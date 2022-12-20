@@ -6,6 +6,7 @@ const AllRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/:username" element={<Home />} />
     </Routes>
   );
 };
