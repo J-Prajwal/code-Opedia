@@ -2,21 +2,19 @@ const express = require("express");
 const connectDatabase = require("./config/db");
 const userController = require("./controllers/user.routes");
 const authentication = require("./middlewares/authentication");
-const dataController = require("./controllers/data.routes");
+const problemController = require("./controllers/problem.routes");
 require("dotenv").config();
 
 const app = express();
 
 app.use(express.json());
 
-app.use("/users", userController);
-app.use(authentication);
-
 app.get("/", (req, res) => {
   res.send("Homepage!");
 });
-
-app.use("/data", dataController);
+app.use("/users", userController);
+app.use(authentication);
+app.use("/problems", problemController);
 
 app.listen(process.env.PORT, async () => {
   try {
