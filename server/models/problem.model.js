@@ -13,6 +13,7 @@ const problemSchema = mongoose.Schema({
   solution_code: { type: String, require: true },
   language_used: { type: String, require: true },
   difficulty: { type: String, require: true },
+  date_time: { type: Date, default: Date.now() },
 });
 
 const ProblemModel = mongoose.model("problem", problemSchema);
