@@ -1,6 +1,6 @@
 // TODO manish: Use purple color
 // Reference: https://choc-ui.com/docs/elements/headers
-import styles from "./Navbar.module.css";
+import styles from "../styles/Navbar.module.css";
 
 const Navbar = () => {
   return (

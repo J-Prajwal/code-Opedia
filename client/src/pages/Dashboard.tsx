@@ -1,5 +1,5 @@
 import { Box, Grid, GridItem } from '@chakra-ui/react';
-import styles from "./Dashboard.module.css"
+import styles from "../styles/Dashboard.module.css";
 import React from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer';
