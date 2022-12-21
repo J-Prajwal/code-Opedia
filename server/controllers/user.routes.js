@@ -80,8 +80,7 @@ userController.post("/register", async (req, res) => {
         hard,
       });
       user.save();
-
-      const usertemp = await UserModel.findOne({ email });
+      const usertemp = await UserModel.findOne({ email }).exec();
       const verificationToken = jwt.sign(
         { ID: usertemp._id },
         process.env.USER_VERIFICATION_TOKEN_SECRET,
@@ -145,7 +144,7 @@ userController.get("/verify/:token", async (req, res) => {
     payload = jwt.verify(token, process.env.USER_VERIFICATION_TOKEN_SECRET);
     console.log(payload, "io");
   } catch (err) {
-    res.status(500).send({message: "error 1"});
+    res.status(500).send({ message: "error 1" });
   }
 
   // findind the user with the matching id
@@ -159,7 +158,7 @@ userController.get("/verify/:token", async (req, res) => {
 
     return res.status(200).send({ message: "Account Verified" });
   } catch (err) {
-    res.status(500).send({message: "error 2"});
+    res.status(500).send({ message: "error 2" });
   }
 });
 
