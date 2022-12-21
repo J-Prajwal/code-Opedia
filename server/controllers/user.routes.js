@@ -81,11 +81,11 @@ userController.post("/register", async (req, res) => {
       });
       user.save();
 
-      const usertemp = await UserModel.find({ email });
+      const usertemp = await UserModel.findOne({ email });
       const verificationToken = jwt.sign(
         { ID: usertemp._id },
         process.env.USER_VERIFICATION_TOKEN_SECRET,
-        { expiresIn: "30d" }
+        { expiresIn: "7d" }
       );
 
       const url = `http://localhost:8080/users/verify/${verificationToken}`;
@@ -95,7 +95,7 @@ userController.post("/register", async (req, res) => {
           from: process.env.EMAIL_USERNAME,
           to: email,
           subject: "Verify Account",
-          html: `Welcome to Algo'Opedia \nPlease <a href='${url}'>Click here to verify yourself.</a>`,
+          html: `Welcome to Algo'Opedia \nPlease <a href='${url}'>Click here to verify your account.</a>`,
         },
         (err, data) => {
           if (err) {
@@ -133,6 +133,34 @@ userController.post("/login", async (req, res) => {
         .send({ message: "Unauthorised Access, Please try again." });
     }
   });
+});
+
+userController.get("/verify/:token", async (req, res) => {
+  const { token } = req.params;
+  if (!token) return res.status(422).send({ message: "Token Missing." });
+
+  // verifying the token from the url
+  let payload = null;
+  try {
+    payload = jwt.verify(token, process.env.USER_VERIFICATION_TOKEN_SECRET);
+    console.log(payload, "io");
+  } catch (err) {
+    res.status(500).send({message: "error 1"});
+  }
+
+  // findind the user with the matching id
+  try {
+    const user = await UserModel.findOne({ _id: payload.ID }).exec();
+    if (!user) return res.status(404).send({ message: "User does not exist." });
+
+    // updating user's verification status to true
+    user.verified = true;
+    await user.save();
+
+    return res.status(200).send({ message: "Account Verified" });
+  } catch (err) {
+    res.status(500).send({message: "error 2"});
+  }
 });
 
 module.exports = userController;
