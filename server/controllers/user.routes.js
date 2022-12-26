@@ -29,8 +29,8 @@ userController.get("/", async (req, res) => {
 
 userController.post("/register", async (req, res) => {
   const {
-    first_name,
-    last_name,
+    fullname,
+    username,
     email,
     password,
     skills,
@@ -58,29 +58,29 @@ userController.post("/register", async (req, res) => {
         message: "Email is already in use.",
       });
     }
+    const user = new UserModel({
+      fullname,
+      username,
+      email,
+      password: hash,
+      skills,
+      github,
+      linkedin,
+      about_me,
+      leetcode,
+      gfg,
+      hackerRank,
+      codechef,
+      is_admin,
+      no_of_problems,
+      easy,
+      medium,
+      hard,
+    });
+    user.save();
 
     try {
-      const user = new UserModel({
-        first_name,
-        last_name,
-        email,
-        password: hash,
-        skills,
-        github,
-        linkedin,
-        about_me,
-        leetcode,
-        gfg,
-        hackerRank,
-        codechef,
-        is_admin,
-        no_of_problems,
-        easy,
-        medium,
-        hard,
-      });
-      user.save();
-      const usertemp = await UserModel.findOne({ email }).exec();
+      const usertemp = await UserModel.findOne({ email });
       const verificationToken = jwt.sign(
         { ID: usertemp._id },
         process.env.USER_VERIFICATION_TOKEN_SECRET,
@@ -94,14 +94,10 @@ userController.post("/register", async (req, res) => {
           from: process.env.EMAIL_USERNAME,
           to: email,
           subject: "Verify Account",
-          html: `Welcome to Algo'Opedia \nPlease <a href='${url}'>Click here to verify your account.</a>`,
+          html: `Welcome to Algo'Opedia <br>Please <a href='${url}'>Click here to verify your account.</a>`,
         },
         (err, data) => {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log(data);
-          }
+          if (err) console.log(err);
         }
       );
       res
@@ -159,6 +155,45 @@ userController.get("/verify/:token", async (req, res) => {
     return res.status(200).send({ message: "Account Verified" });
   } catch (err) {
     res.status(500).send({ message: "error 2" });
+  }
+});
+
+userController.post("/forgotpassword", async (req, res) => {
+  const { email } = req.body;
+  try {
+    const userData = await UserModel.findOne({ email }).exec();
+    console.log(userData);
+    if (!userData)
+      return res.status(404).send({ message: "Email not registered." });
+    else {
+      const verificationToken = jwt.sign(
+        { ID: userData._id },
+        process.env.USER_VERIFICATION_TOKEN_SECRET,
+        { expiresIn: "7d" }
+      );
+
+      const url = `http://localhost:8080/users/verify/${verificationToken}`;
+
+      transporter.sendMail(
+        {
+          from: process.env.EMAIL_USERNAME,
+          to: email,
+          subject: "Change Password",
+          html: `<h3>Hi ${userData.fullname},
+          </h3><br>Please <a href='${url}'>Click here to verify yourself.</a>
+          <p>After verifying yourself, click <a href="http://localhost:3000/user/changepassword">here</a> to change your password</p>
+          `,
+        },
+        (err, data) => {
+          if (err) console.log(err);
+        }
+      );
+      res
+        .status(201)
+        .send({ message: `Sent a verification email to ${email}` });
+    }
+  } catch (err) {
+    res.status(501).send({ message: "Internal Server err", err });
   }
 });
 

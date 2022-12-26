@@ -56,7 +56,7 @@ const Form1 = () => {
           placeholder="Enter Email Address"
           required
         />
-        <FormHelperText>We'll never share your email.</FormHelperText>
+        <FormHelperText color={"whiteAlpha.500"}>We'll never share your email.</FormHelperText>
       </FormControl>
 
       <FormControl isRequired>
@@ -87,8 +87,8 @@ const Form1 = () => {
           Skills
         </FormLabel>
         <Input id="skills" type="text" placeholder="Add your skills" required />
-        <FormHelperText>
-          Seperate each of your skill with a comma( . )
+        <FormHelperText color={"whiteAlpha.500"}>
+          Seperate each of your skill with a comma( , )
         </FormHelperText>
       </FormControl>
     </>
