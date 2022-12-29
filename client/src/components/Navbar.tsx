@@ -1,21 +1,227 @@
-// TODO manish: Use purple color
-// Reference: https://choc-ui.com/docs/elements/headers
-import styles from "../styles/Navbar.module.css";
+import {
+  Avatar,
+  Box,
+  Button,
+  CloseButton,
+  Flex,
+  HStack,
+  IconButton,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Spacer,
+  Tab,
+  TabList,
+  Tabs,
+  VStack,
+  VisuallyHidden,
+  useColorModeValue,
+  useDisclosure,
+  chakra,
+  Image,
+} from "@chakra-ui/react";
+import { AiFillBell, AiOutlineMenu, AiOutlineSearch } from "react-icons/ai";
 
 const Navbar = () => {
+  const bg = useColorModeValue("white", "gray.800");
+  const mobileNav = useDisclosure();
   return (
-    <div>
-      <nav className={styles.navbar}>
-        <img
-          src="https://techcrunch.com/wp-content/uploads/2021/11/facebook-meta-surveillance-2.jpg"
-          alt=""
-        />
-        <div className={styles.logButtons}>
-          <button className={styles.Login}>Login</button>
-          <button className={styles.Signup}>Signup</button>
-        </div>
-      </nav>
-    </div>
+    <Box shadow="md" mb={10}>
+      <chakra.header
+        bg={bg}
+        borderColor="gray.600"
+        borderBottomWidth={1}
+        w="full"
+        px={{
+          base: 2,
+          sm: 4,
+        }}
+        py={4}
+      >
+        <Flex alignItems="center" justifyContent="space-between" mx="auto">
+          <HStack spacing={4} display="flex" alignItems="center">
+            <Box
+              display={{
+                base: "inline-flex",
+                md: "none",
+              }}
+            >
+              <IconButton
+                display={{
+                  base: "flex",
+                  md: "none",
+                }}
+                aria-label="Open menu"
+                fontSize="20px"
+                color="gray.800"
+                _dark={{
+                  color: "inherit",
+                }}
+                variant="ghost"
+                onClick={mobileNav.onOpen}
+                icon={<AiOutlineMenu />}
+              />
+              <VStack
+                pos="absolute"
+                top={0}
+                left={0}
+                right={0}
+                display={mobileNav.isOpen ? "flex" : "none"}
+                flexDirection="column"
+                p={2}
+                pb={4}
+                m={2}
+                bg={bg}
+                spacing={3}
+                rounded="sm"
+                shadow="sm"
+              >
+                <CloseButton
+                  aria-label="Close menu"
+                  justifySelf="self-start"
+                  onClick={mobileNav.onClose}
+                />
+                <Button w="full" variant="ghost">
+                  Dashboard
+                </Button>
+                <Button w="full" variant="ghost">
+                  Practice
+                </Button>
+                <Button w="full" variant="solid" colorScheme="brand">
+                  Contests
+                </Button>
+                <Button w="full" variant="ghost">
+                  Tutorials
+                </Button>
+              </VStack>
+            </Box>
+            <chakra.a
+              href="/"
+              title="Choc Home Page"
+              display="flex"
+              alignItems="center"
+            >
+              <Image
+                src="https://res.cloudinary.com/des8eyvcg/image/upload/v1671615829/1-removebg-preview_btiiyz.png"
+                w={"10rem"}
+              />
+              <VisuallyHidden>Code'Opedia</VisuallyHidden>
+            </chakra.a>
+          </HStack>
+          <HStack spacing={3} display="flex" alignItems="center">
+            <HStack
+              spacing={3}
+              display={{
+                base: "none",
+                md: "inline-flex",
+              }}
+            >
+              <Button variant="ghost" size="sm">
+                Dashboard
+              </Button>
+              <Button variant="ghost" size="sm">
+                Practice
+              </Button>
+              <Button variant="solid" size="sm">
+                Contests
+              </Button>
+              <Button variant="ghost" size="sm">
+                Tutorials
+              </Button>
+            </HStack>
+            <chakra.a
+              p={3}
+              color="gray.800"
+              _dark={{
+                color: "inherit",
+              }}
+              rounded="sm"
+              _hover={{
+                color: "gray.800",
+                _dark: {
+                  color: "gray.600",
+                },
+              }}
+            >
+              <AiFillBell />
+              <VisuallyHidden>Notifications</VisuallyHidden>
+            </chakra.a>
+
+            <Avatar
+              size="sm"
+              name="Dan Abrahmov"
+              src="https://bit.ly/dan-abramov"
+            />
+          </HStack>
+        </Flex>
+      </chakra.header>
+      <Flex
+        alignItems="center"
+        justifyContent="space-between"
+        mx={2}
+        borderWidth={0}
+        overflowX="auto"
+      >
+        <Tabs defaultIndex={0} borderBottomColor="transparent">
+          <TabList>
+            <Tab
+              py={4}
+              m={0}
+              _focus={{
+                boxShadow: "none",
+              }}
+            >
+              All Problems
+            </Tab>
+            <Tab
+              py={4}
+              m={0}
+              _focus={{
+                boxShadow: "none",
+              }}
+            >
+              Easy
+            </Tab>
+            <Tab
+              py={4}
+              m={0}
+              _focus={{
+                boxShadow: "none",
+              }}
+            >
+              Medium
+            </Tab>
+            <Tab
+              py={4}
+              m={0}
+              _focus={{
+                boxShadow: "none",
+              }}
+            >
+              Hard
+            </Tab>
+            <Tab py={4} m={0}>
+              Custom
+            </Tab>
+          </TabList>
+        </Tabs>
+        <Spacer />
+        <HStack spacing={3} alignItems="center">
+          <InputGroup
+            display={{
+              base: "none",
+              lg: "block",
+            }}
+            ml="auto"
+          >
+            <InputLeftElement pointerEvents="none">
+              <AiOutlineSearch />
+            </InputLeftElement>
+            <Input type="tel" placeholder="Search..." />
+          </InputGroup>
+        </HStack>
+      </Flex>
+    </Box>
   );
 };
 
