@@ -46,6 +46,7 @@ userController.post("/register", async (req, res) => {
     easy,
     medium,
     hard,
+    no_of_contests,
   } = req.body;
   bcrypt.hash(password, saltRounds, async function (err, hash) {
     if (err) {
@@ -76,6 +77,7 @@ userController.post("/register", async (req, res) => {
       easy,
       medium,
       hard,
+      no_of_contests,
     });
     user.save();
 
@@ -162,10 +164,12 @@ userController.post("/forgotpassword", async (req, res) => {
   const { email } = req.body;
   try {
     const userData = await UserModel.findOne({ email }).exec();
-    console.log(userData);
     if (!userData)
       return res.status(404).send({ message: "Email not registered." });
     else {
+      userData.verified = false;
+      await userData.save();
+
       const verificationToken = jwt.sign(
         { ID: userData._id },
         process.env.USER_VERIFICATION_TOKEN_SECRET,
@@ -181,7 +185,7 @@ userController.post("/forgotpassword", async (req, res) => {
           subject: "Change Password",
           html: `<h3>Hi ${userData.fullname},
           </h3><br>Please <a href='${url}'>Click here to verify yourself.</a>
-          <p>After verifying yourself, click <a href="http://localhost:3000/user/changepassword">here</a> to change your password</p>
+          <p>After verifying yourself, click <a href="http://localhost:8080/users/changepassword/${email}">here</a> to change your password</p>
           `,
         },
         (err, data) => {
@@ -194,6 +198,37 @@ userController.post("/forgotpassword", async (req, res) => {
     }
   } catch (err) {
     res.status(501).send({ message: "Internal Server err", err });
+  }
+});
+
+userController.patch("/changepassword/:email", async (req, res) => {
+  const { email } = req.params;
+  const { password } = req.body;
+
+  const user = await UserModel.findOne({ email }).exec();
+
+  if (!user) return res.status(404).send({ message: "User not found" });
+
+  if (!user.verified)
+    return res
+      .status(401)
+      .send({ message: "Unauthorized, please verify your mail." });
+  else {
+    bcrypt.hash(password, saltRounds, async function (err, hash) {
+      if (err) {
+        return res.status(500).send({ error: "Please try again!" });
+      }
+      try {
+        // await UserModel.findOneAndUpdate({ email }, { password });
+        user.password = hash;
+        await user.save();
+        return res
+          .status(200)
+          .send({ message: "Password updated successfully.", user });
+      } catch (err) {
+        return res.status(500).send({ message: "Internal server error", err });
+      }
+    });
   }
 });
 

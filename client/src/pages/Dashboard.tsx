@@ -106,7 +106,7 @@ const Dashboard = () => {
               overflow="hidden"
               objectFit="cover"
             >
-              <GitHubCalendar username="gaganchandan2003" />
+              <GitHubCalendar username="j-prajwal" />
             </Box>
           </GridItem>
           <GridItem

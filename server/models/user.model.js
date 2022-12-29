@@ -1,16 +1,15 @@
-const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
 const userSchema = mongoose.Schema({
-  fullname: { type: String, require: true },
-  username: { type: String, require: true },
-  email: { type: String, require: true },
-  password: { type: String, require: true },
-  skills: { type: Array, require: true },
-  github: { type: String, require: true },
+  fullname: { type: String, required: true },
+  username: { type: String, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+  skills: { type: Array, required: true },
+  github: { type: String, required: true },
   linkedin: { type: String },
-  about_me: { type: String, require: true },
+  about_me: { type: String, required: true },
   leetcode: { type: String },
   gfg: { type: String },
   hackerRank: { type: String },
@@ -20,6 +19,7 @@ const userSchema = mongoose.Schema({
   easy: { type: Number, default: 0 },
   medium: { type: Number, default: 0 },
   hard: { type: Number, default: 0 },
+  no_of_contests: { type: Number, required: true, default: 0 },
   verified: { type: Boolean, required: true, default: false },
 });
 
