@@ -1,0 +1,21 @@
+.tech_stacks{
+    width: 90%;
+    margin: auto;
+    display: grid;
+    justify-content: center;
+    margin-top: 20px;
+    grid-template-columns: repeat(6,4%);
+    gap: 20px;
+}
+@media (max-width: 600px) {
+    .tech_stacks{
+        grid-template-columns: repeat(4,4%);
+      }
+  }
+  .card_boxes{
+    box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+  }
+  .flex_boxes{
+    display: flex;
+    box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+  }
