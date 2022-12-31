@@ -4,18 +4,44 @@
     display: grid;
     justify-content: center;
     margin-top: 20px;
-    grid-template-columns: repeat(6,4%);
+    grid-template-columns: repeat(6,6%);
     gap: 20px;
 }
 @media (max-width: 600px) {
     .tech_stacks{
-        grid-template-columns: repeat(4,4%);
+        grid-template-columns: repeat(4,9%);
       }
   }
   .card_boxes{
     box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+    border-radius: 10px;
   }
   .flex_boxes{
     display: flex;
     box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+    border-radius: 10px;
+  }
+  .grid_cont{
+    grid-template-columns: repeat(2,1fr);
+    }
+  .all_butss{
+    margin-left: 40%;
+    width: 50%;
+  }
+  @media (max-width: 1055px){
+    .grid_cont{
+    grid-template-columns: repeat(1,1fr);
+    }
+  }
+  @media (max-width: 516px){
+    .all_butss{
+      width: 70%;
+      margin-left: 20%;
+    }
+  }
+  @media (max-width: 371px){
+    .all_butss{
+      width: 100%;
+      margin-left: -5%;
+    }
   }
