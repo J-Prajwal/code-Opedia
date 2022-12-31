@@ -10,6 +10,7 @@ import {
   WrapItem,
   Image,
   Button,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { FaReact, FaNodeJs } from "react-icons/fa";
 import {
@@ -24,9 +25,9 @@ import { DiCss3, DiMongodb } from "react-icons/di";
 import { SiJavascript } from "react-icons/si";
 import { VscGithub } from "react-icons/vsc";
 import { Divider } from "@chakra-ui/react";
-import { useState } from "react";
-// import axios from "axios";
-
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useToast } from '@chakra-ui/react'
 // type user =  {
 //   id: String;
 //   email: string;
@@ -47,14 +48,18 @@ import { useState } from "react";
 //   no_of_contests:number;
 // };
 const Home = () => {
-  // const api = "https://mock-server-686g.onrender.com";
+  const api = "https://mock-server-686g.onrender.com";
   const [count, setCount] = useState<number>(0);
-  // useEffect(() => {
-  //   axios
-  //     .get(`${api}/code_opedia`)
-  //     .then((response) => setUsers(response))
-  //     .catch((error) => console.log(error.message));
-  // }, []);
+  const [users , setUsers] = useState<any>([])
+  useEffect(() => {
+    axios
+      .get(`${api}/code_opedia`)
+      .then((response) => setUsers(response.data))
+      .catch((error) => console.log(error.message));
+  }, []);
+console.log(users);
+console.log(setCount);
+const toast = useToast()
 
   return (
     <div>
@@ -65,6 +70,8 @@ const Home = () => {
         m={"auto"}
         mt={"10%"}
         textAlign="center"
+        borderRadius={"10%"}
+        border={"1px solid #0d7fdf"}
       >
         <Box w={"100%"}>
           <Box display={"flex"} m="auto" mt={"-6%"}>
@@ -153,20 +160,85 @@ const Home = () => {
           </Flex>
         </Box>
         <Box mt={"5%"} w={"80%"} m={"auto"} mb={"5%"}>
-          <Text>Problems You Attempted</Text>
-          <Box mt={"3%"}>
-            <Box  w={"45%"} className={styles.flex_boxes}  p={1}>
-              <Box w={"30%"} className={styles.card_boxes}>
+          <Text mt={"5%"} mb={"5%"}fontSize={30}>Problems You Attempted</Text>
+          <SimpleGrid className={styles.grid_cont} m="auto"  gap={5}>
+            <Box className={styles.flex_boxes}  p={1}>
+              <Box w={"30%"} m="auto" className={styles.card_boxes}>
+                <Image src="https://cdn3.iconfinder.com/data/icons/logos-and-brands-adobe/512/160_Hackerrank-512.png"/>
+              </Box>
+              <Box w={"70%"}  textAlign={"left"} pl={"5%"}>
+                <Text  fontWeight={"bold"} fontSize={20}>Problem Name</Text>
+                <Text fontSize={13} mt="2%">Discription of Question</Text>
+                <Text fontSize={16} fontWeight="bold" mt="3%">`Level ➡️`</Text>
+                <Button mt={"10%"} className={styles.all_butss} border={"1px solid white"}  onClick={() =>
+        toast({
+          title: 'Added Successfully',
+          description: "Surely give you alert for revision",
+          status: 'success',
+          duration: 4000,
+          isClosable: true,
+        })
+      }>Need Revision</Button>
+              </Box>   
+          </Box>
+          <Box className={styles.flex_boxes}  p={1}>
+              <Box w={"30%"} m="auto" className={styles.card_boxes}>
+                <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdVHUvpMzlUKnxGtZSXcZ1XXZLxfu9hqc8BB77sNTcGjSbiLhLlqRpntUZhk222DQV9UM&usqp=CAU"/>
+              </Box>
+              <Box w={"70%"} textAlign={"left"} pl={"5%"}>
+                <Text  fontWeight={"bold"} fontSize={20}>Problem Name</Text>
+                <Text fontSize={13} mt="2%">Discription of Question</Text>
+                <Text fontSize={16} fontWeight="bold" mt="3%">`Level ➡️`</Text>
+                <Button mt={"10%"} className={styles.all_butss} border={"1px solid white"}  onClick={() =>
+        toast({
+          title: 'Added Successfully',
+          description: "Surely give you alert for revision",
+          status: 'success',
+          duration: 4000,
+          isClosable: true,
+        })
+      }>Need Revision</Button>
+              </Box>   
+          </Box>
+          <Box  className={styles.flex_boxes}  p={1}>
+              <Box w={"30%"} m="auto" className={styles.card_boxes}>
+                <Image src="https://leetcode.com/static/images/LeetCode_logo_rvs.png"/>
+              </Box>
+              <Box w={"70%"} textAlign={"left"} pl={"5%"}>
+                <Text  fontWeight={"bold"} fontSize={20}>Problem Name</Text>
+                <Text fontSize={13} mt="2%">Discription of Question</Text>
+                <Text fontSize={16} fontWeight="bold" mt="3%">`Level ➡️`</Text>
+                <Button mt={"10%"} className={styles.all_butss}  border={"1px solid white"} onClick={() =>
+        toast({
+          title: 'Added Successfully',
+          description: "Surely give you alert for revision",
+          status: 'success',
+          duration: 4000,
+          isClosable: true,
+        })
+      }>Need Revision</Button>
+              </Box>   
+          </Box>
+          <Box className={styles.flex_boxes}  p={1}>
+              <Box m="auto" w={"30%"} className={styles.card_boxes}>
                 <Image src="https://cdn3.iconfinder.com/data/icons/logos-and-brands-adobe/512/160_Hackerrank-512.png"/>
               </Box>
               <Box w={"70%"} textAlign={"left"} pl={"5%"}>
                 <Text  fontWeight={"bold"} fontSize={20}>Problem Name</Text>
                 <Text fontSize={13} mt="2%">Discription of Question</Text>
                 <Text fontSize={16} fontWeight="bold" mt="3%">`Level ➡️`</Text>
-                <Button mt={"10%"} ml="40%" w="55%">Need Revision</Button>
-              </Box>
+                <Button mt={"10%"} className={styles.all_butss} border={"1px solid white"} onClick={() =>
+        toast({
+          title: 'Added Successfully',
+          description: "Surely give you alert for revision",
+          status: 'success',
+          duration: 4000,
+          isClosable: true,
+        })
+      }>Need Revision</Button>
+              </Box>   
           </Box>
-          </Box>
+          </SimpleGrid>
         </Box>
       </Box>
       <Footer />
