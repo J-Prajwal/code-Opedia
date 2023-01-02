@@ -11,6 +11,16 @@ import {
   Image,
   Button,
   SimpleGrid,
+  Tabs,
+  TabList,
+  Tab,
+  Spacer,
+  HStack,
+  InputGroup,
+  InputLeftElement,
+  Input,
+  TabPanels,
+  TabPanel,
 } from "@chakra-ui/react";
 import { FaReact, FaNodeJs } from "react-icons/fa";
 import {
@@ -27,7 +37,13 @@ import { VscGithub } from "react-icons/vsc";
 import { Divider } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useToast } from '@chakra-ui/react'
+import { useToast } from "@chakra-ui/react";
+import { AiOutlineSearch } from "react-icons/ai";
+import Easy from "../components/Easy";
+import AllProblems from "../components/AllProblems";
+import Medium from "../components/Medium";
+import Hard from "../components/Hard";
+import CustomProblems from "../components/CustomProblems";
 // type user =  {
 //   id: String;
 //   email: string;
@@ -50,16 +66,16 @@ import { useToast } from '@chakra-ui/react'
 const Home = () => {
   const api = "https://mock-server-686g.onrender.com";
   const [count, setCount] = useState<number>(0);
-  const [users , setUsers] = useState<any>([])
+  const [users, setUsers] = useState<any>([]);
   useEffect(() => {
     axios
       .get(`${api}/code_opedia`)
       .then((response) => setUsers(response.data))
       .catch((error) => console.log(error.message));
   }, []);
-console.log(users);
-console.log(setCount);
-const toast = useToast()
+  console.log(users);
+  console.log(setCount);
+  const toast = useToast();
 
   return (
     <div>
@@ -160,84 +176,222 @@ const toast = useToast()
           </Flex>
         </Box>
         <Box mt={"5%"} w={"80%"} m={"auto"} mb={"5%"}>
-          <Text mt={"5%"} mb={"5%"}fontSize={30}>Problems You Attempted</Text>
-          <SimpleGrid className={styles.grid_cont} m="auto"  gap={5}>
-            <Box className={styles.flex_boxes}  p={1}>
+          <Divider />
+          <Flex
+            alignItems="center"
+            justifyContent="space-between"
+            my={10}
+            borderWidth={0}
+            overflowX="auto"
+          >
+            <Tabs defaultIndex={0} borderBottomColor="transparent">
+              <TabList>
+                <Tab
+                  py={4}
+                  m={0}
+                  _focus={{
+                    boxShadow: "none",
+                  }}
+                >
+                  All Problems
+                </Tab>
+                <Tab
+                  py={4}
+                  m={0}
+                  _focus={{
+                    boxShadow: "none",
+                  }}
+                >
+                  Easy
+                </Tab>
+                <Tab
+                  py={4}
+                  m={0}
+                  _focus={{
+                    boxShadow: "none",
+                  }}
+                >
+                  Medium
+                </Tab>
+                <Tab
+                  py={4}
+                  m={0}
+                  _focus={{
+                    boxShadow: "none",
+                  }}
+                >
+                  Hard
+                </Tab>
+                <Tab py={4} m={0}>
+                  Custom
+                </Tab>
+              </TabList>
+              <TabPanels>
+                <TabPanel>
+                  <AllProblems />
+                </TabPanel>
+                <TabPanel>
+                  <Easy />
+                </TabPanel>
+                <TabPanel>
+                  <Medium />
+                </TabPanel>
+                <TabPanel>
+                  <Hard />
+                </TabPanel>
+                <TabPanel>
+                  <CustomProblems />
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
+            <Spacer />
+            <HStack spacing={3} alignItems="center">
+              <InputGroup
+                display={{
+                  base: "none",
+                  lg: "block",
+                }}
+                ml="auto"
+              >
+                <InputLeftElement pointerEvents="none">
+                  <AiOutlineSearch />
+                </InputLeftElement>
+                <Input type="tel" placeholder="Search..." />
+              </InputGroup>
+            </HStack>
+          </Flex>
+          <Text mt={"5%"} mb={"5%"} fontSize={30}>
+            Problems You Attempted
+          </Text>
+          <SimpleGrid className={styles.grid_cont} m="auto" gap={5}>
+            <Box className={styles.flex_boxes} p={1}>
               <Box w={"30%"} m="auto" className={styles.card_boxes}>
-                <Image src="https://cdn3.iconfinder.com/data/icons/logos-and-brands-adobe/512/160_Hackerrank-512.png"/>
-              </Box>
-              <Box w={"70%"}  textAlign={"left"} pl={"5%"}>
-                <Text  fontWeight={"bold"} fontSize={20}>Problem Name</Text>
-                <Text fontSize={13} mt="2%">Discription of Question</Text>
-                <Text fontSize={16} fontWeight="bold" mt="3%">`Level ➡️`</Text>
-                <Button mt={"10%"} className={styles.all_butss} border={"1px solid white"}  onClick={() =>
-        toast({
-          title: 'Added Successfully',
-          description: "Surely give you alert for revision",
-          status: 'success',
-          duration: 4000,
-          isClosable: true,
-        })
-      }>Need Revision</Button>
-              </Box>   
-          </Box>
-          <Box className={styles.flex_boxes}  p={1}>
-              <Box w={"30%"} m="auto" className={styles.card_boxes}>
-                <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdVHUvpMzlUKnxGtZSXcZ1XXZLxfu9hqc8BB77sNTcGjSbiLhLlqRpntUZhk222DQV9UM&usqp=CAU"/>
+                <Image src="https://cdn3.iconfinder.com/data/icons/logos-and-brands-adobe/512/160_Hackerrank-512.png" />
               </Box>
               <Box w={"70%"} textAlign={"left"} pl={"5%"}>
-                <Text  fontWeight={"bold"} fontSize={20}>Problem Name</Text>
-                <Text fontSize={13} mt="2%">Discription of Question</Text>
-                <Text fontSize={16} fontWeight="bold" mt="3%">`Level ➡️`</Text>
-                <Button mt={"10%"} className={styles.all_butss} border={"1px solid white"}  onClick={() =>
-        toast({
-          title: 'Added Successfully',
-          description: "Surely give you alert for revision",
-          status: 'success',
-          duration: 4000,
-          isClosable: true,
-        })
-      }>Need Revision</Button>
-              </Box>   
-          </Box>
-          <Box  className={styles.flex_boxes}  p={1}>
+                <Text fontWeight={"bold"} fontSize={20}>
+                  Problem Name
+                </Text>
+                <Text fontSize={13} mt="2%">
+                  Discription of Question
+                </Text>
+                <Text fontSize={16} fontWeight="bold" mt="3%">
+                  `Level ➡️`
+                </Text>
+                <Button
+                  mt={"10%"}
+                  className={styles.all_butss}
+                  border={"1px solid white"}
+                  onClick={() =>
+                    toast({
+                      title: "Added Successfully",
+                      description: "Surely give you alert for revision",
+                      status: "success",
+                      duration: 4000,
+                      isClosable: true,
+                    })
+                  }
+                >
+                  Need Revision
+                </Button>
+              </Box>
+            </Box>
+            <Box className={styles.flex_boxes} p={1}>
               <Box w={"30%"} m="auto" className={styles.card_boxes}>
-                <Image src="https://leetcode.com/static/images/LeetCode_logo_rvs.png"/>
+                <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdVHUvpMzlUKnxGtZSXcZ1XXZLxfu9hqc8BB77sNTcGjSbiLhLlqRpntUZhk222DQV9UM&usqp=CAU" />
               </Box>
               <Box w={"70%"} textAlign={"left"} pl={"5%"}>
-                <Text  fontWeight={"bold"} fontSize={20}>Problem Name</Text>
-                <Text fontSize={13} mt="2%">Discription of Question</Text>
-                <Text fontSize={16} fontWeight="bold" mt="3%">`Level ➡️`</Text>
-                <Button mt={"10%"} className={styles.all_butss}  border={"1px solid white"} onClick={() =>
-        toast({
-          title: 'Added Successfully',
-          description: "Surely give you alert for revision",
-          status: 'success',
-          duration: 4000,
-          isClosable: true,
-        })
-      }>Need Revision</Button>
-              </Box>   
-          </Box>
-          <Box className={styles.flex_boxes}  p={1}>
+                <Text fontWeight={"bold"} fontSize={20}>
+                  Problem Name
+                </Text>
+                <Text fontSize={13} mt="2%">
+                  Discription of Question
+                </Text>
+                <Text fontSize={16} fontWeight="bold" mt="3%">
+                  `Level ➡️`
+                </Text>
+                <Button
+                  mt={"10%"}
+                  className={styles.all_butss}
+                  border={"1px solid white"}
+                  onClick={() =>
+                    toast({
+                      title: "Added Successfully",
+                      description: "Surely give you alert for revision",
+                      status: "success",
+                      duration: 4000,
+                      isClosable: true,
+                    })
+                  }
+                >
+                  Need Revision
+                </Button>
+              </Box>
+            </Box>
+            <Box className={styles.flex_boxes} p={1}>
+              <Box w={"30%"} m="auto" className={styles.card_boxes}>
+                <Image src="https://leetcode.com/static/images/LeetCode_logo_rvs.png" />
+              </Box>
+              <Box w={"70%"} textAlign={"left"} pl={"5%"}>
+                <Text fontWeight={"bold"} fontSize={20}>
+                  Problem Name
+                </Text>
+                <Text fontSize={13} mt="2%">
+                  Discription of Question
+                </Text>
+                <Text fontSize={16} fontWeight="bold" mt="3%">
+                  `Level ➡️`
+                </Text>
+                <Button
+                  mt={"10%"}
+                  className={styles.all_butss}
+                  border={"1px solid white"}
+                  onClick={() =>
+                    toast({
+                      title: "Added Successfully",
+                      description: "Surely give you alert for revision",
+                      status: "success",
+                      duration: 4000,
+                      isClosable: true,
+                    })
+                  }
+                >
+                  Need Revision
+                </Button>
+              </Box>
+            </Box>
+            <Box className={styles.flex_boxes} p={1}>
               <Box m="auto" w={"30%"} className={styles.card_boxes}>
-                <Image src="https://cdn3.iconfinder.com/data/icons/logos-and-brands-adobe/512/160_Hackerrank-512.png"/>
+                <Image src="https://cdn3.iconfinder.com/data/icons/logos-and-brands-adobe/512/160_Hackerrank-512.png" />
               </Box>
               <Box w={"70%"} textAlign={"left"} pl={"5%"}>
-                <Text  fontWeight={"bold"} fontSize={20}>Problem Name</Text>
-                <Text fontSize={13} mt="2%">Discription of Question</Text>
-                <Text fontSize={16} fontWeight="bold" mt="3%">`Level ➡️`</Text>
-                <Button mt={"10%"} className={styles.all_butss} border={"1px solid white"} onClick={() =>
-        toast({
-          title: 'Added Successfully',
-          description: "Surely give you alert for revision",
-          status: 'success',
-          duration: 4000,
-          isClosable: true,
-        })
-      }>Need Revision</Button>
-              </Box>   
-          </Box>
+                <Text fontWeight={"bold"} fontSize={20}>
+                  Problem Name
+                </Text>
+                <Text fontSize={13} mt="2%">
+                  Discription of Question
+                </Text>
+                <Text fontSize={16} fontWeight="bold" mt="3%">
+                  `Level ➡️`
+                </Text>
+                <Button
+                  mt={"10%"}
+                  className={styles.all_butss}
+                  border={"1px solid white"}
+                  onClick={() =>
+                    toast({
+                      title: "Added Successfully",
+                      description: "Surely give you alert for revision",
+                      status: "success",
+                      duration: 4000,
+                      isClosable: true,
+                    })
+                  }
+                >
+                  Need Revision
+                </Button>
+              </Box>
+            </Box>
           </SimpleGrid>
         </Box>
       </Box>
