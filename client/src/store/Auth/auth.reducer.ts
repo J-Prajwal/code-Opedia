@@ -1,15 +1,6 @@
-import { ReducerProps, UserDetails } from "../../constants/constants";
+import { AuthInitialState, ReducerProps } from "../../constants/constants";
 
-type InitialState = {
-  isLoading: boolean;
-  isError: boolean;
-  username: string | null;
-  userDetails: UserDetails | null;
-  token: string | null;
-  isAuth: boolean;
-};
-
-const initialState: InitialState = {
+const initialState: AuthInitialState = {
   isLoading: false,
   isAuth: false,
   isError: false,
@@ -19,7 +10,7 @@ const initialState: InitialState = {
 };
 
 export const reducer = (
-  state: InitialState = initialState,
+  state: AuthInitialState = initialState,
   { type, payload }: ReducerProps
 ) => {
   switch (type) {
