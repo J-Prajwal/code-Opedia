@@ -3,6 +3,7 @@ const connectDatabase = require("./config/db");
 const userController = require("./controllers/user.routes");
 const authentication = require("./middlewares/authentication");
 const problemController = require("./controllers/problem.routes");
+const fileUploadController = require("./controllers/fileUploads.routes");
 require("dotenv").config();
 
 const app = express();
@@ -14,6 +15,7 @@ app.get("/", (req, res) => {
 });
 app.use("/users", userController);
 // app.use(authentication);
+app.use("/", fileUploadController);
 app.use("/problems", problemController);
 
 app.listen(process.env.PORT, async () => {

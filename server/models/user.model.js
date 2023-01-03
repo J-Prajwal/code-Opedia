@@ -21,6 +21,7 @@ const userSchema = mongoose.Schema({
   hard: { type: Number, default: 0 },
   no_of_contests: { type: Number, required: true, default: 0 },
   verified: { type: Boolean, required: true, default: false },
+  profile_picture: { type: String, required: false, default: null },
 });
 
 const UserModel = mongoose.model("user", userSchema);
