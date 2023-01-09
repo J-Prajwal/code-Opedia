@@ -8,10 +8,10 @@ export const getAllContests =
     dispatch({ type: types.GET_ALL_CONTEST_LOADING });
     axios
       .get(
-        `https://clist.by:443/api/v2/contest/?username=${process.env.REACT_APP_CLIST_USERNAME}&api_key=${process.env.REACT_APP_CLIST_API_KEY}`
+        `https://clist.by:443/api/v2/contest/?username=${process.env.REACT_APP_CLIST_USERNAME}&api_key=${process.env.REACT_APP_CLIST_API_KEY}&format=json&upcoming=true`
       )
       .then((res) => {
-        dispatch({ type: types.GET_ALL_CONTEST_SUCCESS, payload: res.data });
+        dispatch({ type: types.GET_ALL_CONTEST_SUCCESS, payload: res.data.objects });
       })
       .catch((err) => {
         dispatch({ type: types.GET_ALL_CONTEST_FAILURE });

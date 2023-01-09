@@ -41,7 +41,7 @@ export type AuthInitialState = {
 export type ContestsInitialState = {
   isLoading: boolean;
   isError: boolean;
-  contests: Contests | [];
+  contests: Contests[] | [];
 };
 
 export interface Contests {
@@ -53,6 +53,20 @@ export interface Contests {
   id: number;
   parsed_at: string;
   problems: null;
+  resource: string;
+  resource_id: number;
+  start: string;
+}
+
+export interface ContestDetails {
+  duration: number;
+  end: string;
+  event: string;
+  host: string;
+  href: string;
+  id: number;
+  parsed_at: string | null;
+  problems: string | null;
   resource: string;
   resource_id: number;
   start: string;

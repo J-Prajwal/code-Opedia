@@ -21,6 +21,7 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { AiFillBell, AiOutlineMenu, AiOutlineSearch } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const bg = useColorModeValue("white", "gray.800");
@@ -117,16 +118,16 @@ const Navbar = () => {
               }}
             >
               <Button variant="ghost" size="sm">
-                Dashboard
+                <Link to={`/user/${"username"}`}> Dashboard </Link>
               </Button>
               <Button variant="ghost" size="sm">
-                Practice
+                <Link to={"/practise"}>Practice</Link>
               </Button>
               <Button variant="solid" size="sm">
-                Contests
+                <Link to={"/contests"}>Contests</Link>
               </Button>
               <Button variant="ghost" size="sm">
-                Tutorials
+                <Link to={"/tutorials"}>Tutorials</Link>
               </Button>
             </HStack>
             <chakra.a

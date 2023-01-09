@@ -20,8 +20,10 @@ import {
 } from "@chakra-ui/react";
 
 import { useToast } from "@chakra-ui/react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import { getSpaceUntilMaxLength } from "@testing-library/user-event/dist/utils";
+import { resolve } from "path";
+import { rejects } from "assert";
+import axios from "axios";
 
 const Form1 = () => {
   const [show, setShow] = React.useState(false);
@@ -56,7 +58,9 @@ const Form1 = () => {
           placeholder="Enter Email Address"
           required
         />
-        <FormHelperText color={"whiteAlpha.500"}>We'll never share your email.</FormHelperText>
+        <FormHelperText color={"whiteAlpha.500"}>
+          We'll never share your email.
+        </FormHelperText>
       </FormControl>
 
       <FormControl isRequired>
@@ -258,6 +262,41 @@ const Form2 = () => {
 };
 
 const Form3 = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [url, setUrl] = useState<string>("");
+
+  const convertBase64 = (file: any): any => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = () => {
+        reject(fileReader.error);
+      };
+    });
+  };
+
+  const uploadImage = async (e: any) => {
+    const file = e.target.files[0];
+    const base64 = await convertBase64(file);
+    setLoading(true);
+    axios
+      .post("http://localhost:8080/uploadImage", { image: base64 })
+      .then((res) => {
+        console.log(res)
+        setUrl(res.data);
+        alert("image uploaded");
+      })
+      .then(() => setLoading(false))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  console.log(url);
+
   return (
     <>
       <Heading w="100%" textAlign={"center"} fontWeight="normal">
@@ -281,6 +320,14 @@ const Form3 = () => {
             Brief description for your profile. URLs are hyperlinked.
           </FormHelperText>
         </FormControl>
+        <Flex
+          border={"1px dotted white"}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          <Input type={"file"} onChange={uploadImage} />
+          {url && <img src={url} />}
+        </Flex>
       </SimpleGrid>
     </>
   );

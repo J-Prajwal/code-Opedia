@@ -4,7 +4,7 @@ const fileUploadController = express.Router();
 
 fileUploadController.post("/uploadImage", (req, res) => {
   uploadImage(req.body.image)
-    .then((res) => res.send(res))
+    .then((url) => res.send(url))
     .catch((err) => res.send(err));
 });
 

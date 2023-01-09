@@ -13,7 +13,7 @@ export const reducer = (
 ) => {
   switch (type) {
     case types.GET_ALL_CONTEST_LOADING: {
-      return { ...state, IsLoading: true, isError: false };
+      return { ...state, isLoading: true, isError: false };
     }
     case types.GET_ALL_CONTEST_SUCCESS: {
       return { ...state, isLoading: false, isError: false, contests: payload };
