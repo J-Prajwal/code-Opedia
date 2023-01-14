@@ -7,10 +7,14 @@ import { Heading, SimpleGrid } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import ContestCard from "../components/ContestCard";
 
+type State = {
+  contest: ContestsInitialState;
+};
+
 const Contests = () => {
   const dispatch: Dispatch<any> = useDispatch();
   const { isLoading, isError, contests }: ContestsInitialState = useSelector(
-    (state: any) => state.contest
+    (state: State) => state.contest
   );
   useEffect(() => {
     dispatch(getAllContests());
