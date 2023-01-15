@@ -71,3 +71,7 @@ export interface ContestDetails {
   resource_id: number;
   start: string;
 }
+
+export type State = {
+  contest: ContestsInitialState;
+};

@@ -1,54 +1,89 @@
 import {
+  Avatar,
   Button,
   Card,
   CardBody,
   CardFooter,
+  Center,
+  Flex,
+  HStack,
   Heading,
   Image,
+  Link,
   Stack,
   Text,
+  Tooltip,
 } from "@chakra-ui/react";
 import { ContestDetails } from "../constants/constants";
+import { convertMsToTime } from "../utils/msToTime";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 type ContestProps = {
-    contest: ContestDetails,
-    key: number
-}
+  contest: ContestDetails;
+  key: number;
+};
 
-const ContestCard = ({contest}: ContestProps) => {
-    console.log(contest)
+const ContestCard = ({ contest }: ContestProps) => {
+  console.log(contest);
   return (
-    <div>
-      <Card
-        direction={{ base: "column", sm: "row" }}
-        overflow="hidden"
-        variant="outline"
-      >
-        <Image
-          objectFit="cover"
-          maxW={{ base: "100%", sm: "200px" }}
-          src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
-          alt="Caffe Latte"
-        />
+    <Card
+      direction={{ base: "column", sm: "row" }}
+      overflow="hidden"
+      variant="outline"
+    >
+      <Stack w={"full"}>
+        <CardBody>
+          <HStack justifyContent={"space-between"}>
+            <Heading size="sm">{contest.event}</Heading>
+            <Avatar name={contest.host} />
+          </HStack>
+          <HStack gap={10}>
+            <Text color={"tomato"}>{contest.duration}</Text>
+            <Link
+              color={"blue.200"}
+              isExternal
+              href={`https://${contest.host}`}
+            >
+              {contest.host}
+            </Link>
+          </HStack>
+          <HStack
+            mt={3}
+            fontSize={"lg"}
+            fontFamily={"monospace"}
+            alignItems={"baseline"}
+          >
+            <Heading size={"md"} fontWeight={"semibold"}>
+              Starts:{" "}
+            </Heading>
+            <Text>{contest.start}</Text>
+          </HStack>
+          <HStack
+            fontSize={"lg"}
+            fontFamily={"monospace"}
+            alignItems={"baseline"}
+          >
+            <Heading size={"md"} fontWeight={"semibold"}>
+              Ends:{" "}
+            </Heading>
+            <Text>{contest.end}</Text>
+          </HStack>
+        </CardBody>
 
-        <Stack>
-          <CardBody>
-            <Heading size="md">The perfect latte</Heading>
-
-            <Text py="2">
-              Caffè latte is a coffee beverage of Italian origin made with
-              espresso and steamed milk.
-            </Text>
-          </CardBody>
-
-          <CardFooter>
-            <Button variant="solid" colorScheme="blue">
-              Buy Latte
-            </Button>
-          </CardFooter>
-        </Stack>
-      </Card>
-    </div>
+        <Flex
+          justifyContent={"center"}
+          alignItems={"center"}
+          bgColor={"purple.700"}
+          w={"100%"}
+          h={"5vh"}
+          borderRadius={"md"}
+        >
+          <Text textTransform={"capitalize"}>
+            Participate in the contest <ExternalLinkIcon />
+          </Text>
+        </Flex>
+      </Stack>
+    </Card>
   );
 };
 
