@@ -2,21 +2,23 @@ export interface UserDetails {
   fullname: string;
   username: string;
   email: string;
+  password: string;
   skills: string[];
   github: string;
-  linkedin?: string;
+  linkedin: string;
   about_me: string;
-  leetcode?: string;
-  gfg?: string;
-  hackerRank?: string;
-  codeChef?: string;
+  leetcode: string;
+  gfg: string;
+  hackerRank: string;
+  codeChef: string;
   is_admin: boolean;
-  no_of_problems: boolean;
-  easy: boolean;
-  medium: boolean;
-  hard: boolean;
-  no_of_contests: boolean;
+  no_of_problems: number;
+  easy: number;
+  medium: number;
+  hard: number;
+  no_of_contests: number;
   verified: boolean;
+  profile_picture: string;
 }
 
 export type ReducerProps = {
@@ -73,5 +75,12 @@ export interface ContestDetails {
 }
 
 export type State = {
+  auth: AuthInitialState;
   contest: ContestsInitialState;
+};
+
+export type SignupProps = {
+  userDetails: UserDetails;
+  existingUsername?: boolean;
+  handleOnChange: (e: any) => void;
 };

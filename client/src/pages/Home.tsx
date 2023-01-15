@@ -28,7 +28,7 @@ import { DiCss3, DiMongodb } from "react-icons/di";
 import { SiJavascript } from "react-icons/si";
 import { VscGithub } from "react-icons/vsc";
 import { Divider } from "@chakra-ui/react";
-import {useState } from "react";
+import { useState } from "react";
 import Easy from "../components/Easy";
 import AllProblems from "../components/AllProblems";
 import Medium from "../components/Medium";
@@ -156,14 +156,8 @@ const Home = () => {
           </Flex>
         </Box>
         <Box mt={"5%"} w={"80%"} m={"auto"} mb={"5%"}>
-          <Divider />
-          <Flex
-            alignItems="center"
-            justifyContent="space-between"
-            my={10}
-            borderWidth={0}
-            overflowX="auto"
-          >
+        </Box>
+      </Box>
             <Tabs defaultIndex={0} borderBottomColor="transparent">
               <TabList>
                 <Tab
@@ -224,11 +218,6 @@ const Home = () => {
                 </TabPanel>
               </TabPanels>
             </Tabs>
-            <Spacer />
-          </Flex>
-          
-        </Box>
-      </Box>
       <Footer />
     </div>
   );

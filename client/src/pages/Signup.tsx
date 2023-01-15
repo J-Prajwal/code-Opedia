@@ -10,9 +10,7 @@ import {
   GridItem,
   FormLabel,
   Input,
-  Select,
   SimpleGrid,
-  InputLeftAddon,
   InputGroup,
   Textarea,
   FormHelperText,
@@ -20,12 +18,14 @@ import {
 } from "@chakra-ui/react";
 
 import { useToast } from "@chakra-ui/react";
-import { getSpaceUntilMaxLength } from "@testing-library/user-event/dist/utils";
-import { resolve } from "path";
-import { rejects } from "assert";
 import axios from "axios";
+import { SignupProps, UserDetails } from "../constants/constants";
 
-const Form1 = () => {
+const Form1 = ({
+  userDetails,
+  handleOnChange,
+  existingUsername,
+}: SignupProps) => {
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
   return (
@@ -38,14 +38,34 @@ const Form1 = () => {
           <FormLabel htmlFor="full-name" fontWeight={"normal"}>
             Full name
           </FormLabel>
-          <Input id="full-name" placeholder="Full name" required />
+          <Input
+            id="full-name"
+            name="fullname"
+            value={userDetails.fullname}
+            placeholder="Full name"
+            onChange={handleOnChange}
+            required
+          />
         </FormControl>
 
         <FormControl isRequired>
           <FormLabel htmlFor="username" fontWeight={"normal"}>
             Username
           </FormLabel>
-          <Input id="username" placeholder="Username" required />
+          <Input
+            id="username"
+            name="username"
+            outline={existingUsername ? "2px solid red" : ""}
+            value={userDetails.username}
+            onChange={handleOnChange}
+            placeholder="Username"
+            required
+          />
+          {existingUsername && (
+            <FormHelperText color={"red"}>
+              Username already taken
+            </FormHelperText>
+          )}
         </FormControl>
       </Flex>
       <FormControl isRequired mt="2%">
@@ -99,7 +119,7 @@ const Form1 = () => {
   );
 };
 
-const Form2 = () => {
+const Form2 = ({ userDetails, handleOnChange }: SignupProps) => {
   return (
     <>
       <Heading w="100%" textAlign={"center"} fontWeight="normal" mb="2%">
@@ -261,7 +281,7 @@ const Form2 = () => {
   );
 };
 
-const Form3 = () => {
+const Form3 = ({ userDetails, handleOnChange }: SignupProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [url, setUrl] = useState<string>("");
 
@@ -285,7 +305,7 @@ const Form3 = () => {
     axios
       .post("http://localhost:8080/uploadImage", { image: base64 })
       .then((res) => {
-        console.log(res)
+        console.log(res);
         setUrl(res.data);
         alert("image uploaded");
       })
@@ -325,8 +345,9 @@ const Form3 = () => {
           justifyContent={"center"}
           alignItems={"center"}
         >
+          {/* Arpit mishra to start working from here && not above this line */}
           <Input type={"file"} onChange={uploadImage} />
-          {url && <img src={url} />}
+          {/* {url && <img src={url} />} - for conditional rendering */}
         </Flex>
       </SimpleGrid>
     </>
@@ -337,6 +358,52 @@ export default function Signup() {
   const toast = useToast();
   const [step, setStep] = useState(1);
   const [progress, setProgress] = useState(33.33);
+  const [userDetails, setUserDetails] = useState<UserDetails>({
+    fullname: "",
+    username: "",
+    email: "",
+    password: "",
+    skills: [],
+    github: "",
+    linkedin: "",
+    about_me: "",
+    leetcode: "",
+    gfg: "",
+    hackerRank: "",
+    codeChef: "",
+    is_admin: false,
+    no_of_problems: 0,
+    easy: 0,
+    medium: 0,
+    hard: 0,
+    no_of_contests: 0,
+    verified: false,
+    profile_picture: "",
+  });
+
+  const [existingUsername, setExistingUsername] = useState<boolean>(false);
+
+  const handleOnChange = (e: any): void => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    if (name === "username") {
+      axios
+        .get(`http://localhost:8080/users?q=${value}`)
+        .then((res) => {
+          if (res.data.users.length > 0) {
+            setExistingUsername(true);
+          } else {
+            setExistingUsername(false);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+
+    setUserDetails((values) => ({ ...values, [name]: value }));
+
+    console.log(userDetails);
+  };
   return (
     <>
       <Box
@@ -358,7 +425,17 @@ export default function Signup() {
           isAnimated
           colorScheme={"purple"}
         ></Progress>
-        {step === 1 ? <Form1 /> : step === 2 ? <Form2 /> : <Form3 />}
+        {step === 1 ? (
+          <Form1
+            userDetails={userDetails}
+            handleOnChange={handleOnChange}
+            existingUsername={existingUsername}
+          />
+        ) : step === 2 ? (
+          <Form2 userDetails={userDetails} handleOnChange={handleOnChange} />
+        ) : (
+          <Form3 userDetails={userDetails} handleOnChange={handleOnChange} />
+        )}
         <ButtonGroup mt="5%" w="100%">
           <Flex w="100%" justifyContent="space-between">
             <Flex>
@@ -388,6 +465,7 @@ export default function Signup() {
                 }}
                 colorScheme="purple"
                 variant="outline"
+                disabled={existingUsername}
               >
                 Next
               </Button>
