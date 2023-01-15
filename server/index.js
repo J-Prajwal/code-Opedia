@@ -4,11 +4,13 @@ const userController = require("./controllers/user.routes");
 const authentication = require("./middlewares/authentication");
 const problemController = require("./controllers/problem.routes");
 const fileUploadController = require("./controllers/fileUploads.routes");
+const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Homepage!");

@@ -20,7 +20,7 @@ const userController = express.Router();
 
 userController.get("/", async (req, res) => {
   try {
-    const users = await UserModel.find();
+    const users = await UserModel.find({ username: req.query.q });
     res.status(200).send({ message: "User Data Found!", users });
   } catch (err) {
     res.status(500).send({ message: "Internal Server Error" });
