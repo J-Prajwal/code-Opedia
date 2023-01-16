@@ -13,6 +13,7 @@ export const registerUser =
     axios
       .post("http://localhost:8080/users/register", userDetails)
       .then((res) => {
+        console.log(res);
         dispatch({ type: types.REGISTER_USER_SUCCESS, payload: res.data });
         return true;
       })

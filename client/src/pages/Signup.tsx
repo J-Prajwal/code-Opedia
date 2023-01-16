@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Dispatch, useState } from "react";
 import {
   Progress,
   Box,
@@ -20,6 +20,8 @@ import {
 import { useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { SignupProps, UserDetails } from "../constants/constants";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../store/Auth/auth.actions";
 
 const Form1 = ({
   userDetails,
@@ -41,7 +43,6 @@ const Form1 = ({
           <Input
             id="full-name"
             name="fullname"
-            value={userDetails.fullname}
             placeholder="Full name"
             onChange={handleOnChange}
             required
@@ -56,7 +57,6 @@ const Form1 = ({
             id="username"
             name="username"
             outline={existingUsername ? "2px solid red" : ""}
-            value={userDetails.username}
             onChange={handleOnChange}
             placeholder="Username"
             required
@@ -76,6 +76,9 @@ const Form1 = ({
           id="email"
           type="email"
           placeholder="Enter Email Address"
+          name="email"
+          onChange={handleOnChange}
+          value={userDetails.email}
           required
         />
         <FormHelperText color={"whiteAlpha.500"}>
@@ -92,6 +95,8 @@ const Form1 = ({
             pr="4.5rem"
             type={show ? "text" : "password"}
             placeholder="Enter password"
+            name="password"
+            onChange={handleOnChange}
           />
           <InputRightElement width="5.5rem">
             <Button
@@ -110,7 +115,14 @@ const Form1 = ({
         <FormLabel htmlFor="skills" fontWeight={"normal"}>
           Skills
         </FormLabel>
-        <Input id="skills" type="text" placeholder="Add your skills" required />
+        <Input
+          id="skills"
+          type="text"
+          name="skills"
+          onChange={handleOnChange}
+          placeholder="Add your skills"
+          required
+        />
         <FormHelperText color={"whiteAlpha.500"}>
           Seperate each of your skill with a comma( , )
         </FormHelperText>
@@ -147,6 +159,7 @@ const Form2 = ({ userDetails, handleOnChange }: SignupProps) => {
           w="full"
           rounded="md"
           placeholder="Enter github profile url"
+          onChange={handleOnChange}
         />
       </FormControl>
 
@@ -164,6 +177,7 @@ const Form2 = ({ userDetails, handleOnChange }: SignupProps) => {
           type="text"
           name="linkedin"
           id="linkedin"
+          onChange={handleOnChange}
           autoComplete="linkedin"
           focusBorderColor="brand.400"
           shadow="sm"
@@ -187,6 +201,7 @@ const Form2 = ({ userDetails, handleOnChange }: SignupProps) => {
         <Input
           type="text"
           name="leetcode"
+          onChange={handleOnChange}
           id="leetcode"
           autoComplete="leetcode"
           focusBorderColor="brand.400"
@@ -214,6 +229,7 @@ const Form2 = ({ userDetails, handleOnChange }: SignupProps) => {
         <Input
           type="text"
           name="gfg"
+          onChange={handleOnChange}
           id="gfg"
           autoComplete="gfg"
           focusBorderColor="brand.400"
@@ -242,6 +258,7 @@ const Form2 = ({ userDetails, handleOnChange }: SignupProps) => {
           type="text"
           name="hackerrank"
           id="hackerrank"
+          onChange={handleOnChange}
           autoComplete="hackerrank"
           focusBorderColor="brand.400"
           shadow="sm"
@@ -268,6 +285,7 @@ const Form2 = ({ userDetails, handleOnChange }: SignupProps) => {
           type="text"
           name="codechef"
           id="codechef"
+          onChange={handleOnChange}
           autoComplete="codechef"
           focusBorderColor="brand.400"
           shadow="sm"
@@ -305,8 +323,8 @@ const Form3 = ({ userDetails, handleOnChange }: SignupProps) => {
     axios
       .post("http://localhost:8080/uploadImage", { image: base64 })
       .then((res) => {
-        console.log(res);
         setUrl(res.data);
+        userDetails.profile_picture = res.data;
         alert("image uploaded");
       })
       .then(() => setLoading(false))
@@ -314,8 +332,6 @@ const Form3 = ({ userDetails, handleOnChange }: SignupProps) => {
         console.log(err);
       });
   };
-
-  console.log(url);
 
   return (
     <>
@@ -332,6 +348,8 @@ const Form3 = ({ userDetails, handleOnChange }: SignupProps) => {
             rows={3}
             shadow="sm"
             focusBorderColor="brand.400"
+            name="about_me"
+            onChange={handleOnChange}
             fontSize={{
               sm: "sm",
             }}
@@ -383,9 +401,11 @@ export default function Signup() {
 
   const [existingUsername, setExistingUsername] = useState<boolean>(false);
 
+  const dispatch: Dispatch<any> = useDispatch();
+
   const handleOnChange = (e: any): void => {
     const name = e.target.name;
-    const value = e.target.value;
+    let value = e.target.value;
 
     if (name === "username") {
       axios
@@ -400,10 +420,25 @@ export default function Signup() {
         .catch((err) => console.log(err));
     }
 
-    setUserDetails((values) => ({ ...values, [name]: value }));
+    if (name === "skills") {
+      value = value.split(",");
+    }
 
-    console.log(userDetails);
+    setUserDetails((values) => ({ ...values, [name]: value }));
   };
+
+  const handleOnSubmit = () => {
+    dispatch(registerUser(userDetails));
+
+    toast({
+      title: "Account created.",
+      description: "We've created your account for you.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+  };
+
   return (
     <>
       <Box
@@ -475,15 +510,7 @@ export default function Signup() {
                 w="7rem"
                 colorScheme="red"
                 variant="solid"
-                onClick={() => {
-                  toast({
-                    title: "Account created.",
-                    description: "We've created your account for you.",
-                    status: "success",
-                    duration: 3000,
-                    isClosable: true,
-                  });
-                }}
+                onClick={handleOnSubmit}
               >
                 Submit
               </Button>

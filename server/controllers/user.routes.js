@@ -40,13 +40,15 @@ userController.post("/register", async (req, res) => {
     leetcode,
     gfg,
     hackerRank,
-    codechef,
+    codeChef,
     is_admin,
     no_of_problems,
     easy,
     medium,
     hard,
     no_of_contests,
+    verified,
+    profile_picture,
   } = req.body;
   bcrypt.hash(password, saltRounds, async function (err, hash) {
     if (err) {
@@ -63,7 +65,7 @@ userController.post("/register", async (req, res) => {
       fullname,
       username,
       email,
-      password: hash,
+      password,
       skills,
       github,
       linkedin,
@@ -71,13 +73,15 @@ userController.post("/register", async (req, res) => {
       leetcode,
       gfg,
       hackerRank,
-      codechef,
+      codeChef,
       is_admin,
       no_of_problems,
       easy,
       medium,
       hard,
       no_of_contests,
+      verified,
+      profile_picture,
     });
     user.save();
 
@@ -96,7 +100,7 @@ userController.post("/register", async (req, res) => {
           from: process.env.EMAIL_USERNAME,
           to: email,
           subject: "Verify Account",
-          html: `Welcome to Algo'Opedia <br>Please <a href='${url}'>Click here to verify your account.</a>`,
+          html: `Welcome to code'Opedia <br>Please <a href='${url}'>Click here to verify your account.</a>`,
         },
         (err, data) => {
           if (err) console.log(err);
