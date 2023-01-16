@@ -4,11 +4,20 @@ const userController = require("./controllers/user.routes");
 const authentication = require("./middlewares/authentication");
 const problemController = require("./controllers/problem.routes");
 const fileUploadController = require("./controllers/fileUploads.routes");
+const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
-
+app.use(bodyParser.json({ limit: "50mb", extended: true }));
+app.use(
+  bodyParser.urlencoded({
+    limit: "50mb",
+    extended: true,
+    parameterLimit: 50000,
+  })
+);
+app.use(bodyParser.text({ limit: "200mb" }));
 app.use(express.json());
 app.use(cors());
 
