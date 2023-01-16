@@ -158,7 +158,12 @@ userController.get("/verify/:token", async (req, res) => {
     user.verified = true;
     await user.save();
 
-    return res.status(200).send({ message: "Account Verified" });
+    return res
+      .status(200)
+      .send({
+        message: "Account Verified",
+        login: "http://localhost:3000/login",
+      });
   } catch (err) {
     res.status(500).send({ message: "error 2" });
   }
