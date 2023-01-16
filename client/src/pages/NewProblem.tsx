@@ -2,7 +2,7 @@ import React from 'react'
 
 const NewProblem = () => {
   return (
-    <div>NewProblem</div>
+    <div>PROBLOEM PROBLOEM</div>
   )
 }
 
