@@ -65,7 +65,7 @@ userController.post("/register", async (req, res) => {
       fullname,
       username,
       email,
-      password,
+      password: hash,
       skills,
       github,
       linkedin,
@@ -121,13 +121,16 @@ userController.post("/login", async (req, res) => {
 
   if (!user) res.status(404).send({ message: "No such user found!" });
   const hash = user.password;
-  bcrypt.compare(password, hash, async (err, result) => {
+  bcrypt.compare(password, hash, async function (err, result) {
+    console.log(err, result);
     if (result) {
       const token = jwt.sign(
         { email: user.email, userId: user._id },
         process.env.SECRET
       );
-      res.status(200).send({ message: "Login Successfull", token, user });
+      return res
+        .status(200)
+        .send({ message: "Login Successfull", token, user });
     } else {
       res
         .status(401)
@@ -158,12 +161,10 @@ userController.get("/verify/:token", async (req, res) => {
     user.verified = true;
     await user.save();
 
-    return res
-      .status(200)
-      .send({
-        message: "Account Verified",
-        login: "http://localhost:3000/login",
-      });
+    return res.status(200).send({
+      message: "Account Verified",
+      login: "http://localhost:3000/login",
+    });
   } catch (err) {
     res.status(500).send({ message: "error 2" });
   }
