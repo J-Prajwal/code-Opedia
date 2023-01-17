@@ -1,19 +1,41 @@
-import { AuthInitialState, ReducerProps } from "../../constants/constants";
+import * as types from "./auth.actionTypes";
+
+import {
+  AuthInitialState,
+  AuthReducer,
+  ReducerProps,
+} from "../../constants/constants";
+import { getItem } from "../../utils/localStorage";
 
 const initialState: AuthInitialState = {
   isLoading: false,
-  isAuth: false,
+  isAuth: getItem("token") ? true : false,
   isError: false,
-  token: null,
+  token: getItem("token"),
   userDetails: null,
   username: null,
 };
 
 export const reducer = (
   state: AuthInitialState = initialState,
-  { type, payload }: ReducerProps
+  { type, payload }: AuthReducer
 ) => {
   switch (type) {
+    case types.LOGIN_USER_LOADING: {
+      return { ...state, isLoading: true };
+    }
+    case types.LOGIN_USER_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+        isAuth: true,
+        userDetails: payload?.user,
+        username: payload?.user.username,
+      };
+    }
+    case types.LOGIN_USER_FAILURE: {
+      return {...state, isError: true, isLoading: false}
+    }
     default:
       return state;
   }

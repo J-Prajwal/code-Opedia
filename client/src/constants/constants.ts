@@ -19,12 +19,25 @@ export interface UserDetails {
   no_of_contests: number;
   verified: boolean;
   profile_picture: string;
+  __v?: number;
+  _id?: string;
 }
 
 export type ReducerProps = {
   type: string;
   payload?: string;
 };
+
+export type AuthReducer = {
+  type: string;
+  payload?: AuthPayload;
+};
+
+export interface AuthPayload {
+  token: string;
+  message: string;
+  user: UserDetails;
+}
 
 export type UserCredentials = {
   email: string;
@@ -83,4 +96,9 @@ export type SignupProps = {
   userDetails: UserDetails;
   existingUsername?: boolean;
   handleOnChange: (e: any) => void;
+};
+
+export type Store = {
+  auth?: AuthInitialState;
+  contest?: ContestsInitialState;
 };

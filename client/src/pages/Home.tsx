@@ -34,29 +34,13 @@ import AllProblems from "../components/AllProblems";
 import Medium from "../components/Medium";
 import Hard from "../components/Hard";
 import CustomProblems from "../components/CustomProblems";
-// import { AiOutlineSearch } from "react-icons/ai";
-// type user =  {
-//   id: String;
-//   email: string;
-//   fullname: string;
-//   username:string;
-//   skills:[];
-//   github:string;
-//   about_me:string;
-//   leetcode:string;
-//   gfg:string;
-//   hackerRank:string;
-//   is_admin:boolean;
-//   no_of_problems:number;
-//   easy:number;
-//   medium:number;
-//   hard:number;
-//   verified:boolean;
-//   no_of_contests:number;
-// };
+import { useSelector } from "react-redux";
+import { State } from "../constants/constants";
+
 const Home = () => {
   const [count, setCount] = useState<number>(0);
-  console.log(setCount);
+  const { userDetails } = useSelector((store: State) => store.auth);
+  console.log(userDetails);
   return (
     <div>
       <Navbar />
@@ -76,20 +60,20 @@ const Home = () => {
                 <Avatar
                   size="2xl"
                   name="arpit mishra"
-                  src="https://avatars.githubusercontent.com/u/106508210?v=4"
-                />{" "}
+                  src={userDetails?.profile_picture}
+                />
               </WrapItem>
             </Wrap>
           </Box>
           <Flex mt={5} gap="1%" justifyContent="center" alignItems={"center"}>
             <Text fontSize={22} fontWeight={"bolder"}>
-              Arpit Mishra
+              {userDetails?.fullname}
             </Text>
             <Text fontSize={20}>@code_opedia</Text>
           </Flex>
           <Box mb={"3%"}>
             <Text fontSize={18} mt={2}>
-              Talk Is Cheap Show Me The Code
+              {userDetails?.about_me}
             </Text>
             <Text
               m={"auto"}
@@ -155,69 +139,68 @@ const Home = () => {
             </Box>
           </Flex>
         </Box>
-        <Box mt={"5%"} w={"80%"} m={"auto"} mb={"5%"}>
-        </Box>
+        <Box mt={"5%"} w={"80%"} m={"auto"} mb={"5%"}></Box>
       </Box>
-            <Tabs defaultIndex={0} borderBottomColor="transparent">
-              <TabList>
-                <Tab
-                  py={4}
-                  m={0}
-                  _focus={{
-                    boxShadow: "none",
-                  }}
-                >
-                  All Problems
-                </Tab>
-                <Tab
-                  py={4}
-                  m={0}
-                  _focus={{
-                    boxShadow: "none",
-                  }}
-                >
-                  Easy
-                </Tab>
-                <Tab
-                  py={4}
-                  m={0}
-                  _focus={{
-                    boxShadow: "none",
-                  }}
-                >
-                  Medium
-                </Tab>
-                <Tab
-                  py={4}
-                  m={0}
-                  _focus={{
-                    boxShadow: "none",
-                  }}
-                >
-                  Hard
-                </Tab>
-                <Tab py={4} m={0}>
-                  Custom
-                </Tab>
-              </TabList>
-              <TabPanels>
-                <TabPanel>
-                  <AllProblems />
-                </TabPanel>
-                <TabPanel>
-                  <Easy />
-                </TabPanel>
-                <TabPanel>
-                  <Medium />
-                </TabPanel>
-                <TabPanel>
-                  <Hard />
-                </TabPanel>
-                <TabPanel>
-                  <CustomProblems />
-                </TabPanel>
-              </TabPanels>
-            </Tabs>
+      <Tabs defaultIndex={0} borderBottomColor="transparent">
+        <TabList>
+          <Tab
+            py={4}
+            m={0}
+            _focus={{
+              boxShadow: "none",
+            }}
+          >
+            All Problems
+          </Tab>
+          <Tab
+            py={4}
+            m={0}
+            _focus={{
+              boxShadow: "none",
+            }}
+          >
+            Easy
+          </Tab>
+          <Tab
+            py={4}
+            m={0}
+            _focus={{
+              boxShadow: "none",
+            }}
+          >
+            Medium
+          </Tab>
+          <Tab
+            py={4}
+            m={0}
+            _focus={{
+              boxShadow: "none",
+            }}
+          >
+            Hard
+          </Tab>
+          <Tab py={4} m={0}>
+            Custom
+          </Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <AllProblems />
+          </TabPanel>
+          <TabPanel>
+            <Easy />
+          </TabPanel>
+          <TabPanel>
+            <Medium />
+          </TabPanel>
+          <TabPanel>
+            <Hard />
+          </TabPanel>
+          <TabPanel>
+            <CustomProblems />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
       <Footer />
     </div>
   );

@@ -5,6 +5,8 @@ import {
   UserDetails,
 } from "../../constants/constants";
 import * as types from "./auth.actionTypes";
+import { Dispatch } from "redux";
+import { setItem } from "../../utils/localStorage";
 
 export const registerUser =
   (userDetails: UserDetails) =>
@@ -25,16 +27,18 @@ export const registerUser =
 
 export const loginUser =
   (userCreds: UserCredentials) =>
-  (dispatch: ({ type, payload }: ReducerProps) => void): boolean => {
+  (dispatch: ({ type, payload }: ReducerProps) => Dispatch) => {
     dispatch({ type: types.LOGIN_USER_LOADING });
-    axios
+    return axios
       .post("http://localhost:8080/users/login", userCreds)
       .then((res) => {
-        dispatch({ type: types.LOGIN_USER_SUCCESS, payload: res.data.token });
+        dispatch({ type: types.LOGIN_USER_SUCCESS, payload: res.data });
+        setItem("token", res.data.token);
         return true;
       })
       .catch((err) => {
+        console.log(err);
         dispatch({ type: types.LOGIN_USER_FAILURE });
+        return false;
       });
-    return false;
   };

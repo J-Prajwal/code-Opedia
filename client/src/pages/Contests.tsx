@@ -15,6 +15,7 @@ const Contests = () => {
   const { isLoading, isError, contests }: ContestsInitialState = useSelector(
     (state: State) => state.contest
   );
+
   useEffect(() => {
     dispatch(getAllContests());
   }, []);

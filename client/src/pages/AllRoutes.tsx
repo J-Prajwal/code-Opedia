@@ -6,6 +6,7 @@ import Signup from "./Signup";
 import Contests from "./Contests";
 import Navbar from "../components/Navbar";
 import NewProblem from "./NewProblem";
+import Login from "./Login";
 
 const AllRoutes = () => {
   return (
@@ -14,7 +15,7 @@ const AllRoutes = () => {
       <Route path="/user/:username" element={<Dashboard />} />
       <Route path="/user/problems/new" element={<NewProblem />} />
       <Route path="/signup" element={<Signup />} />
-      <Route path="/login" element={<Signup />} />
+      <Route path="/login" element={<Login />} />
       <Route
         path="/contests"
         element={
