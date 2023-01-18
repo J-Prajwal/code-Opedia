@@ -12,3 +12,7 @@ export const CHANGE_USER_PASSWORD_SUCCESS: string =
   "change/user/password/success";
 export const CHANGE_USER_PASSWORD_FAILURE: string =
   "change/user/password/failure";
+
+export const GET_USER_DETAILS_LOADING: string = "get/user/details/loading";
+export const GET_USER_DETAILS_SUCCESS: string = "get/user/details/success";
+export const GET_USER_DETAILS_FAILURE: string = "get/user/details/failure";

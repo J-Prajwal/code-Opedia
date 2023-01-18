@@ -28,19 +28,25 @@ import { DiCss3, DiMongodb } from "react-icons/di";
 import { SiJavascript } from "react-icons/si";
 import { VscGithub } from "react-icons/vsc";
 import { Divider } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect, Dispatch } from "react";
 import Easy from "../components/Easy";
 import AllProblems from "../components/AllProblems";
 import Medium from "../components/Medium";
 import Hard from "../components/Hard";
 import CustomProblems from "../components/CustomProblems";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { State } from "../constants/constants";
+import { getUserDetails } from "../store/Auth/auth.actions";
+import { getItem } from "../utils/localStorage";
 
 const Home = () => {
   const [count, setCount] = useState<number>(0);
-  const { userDetails } = useSelector((store: State) => store.auth);
-  console.log(userDetails);
+  const { userDetails, username } = useSelector((store: State) => store.auth);
+  const dispatch: Dispatch<any> = useDispatch();
+  useEffect(() => {
+    console.log(userDetails, username);
+    dispatch(getUserDetails(username));
+  }, []);
   return (
     <div>
       <Navbar />

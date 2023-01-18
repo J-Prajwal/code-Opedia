@@ -13,7 +13,7 @@ const initialState: AuthInitialState = {
   isError: false,
   token: getItem("token"),
   userDetails: null,
-  username: null,
+  username: getItem("username") || null,
 };
 
 export const reducer = (
@@ -29,12 +29,26 @@ export const reducer = (
         ...state,
         isLoading: false,
         isAuth: true,
-        userDetails: payload?.user,
-        username: payload?.user.username,
+        // userDetails: payload?.user,
+        // username: payload?.user.username,
       };
     }
     case types.LOGIN_USER_FAILURE: {
-      return {...state, isError: true, isLoading: false}
+      return { ...state, isError: true, isLoading: false };
+    }
+    case types.GET_USER_DETAILS_LOADING: {
+      return { ...state, isLoading: true };
+    }
+    case types.GET_USER_DETAILS_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+        // userDetails: payload?.user,
+        // username: payload?.user.username,
+      };
+    }
+    case types.GET_USER_DETAILS_FAILURE: {
+      return { ...state, isLoading: false, isError: true };
     }
     default:
       return state;

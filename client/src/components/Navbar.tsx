@@ -6,13 +6,6 @@ import {
   Flex,
   HStack,
   IconButton,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Spacer,
-  Tab,
-  TabList,
-  Tabs,
   VStack,
   VisuallyHidden,
   useColorModeValue,
@@ -20,10 +13,13 @@ import {
   chakra,
   Image,
 } from "@chakra-ui/react";
-import { AiFillBell, AiOutlineMenu, AiOutlineSearch } from "react-icons/ai";
+import { AiFillBell, AiOutlineMenu } from "react-icons/ai";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { State } from "../constants/constants";
 
 const Navbar = () => {
+  const { userDetails, isAuth } = useSelector((state: State) => state.auth);
   const bg = useColorModeValue("white", "gray.800");
   const mobileNav = useDisclosure();
   return (
@@ -147,12 +143,17 @@ const Navbar = () => {
               <AiFillBell />
               <VisuallyHidden>Notifications</VisuallyHidden>
             </chakra.a>
-
-            <Avatar
-              size="sm"
-              name="Dan Abrahmov"
-              src="https://bit.ly/dan-abramov"
-            />
+            {userDetails ? (
+              <Avatar
+                size="sm"
+                name="Dan Abrahmov"
+                src={userDetails?.profile_picture}
+              />
+            ) : (
+              <Button bgColor={"purple.700"}>
+                <Link to={"/signup"}>Register</Link>
+              </Button>
+            )}
           </HStack>
         </Flex>
       </chakra.header>

@@ -30,7 +30,12 @@ export type ReducerProps = {
 
 export type AuthReducer = {
   type: string;
-  payload?: AuthPayload;
+  payload?: AuthPayload | UserDetail;
+};
+
+type UserDetail = {
+  message: string;
+  users: UserDetails;
 };
 
 export interface AuthPayload {

@@ -18,10 +18,12 @@ declare global {
 const composeEnhancers: any =
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+const rootReducer = combineReducers({
+  auth: AuthReducer,
+  contest: ContestReducer,
+});
+
 export const store = legacy_createStore(
-  combineReducers({
-    auth: AuthReducer,
-    contest: ContestReducer,
-  }),
+  rootReducer,
   composeEnhancers(applyMiddleware(thunk))
 );
