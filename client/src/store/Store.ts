@@ -7,7 +7,6 @@ import {
 import { reducer as AuthReducer } from "./Auth/auth.reducer";
 import { reducer as ContestReducer } from "./Contests/contests.reducer";
 import thunk from "redux-thunk";
-import { Store } from "../constants/constants";
 
 declare global {
   interface Window {

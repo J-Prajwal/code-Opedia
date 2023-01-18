@@ -18,7 +18,7 @@ const initialState: AuthInitialState = {
 
 export const reducer = (
   state: AuthInitialState = initialState,
-  { type, payload }: AuthReducer
+  { type, payload }: any
 ) => {
   switch (type) {
     case types.LOGIN_USER_LOADING: {
@@ -29,8 +29,8 @@ export const reducer = (
         ...state,
         isLoading: false,
         isAuth: true,
-        // userDetails: payload?.user,
-        // username: payload?.user.username,
+        userDetails: payload?.user,
+        username: payload?.user.username,
       };
     }
     case types.LOGIN_USER_FAILURE: {
@@ -43,8 +43,8 @@ export const reducer = (
       return {
         ...state,
         isLoading: false,
-        // userDetails: payload?.user,
-        // username: payload?.user.username,
+        userDetails: payload?.users[0],
+        username: payload?.users[0].username,
       };
     }
     case types.GET_USER_DETAILS_FAILURE: {

@@ -37,7 +37,7 @@ export default function Login() {
   const handleOnSubmit = async () => {
     let authSuccess: any = await dispatch(loginUser(creds));
     if (authSuccess) {
-      navigate("/");
+      navigate("/my-problems");
       return toast({
         title: "Logged In",
         description: "This is a start of something really great.",

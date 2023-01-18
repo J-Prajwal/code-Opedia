@@ -14,12 +14,21 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { AiFillBell, AiOutlineMenu } from "react-icons/ai";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { State } from "../constants/constants";
+import {Dispatch, useEffect} from "react"
+import { getUserDetails } from "../store/Auth/auth.actions";
 
 const Navbar = () => {
-  const { userDetails, isAuth } = useSelector((state: State) => state.auth);
+  const { userDetails, username } = useSelector((store: State) => store.auth);
+  const dispatch: Dispatch<any> = useDispatch();
+  useEffect(() => {
+    if (!userDetails) {
+      console.log(userDetails, username);
+      dispatch(getUserDetails(username));
+    }
+  }, []);
   const bg = useColorModeValue("white", "gray.800");
   const mobileNav = useDisclosure();
   return (
@@ -113,6 +122,9 @@ const Navbar = () => {
                 md: "inline-flex",
               }}
             >
+              <Button variant="ghost" size="sm">
+                <Link to={`/my-problems`}> My Problems </Link>
+              </Button>
               <Button variant="ghost" size="sm">
                 <Link to={`/user/${"username"}`}> Dashboard </Link>
               </Button>

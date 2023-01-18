@@ -7,11 +7,13 @@ import Contests from "./Contests";
 import Navbar from "../components/Navbar";
 import NewProblem from "./NewProblem";
 import Login from "./Login";
+import MyProblems from "./MyProblems";
 
 const AllRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/my-problems" element={<MyProblems />} />
       <Route path="/user/:username" element={<Dashboard />} />
       <Route path="/user/problems/new" element={<NewProblem />} />
       <Route path="/signup" element={<Signup />} />

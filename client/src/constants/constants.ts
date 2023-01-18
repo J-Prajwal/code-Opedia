@@ -39,7 +39,7 @@ type UserDetail = {
 };
 
 export interface AuthPayload {
-  token: string;
+  token?: string;
   message: string;
   user: UserDetails;
 }
