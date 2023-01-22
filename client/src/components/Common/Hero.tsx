@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Flex,
   HStack,
@@ -7,8 +6,8 @@ import {
   Image,
   Text,
   VStack,
+  useColorMode,
 } from "@chakra-ui/react";
-import React from "react";
 import styles from "../../styles/Hero.module.css";
 import {
   SiLeetcode,
@@ -16,10 +15,6 @@ import {
   SiHackerearth,
   SiCodechef,
   SiCodingninjas,
-  SiSlack,
-  SiMetabase,
-  SiFacebook,
-  SiCloudbees,
   SiGithub,
 } from "react-icons/si";
 
@@ -46,7 +41,7 @@ const Hero = () => {
             platforms on code'opedia.
           </Heading>
           <HStack pt={5}>
-            <Button bgColor={"purple.700"}>Start Your Journey</Button>
+            <Button bgColor={"purple.700"} color={"white"}>Start Your Journey</Button>
           </HStack>
         </VStack>
         <Image

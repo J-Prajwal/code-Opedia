@@ -12,12 +12,13 @@ import {
   useDisclosure,
   chakra,
   Image,
+  useColorMode,
 } from "@chakra-ui/react";
 import { AiFillBell, AiOutlineMenu } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { State } from "../constants/constants";
-import {Dispatch, useEffect} from "react"
+import { Dispatch, useEffect } from "react";
 import { getUserDetails } from "../store/Auth/auth.actions";
 
 const Navbar = () => {
@@ -31,6 +32,7 @@ const Navbar = () => {
   }, []);
   const bg = useColorModeValue("white", "gray.800");
   const mobileNav = useDisclosure();
+  const { colorMode } = useColorMode();
   return (
     <Box shadow="md" mb={10}>
       <chakra.header
@@ -107,10 +109,18 @@ const Navbar = () => {
               display="flex"
               alignItems="center"
             >
-              <Image
-                src="https://res.cloudinary.com/des8eyvcg/image/upload/v1671615829/1-removebg-preview_btiiyz.png"
-                w={"10rem"}
-              />
+              {colorMode == "light" ? (
+                <Image
+                  src="https://res.cloudinary.com/des8eyvcg/image/upload/c_fill,h_126,w_500/v1674389945/Indic_Designs_Creative_Logo-removebg-preview_nb4mil.png"
+                  w={"10rem"}
+                />
+              ) : (
+                <Image
+                  src="https://res.cloudinary.com/des8eyvcg/image/upload/v1671615829/1-removebg-preview_btiiyz.png"
+                  w={"10rem"}
+                />
+              )}
+
               <VisuallyHidden>Code'Opedia</VisuallyHidden>
             </chakra.a>
           </HStack>
