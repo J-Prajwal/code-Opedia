@@ -14,9 +14,8 @@ function App() {
         } }`}</style>
       </Helmet>
       <Button
-        variant={"ghost"}
-        _hover={{ variant: "ghost" }}
-        _focus={{ variant: "ghost" }}
+        variant={"outline"}
+        borderRadius={"full"}
         position={"fixed"}
         bottom={"20"}
         onClick={toggleColorMode}
