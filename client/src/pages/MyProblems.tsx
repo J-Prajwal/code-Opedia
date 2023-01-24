@@ -52,15 +52,20 @@ const MyProblems = () => {
   return (
     <div>
       <Navbar />
-      <Tooltip label={"Add new problem"} placement="left">
+      <Tooltip hasArrow label={"Add new problem"} placement="top">
         <Button
-          right={5}
+          right={0}
           position={"fixed"}
           bgColor={"purple.700"}
-          _hover={{bgColor: "purple.500"}}
-          borderRadius={"3xl"}
+          _hover={{
+            bgColor: "purple.500",
+            pr: "30px",
+            transition: "ease-out 0.5s",
+            borderRadius: "30% 0 0 30%",
+          }}
+          borderRadius={"50% 0 0 50%"}
         >
-          <VscNewFile color="white" />
+          <VscNewFile color="white" size={20} />
         </Button>
       </Tooltip>
       <Box
