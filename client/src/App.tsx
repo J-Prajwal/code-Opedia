@@ -13,6 +13,7 @@ function App() {
         <style>{`body {background-color: ${
           colorMode == "light" ? "white" : "#1a202c"
         } }`}</style>
+        <meta name="description" content="" />
       </Helmet>
       {pathname !== "/admin/dashboard" && (
         <Button

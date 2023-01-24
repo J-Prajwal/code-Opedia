@@ -14,6 +14,8 @@ import {
   Spacer,
   TabPanels,
   TabPanel,
+  Button,
+  Tooltip,
 } from "@chakra-ui/react";
 import { FaReact, FaNodeJs } from "react-icons/fa";
 import {
@@ -26,7 +28,7 @@ import {
 } from "react-icons/si";
 import { DiCss3, DiMongodb } from "react-icons/di";
 import { SiJavascript } from "react-icons/si";
-import { VscGithub } from "react-icons/vsc";
+import { VscGithub, VscNewFile } from "react-icons/vsc";
 import { Divider } from "@chakra-ui/react";
 import { useState, useEffect, Dispatch } from "react";
 import Easy from "../components/Easy";
@@ -37,10 +39,8 @@ import CustomProblems from "../components/CustomProblems";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../constants/constants";
 import { getUserDetails } from "../store/Auth/auth.actions";
-import { getItem } from "../utils/localStorage";
 
 const MyProblems = () => {
-  const [count, setCount] = useState<number>(0);
   const { userDetails, username } = useSelector((store: State) => store.auth);
   const dispatch: Dispatch<any> = useDispatch();
   useEffect(() => {
@@ -52,6 +52,17 @@ const MyProblems = () => {
   return (
     <div>
       <Navbar />
+      <Tooltip label={"Add new problem"} placement="left">
+        <Button
+          right={5}
+          position={"fixed"}
+          bgColor={"purple.700"}
+          _hover={{bgColor: "purple.500"}}
+          borderRadius={"3xl"}
+        >
+          <VscNewFile color="white" />
+        </Button>
+      </Tooltip>
       <Box
         color={"white"}
         w={"80%"}
@@ -126,7 +137,7 @@ const MyProblems = () => {
                 Easy
               </Text>
               <Text fontWeight={"semibold"} fontSize={20}>
-                {count}
+                {userDetails?.easy}
               </Text>
             </Box>
             <Box w={"50%"} borderLeft="2px solid" borderRight="2px solid">
@@ -134,7 +145,7 @@ const MyProblems = () => {
                 Medium
               </Text>
               <Text fontWeight={"semibold"} fontSize={20}>
-                {count}
+                {userDetails?.medium}
               </Text>
             </Box>
             <Box w={"40%"}>
@@ -142,7 +153,7 @@ const MyProblems = () => {
                 Hard
               </Text>
               <Text fontWeight={"semibold"} fontSize={20}>
-                {count}
+                {userDetails?.hard}
               </Text>
             </Box>
           </Flex>

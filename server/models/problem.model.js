@@ -1,19 +1,19 @@
 const mongoose = require("mongoose");
 
 const problemSchema = mongoose.Schema({
-  userId: { type: String, require: true },
-  problem_url: { type: String, require: true },
-  platform_name: { type: String, require: true },
-  problem_name: { type: String, require: true },
-  description: { type: String, rquire: true },
+  userId: { type: String, required: true },
+  problem_url: { type: String, required: true },
+  platform_name: { type: String, required: true },
+  problem_name: { type: String, required: true },
+  description: { type: String, required: true },
   textual_approach: { type: String },
   pictorial_approach: { type: String },
   textual_reference: { type: String },
   video_reference: { type: String },
-  solution_code: { type: String, require: true },
-  language_used: { type: String, require: true },
-  difficulty: { type: String, require: true },
-  date_time: { type: Date, default: Date.now() },
+  solution_code: { type: String, required: true },
+  language_used: { type: String, required: true },
+  difficulty: { type: String, required: true },
+  updatedAt: { type: Date, default: Date.now() },
 });
 
 const ProblemModel = mongoose.model("problem", problemSchema);
