@@ -23,18 +23,25 @@ import { BsFillMenuAppFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../../constants/constants";
 import { Dispatch } from "redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getUserDetails } from "../../store/Auth/auth.actions";
+import Home from "../../components/Admin/Home";
+import Articles from "../../components/Admin/Articles";
 
 const Dashboad = () => {
   const { userDetails, username } = useSelector((store: State) => store.auth);
   const dispatch: Dispatch<any> = useDispatch();
+  const [comp, setComp] = useState(<Home />);
+  const handleOnChange = (e: any) => {
+    const name = e.target.name;
+    const value = e.target.values;
+    setComp((values) => ({ ...values, [name]: value }));
+  };
   useEffect(() => {
     if (!userDetails) {
       dispatch(getUserDetails(username));
     }
   }, []);
-  console.log(userDetails);
   const sidebar = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const NavItem = (props: any) => {
@@ -76,7 +83,6 @@ const Dashboad = () => {
       {...props}
     >
       <Flex px="4" py="5" align="center">
-        {/* <Logo /> */}
         <Text fontSize="2xl" ml="2" fontWeight="semibold">
           {colorMode == "light" ? (
             <Image
@@ -97,10 +103,18 @@ const Dashboad = () => {
         fontSize="sm"
         aria-label="Main Navigation"
       >
-        <NavItem icon={MdHome}>Home</NavItem>
-        <NavItem icon={FaUser}>Users</NavItem>
-        <NavItem icon={FaRss}>Articles</NavItem>
-        <NavItem icon={FaCode}>Flow</NavItem>
+        <NavItem onClick={() => setComp(<Home />)} icon={MdHome}>
+          Home
+        </NavItem>
+        <NavItem onClick={() => setComp(<Home />)} value={"Users"} icon={FaUser}>
+          Users
+        </NavItem>
+        <NavItem onClick={() => setComp(<Articles />)} icon={FaRss}>
+          Articles
+        </NavItem>
+        <NavItem onClick={() => setComp(<Home />)} value={"Flow"} icon={FaCode}>
+          Flow
+        </NavItem>
       </Flex>
     </Box>
   );
@@ -193,7 +207,7 @@ const Dashboad = () => {
         </Flex>
 
         <Box as="main" p="4">
-          {/* Add content here, remove div below  */}
+          {comp}
         </Box>
       </Box>
     </Box>

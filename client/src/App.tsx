@@ -18,10 +18,12 @@ function App() {
       {pathname !== "/admin/dashboard" && (
         <Button
           variant={"outline"}
-          borderRadius={"full"}
+          borderRadius={"0 30% 30% 0"}
           position={"fixed"}
           bottom={"20"}
           onClick={toggleColorMode}
+          transition={"ease-in-out 1s"}
+          _hover={{pl: 7, borderRadius: "0 40% 40% 0"}}
         >
           {colorMode === "light" ? <BsMoon size={20} /> : <BsSun size={20} />}
         </Button>
