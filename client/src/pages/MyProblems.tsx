@@ -98,7 +98,7 @@ const MyProblems = () => {
       >
         <ModalOverlay />
         <ModalContent m="auto" bg={"#1a202c"}>
-          <ModalHeader textAlign={"center"} fontSize={25} color="gray.400">Add New Problem</ModalHeader>
+          <ModalHeader textAlign={"center"} fontSize={25} color="gray.400" textDecoration={"underline"}>Add New Problem</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <Flex w={"100%"} m="auto">
@@ -149,7 +149,7 @@ const MyProblems = () => {
             </FormControl>
 
             <FormControl mt={2}>
-              <FormLabel color="gray.400" fontSize={20}>Textual approach</FormLabel>
+              <FormLabel color="gray.400" fontSize={20}>Textual Approach</FormLabel>
               <Textarea
                 placeholder="write a textual_reference for problem"
                 w={"80%"}
@@ -157,7 +157,7 @@ const MyProblems = () => {
             </FormControl>
 
             <FormControl mt={2}>
-              <FormLabel color="gray.400" fontSize={20}>language used</FormLabel>
+              <FormLabel color="gray.400" fontSize={20}>Language Used</FormLabel>
               <Select color="gray.400" placeholder="please select" w={"80%"}>
                 <option value="">Javascript</option>
                 <option value="">Java</option>
@@ -173,7 +173,7 @@ const MyProblems = () => {
               </Box>
               <Box w={"50%"}>
               <FormControl>
-              <FormLabel color="gray.400" fontSize={20}>pictorial reference</FormLabel>
+              <FormLabel color="gray.400" fontSize={20}>Pictorial Reference</FormLabel>
               <Flex
               w={"80%"}
                 mt={1}
@@ -255,7 +255,7 @@ const MyProblems = () => {
             </FormControl>
 
             <FormControl mt={2}>
-              <FormLabel color="gray.400" fontSize={20}>textual reference</FormLabel>
+              <FormLabel color="gray.400" fontSize={20}>Textual Reference</FormLabel>
               <InputGroup size="sm">
                   <InputLeftAddon
                     bg="gray.50"
@@ -277,7 +277,7 @@ const MyProblems = () => {
             </FormControl>
 
             <FormControl mt={2}>
-              <FormLabel color="gray.400" fontSize={20}>video reference</FormLabel>
+              <FormLabel color="gray.400" fontSize={20}>Video Reference</FormLabel>
               <InputGroup size="sm">
                   <InputLeftAddon
                     bg="gray.50"
@@ -299,7 +299,7 @@ const MyProblems = () => {
             </FormControl>
 
             <FormControl mt={2}>
-              <FormLabel color="gray.400" fontSize={20}>solution code</FormLabel>
+              <FormLabel color="gray.400" fontSize={20}>Solution Code</FormLabel>
               <Textarea
                 placeholder="write a textual_reference for problem"
                 w={"80%"}
@@ -307,7 +307,7 @@ const MyProblems = () => {
             </FormControl>
 
             <FormControl mt={2}>
-              <FormLabel color="gray.400" fontSize={20}>difficulty level</FormLabel>
+              <FormLabel color="gray.400" fontSize={20}>Difficulty Level</FormLabel>
               <Select color="gray.400" placeholder="please select" w={"80%"}>
                 <option value="easy">Easy</option>
                 <option value="medium">Medium</option>
