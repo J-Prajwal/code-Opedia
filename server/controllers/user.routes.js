@@ -83,9 +83,9 @@ userController.post("/register", async (req, res) => {
       verified,
       profile_picture,
     });
-    user.save();
-
+    
     try {
+      user.save();
       const usertemp = await UserModel.findOne({ email });
       const verificationToken = jwt.sign(
         { ID: usertemp._id },

@@ -1,3 +1,5 @@
+import { ProblemInitialState } from "./Store/Problems/problems.types";
+
 export interface UserDetails {
   fullname: string;
   username: string;
@@ -95,6 +97,7 @@ export interface ContestDetails {
 export type State = {
   auth: AuthInitialState;
   contest: ContestsInitialState;
+  problems: ProblemInitialState;
 };
 
 export type SignupProps = {

@@ -34,6 +34,7 @@ import {
   VisuallyHidden,
   InputGroup,
   InputLeftAddon,
+  useToast,
 } from "@chakra-ui/react";
 import { FaReact, FaNodeJs } from "react-icons/fa";
 import {
@@ -48,7 +49,7 @@ import { DiCss3, DiMongodb } from "react-icons/di";
 import { SiJavascript } from "react-icons/si";
 import { VscGithub, VscNewFile } from "react-icons/vsc";
 import { Divider } from "@chakra-ui/react";
-import { useEffect, Dispatch, useRef, useState } from "react";
+import React, { useEffect, Dispatch, useRef, useState } from "react";
 import Easy from "../components/Easy";
 import AllProblems from "../components/AllProblems";
 import Medium from "../components/Medium";
@@ -57,26 +58,17 @@ import CustomProblems from "../components/CustomProblems";
 import { useDispatch, useSelector } from "react-redux";
 import { State } from "../constants/constants";
 import { getUserDetails } from "../store/Auth/auth.actions";
+import { Problem } from "../constants/Store/Problems/problems.types";
+import { postMyProblem } from "../store/Problems/problems.actions";
 
 const MyProblems = () => {
-  interface ProblemData {
-    userId:string | undefined,
-    problem_url:string | undefined,
-    platform_name:string | undefined,
-    problem_name:string | undefined,
-    description:string | undefined,
-    textual_approach:string | undefined,
-    pictorial_approach:string | undefined,
-    textual_reference:string | undefined,
-    video_reference:string | undefined,
-    solution_code:string | undefined,
-    language_used:string | undefined,
-    difficulty:string | undefined,
-  }
   const { userDetails, username } = useSelector((store: State) => store.auth);
+  const { isLoading, isError, isPostSuccess, problems } = useSelector(
+    (store: State) => store.problems
+  );
   const dispatch: Dispatch<any> = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [problemData, setProblemData] = useState<ProblemData>({
+  const [problemData, setProblemData] = useState<Problem>({
     userId: "",
     problem_url: "",
     platform_name: "",
@@ -90,23 +82,42 @@ const MyProblems = () => {
     language_used: "",
     difficulty: "",
   });
+  const toast = useToast();
 
   const initialRef = useRef(null);
   const finalRef = useRef(null);
   const addNewProblem = (): void => {
     onOpen();
   };
-
-  const handleOnChange = (e: any): void => {
+  if (isPostSuccess) {
+    toast({
+      title: "Problem Added",
+      status: "success",
+      position: "top",
+      variant: "subtle",
+      containerStyle: {
+        backgroundColor: "purple.700",
+        borderRadius: "md",
+      },
+      duration: 3000,
+      isClosable: true,
+    });
+  }
+  const handleOnChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ): void => {
     const name = e.target.name;
     const value = e.target.value;
     setProblemData((values) => ({ ...values, [name]: value }));
-    console.log(problemData);
   };
 
   const handleOnSubmit = () => {
     problemData.userId = userDetails?._id;
-  }
+    dispatch(postMyProblem(problemData));
+  };
 
   useEffect(() => {
     if (!userDetails) {
@@ -332,7 +343,13 @@ const MyProblems = () => {
                     >
                       http://
                     </InputLeftAddon>
-                    <Input type="tel" name="textual_reference" onChange={handleOnChange} placeholder="www.example.com" w={"68%"} />
+                    <Input
+                      type="tel"
+                      name="textual_reference"
+                      onChange={handleOnChange}
+                      placeholder="www.example.com"
+                      w={"68%"}
+                    />
                   </InputGroup>
                 </FormControl>
 
@@ -349,14 +366,21 @@ const MyProblems = () => {
                     >
                       http://
                     </InputLeftAddon>
-                    <Input type="tel" name="video_reference" onChange={handleOnChange} placeholder="www.example.com" w={"68%"} />
+                    <Input
+                      type="tel"
+                      name="video_reference"
+                      onChange={handleOnChange}
+                      placeholder="www.example.com"
+                      w={"68%"}
+                    />
                   </InputGroup>
                 </FormControl>
 
                 <FormControl mt={2}>
                   <FormLabel fontSize={20}>Solution Code</FormLabel>
                   <Textarea
-                    name="solution_code" onChange={handleOnChange}
+                    name="solution_code"
+                    onChange={handleOnChange}
                     placeholder="Enter your code"
                     w={"80%"}
                   />
@@ -364,7 +388,12 @@ const MyProblems = () => {
 
                 <FormControl mt={2}>
                   <FormLabel fontSize={20}>Difficulty Level</FormLabel>
-                  <Select name="difficulty" onChange={handleOnChange} placeholder="please select" w={"80%"}>
+                  <Select
+                    name="difficulty"
+                    onChange={handleOnChange}
+                    placeholder="please select"
+                    w={"80%"}
+                  >
                     <option value="easy">Easy</option>
                     <option value="medium">Medium</option>
                     <option value="hard">Hard</option>
@@ -375,7 +404,15 @@ const MyProblems = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button onClick={handleOnSubmit} colorScheme="blue" mr={3}>
+            <Button
+              onClick={handleOnSubmit}
+              color={"white"}
+              bgColor={"purple.700"}
+              isLoading={isLoading}
+              mx={3}
+              _hover={{ bgColor: "purple.500" }}
+              loadingText="Adding"
+            >
               Add It
             </Button>
             <Button onClick={onClose}>Cancel</Button>
