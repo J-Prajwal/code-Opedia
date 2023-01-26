@@ -33,7 +33,7 @@ import {
   Stack,
   VisuallyHidden,
   InputGroup,
-  InputLeftAddon
+  InputLeftAddon,
 } from "@chakra-ui/react";
 import { FaReact, FaNodeJs } from "react-icons/fa";
 import {
@@ -48,7 +48,7 @@ import { DiCss3, DiMongodb } from "react-icons/di";
 import { SiJavascript } from "react-icons/si";
 import { VscGithub, VscNewFile } from "react-icons/vsc";
 import { Divider } from "@chakra-ui/react";
-import {  useEffect, Dispatch, useRef } from "react";
+import { useEffect, Dispatch, useRef, useState } from "react";
 import Easy from "../components/Easy";
 import AllProblems from "../components/AllProblems";
 import Medium from "../components/Medium";
@@ -59,18 +59,57 @@ import { State } from "../constants/constants";
 import { getUserDetails } from "../store/Auth/auth.actions";
 
 const MyProblems = () => {
+  interface ProblemData {
+    userId:string | undefined,
+    problem_url:string | undefined,
+    platform_name:string | undefined,
+    problem_name:string | undefined,
+    description:string | undefined,
+    textual_approach:string | undefined,
+    pictorial_approach:string | undefined,
+    textual_reference:string | undefined,
+    video_reference:string | undefined,
+    solution_code:string | undefined,
+    language_used:string | undefined,
+    difficulty:string | undefined,
+  }
   const { userDetails, username } = useSelector((store: State) => store.auth);
   const dispatch: Dispatch<any> = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [problemData, setProblemData] = useState<ProblemData>({
+    userId: "",
+    problem_url: "",
+    platform_name: "",
+    problem_name: "",
+    description: "",
+    textual_approach: "",
+    pictorial_approach: "",
+    textual_reference: "",
+    video_reference: "",
+    solution_code: "",
+    language_used: "",
+    difficulty: "",
+  });
 
   const initialRef = useRef(null);
   const finalRef = useRef(null);
-  const addNewProblem = () => {
+  const addNewProblem = (): void => {
     onOpen();
   };
+
+  const handleOnChange = (e: any): void => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setProblemData((values) => ({ ...values, [name]: value }));
+    console.log(problemData);
+  };
+
+  const handleOnSubmit = () => {
+    problemData.userId = userDetails?._id;
+  }
+
   useEffect(() => {
     if (!userDetails) {
-      console.log(userDetails, username);
       dispatch(getUserDetails(username));
     }
   }, []);
@@ -97,231 +136,246 @@ const MyProblems = () => {
         size={"6xl"}
       >
         <ModalOverlay />
-        <ModalContent m="auto" bg={"#1a202c"}>
-          <ModalHeader textAlign={"center"} fontSize={25} color="gray.400" textDecoration={"underline"}>Add New Problem</ModalHeader>
+        <ModalContent m="auto">
+          <ModalHeader
+            textAlign={"center"}
+            fontSize={25}
+            textDecoration={"underline"}
+          >
+            Add New Problem
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <Flex w={"100%"} m="auto">
-              <Box w={"50%"} >
-              <FormControl>
-              <FormLabel color="gray.400" fontSize={20}>Problem Url</FormLabel>
-              <InputGroup size="sm">
-                  <InputLeftAddon
-                    bg="gray.50"
-                    _dark={{
-                      bg: "gray.800",
-                    }}
-                    color="gray.500"
-                    rounded="md"
+              <Box w={"50%"}>
+                <FormControl>
+                  <FormLabel fontSize={20}>Problem Url</FormLabel>
+                  <InputGroup size="sm">
+                    <InputLeftAddon
+                      bg="gray.50"
+                      _dark={{
+                        bg: "gray.800",
+                      }}
+                      color="gray.500"
+                      rounded="md"
+                    >
+                      http://
+                    </InputLeftAddon>
+                    <Input
+                      type="tel"
+                      name="problem_url"
+                      onChange={(e) => handleOnChange(e)}
+                      placeholder="www.example.com"
+                      w={"68%"}
+                    />
+                  </InputGroup>
+                </FormControl>
+                <FormControl mt={2}>
+                  <FormLabel fontSize={20}>Platform Name</FormLabel>
+                  <Select
+                    name="platform_name"
+                    onChange={handleOnChange}
+                    placeholder="please select"
+                    w={"80%"}
                   >
-                    http://
-                  </InputLeftAddon>
+                    <option value="leetcode">leetcode</option>
+                    <option value="gfg">gfg</option>
+                    <option value="hackerRank">hackerRank</option>
+                    <option value="codeChef">codeChef</option>
+                    <option value="hackerearth">hackerearth</option>
+                  </Select>
+                </FormControl>
+
+                <FormControl mt={2}>
+                  <FormLabel fontSize={20}>Problem Name</FormLabel>
                   <Input
-                    type="tel"
-                    color="gray.400"
-                    placeholder="www.example.com"
-                    w={"68%"}
+                    name="problem_name"
+                    onChange={handleOnChange}
+                    placeholder="Problem name"
+                    w={"80%"}
                   />
-                </InputGroup>
-            </FormControl>
-            <FormControl mt={2}>
-              <FormLabel color="gray.400" fontSize={20}>Platform Name</FormLabel>
-              <Select color="gray.400" placeholder="please select" w={"80%"}>
-                <option value="leetcode">leetcode</option>
-                <option value="gfg">gfg</option>
-                <option value="hackerRank">hackerRank</option>
-                <option value="codeChef">codeChef</option>
-                <option value="hackerearth">hackerearth</option>
-              </Select>
-            </FormControl>
+                </FormControl>
 
-            <FormControl mt={2}>
-              <FormLabel color="gray.400" fontSize={20}>Problem Name</FormLabel>
-              <Input placeholder="Problem name" w={"80%"} />
-            </FormControl>
+                <FormControl mt={2}>
+                  <FormLabel fontSize={20}>Description</FormLabel>
+                  <Textarea
+                    name="description"
+                    onChange={handleOnChange}
+                    placeholder="write a description for problem"
+                    w={"80%"}
+                  />
+                </FormControl>
 
-            <FormControl mt={2}>
-              <FormLabel color="gray.400" fontSize={20}>Description</FormLabel>
-              <Textarea
-                placeholder="write a description for problem"
-                w={"80%"}
-              />
-            </FormControl>
+                <FormControl mt={2}>
+                  <FormLabel fontSize={20}>Textual Approach</FormLabel>
+                  <Textarea
+                    name="textual_approach"
+                    onChange={handleOnChange}
+                    placeholder="write a textual_reference for problem"
+                    w={"80%"}
+                  />
+                </FormControl>
 
-            <FormControl mt={2}>
-              <FormLabel color="gray.400" fontSize={20}>Textual Approach</FormLabel>
-              <Textarea
-                placeholder="write a textual_reference for problem"
-                w={"80%"}
-              />
-            </FormControl>
-
-            <FormControl mt={2}>
-              <FormLabel color="gray.400" fontSize={20}>Language Used</FormLabel>
-              <Select color="gray.400" placeholder="please select" w={"80%"}>
-                <option value="">Javascript</option>
-                <option value="">Java</option>
-                <option value="">C & C++</option>
-                <option value="">TypeScript</option>
-                <option value="">PHP</option>
-                <option value="">Python</option>
-                <option value="">Perl</option>
-                <option value="">Rust</option>
-                <option value="">Ruby</option>
-              </Select>
-            </FormControl>
+                <FormControl mt={2}>
+                  <FormLabel fontSize={20}>Language Used</FormLabel>
+                  <Select
+                    name="language_used"
+                    onChange={handleOnChange}
+                    placeholder="please select"
+                    w={"80%"}
+                  >
+                    <option value="Javascript">Javascript</option>
+                    <option value="Java">Java</option>
+                    <option value="C">C</option>
+                    <option value="C++">C++</option>
+                    <option value="TypeScript">TypeScript</option>
+                    <option value="PHP">PHP</option>
+                    <option value="Python">Python</option>
+                    <option value="Perl">Perl</option>
+                    <option value="Rust">Rust</option>
+                    <option value="Ruby">Ruby</option>
+                  </Select>
+                </FormControl>
               </Box>
               <Box w={"50%"}>
-              <FormControl>
-              <FormLabel color="gray.400" fontSize={20}>Pictorial Reference</FormLabel>
-              <Flex
-              w={"80%"}
-                mt={1}
-                justify="center"
-                borderWidth={2}
-                _dark={{
-                  color: "gray.500",
-                }}
-                borderStyle="dashed"
-                rounded="md"
-              >
-                <Stack spacing={1} textAlign="center">
-                  <Icon
-                    mx="auto"
-                    boxSize={12}
-                    color="black"
-                    _dark={{
-                      color: "white",
-                    }}
-                    stroke="currentColor"
-                    fill="none"
-                    viewBox="0 0 48 48"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </Icon>
+                <FormControl>
+                  <FormLabel fontSize={20}>Pictorial Reference</FormLabel>
                   <Flex
-                    fontSize="sm"
-                    color="gray.600"
+                    w={"80%"}
+                    mt={1}
+                    justify="center"
+                    borderWidth={2}
                     _dark={{
-                      color: "gray.400",
+                      color: "gray.500",
                     }}
-                    alignItems="baseline"
+                    borderStyle="dashed"
+                    rounded="md"
                   >
-                    <chakra.label
-                      htmlFor="file-upload"
-                      cursor="pointer"
-                      rounded="md"
-                      fontSize="md"
-                      color="brand.600"
-                      _dark={{
-                        color: "brand.200",
-                      }}
-                      pos="relative"
-                      _hover={{
-                        color: "brand.400",
-                        _dark: {
-                          color: "brand.300",
-                        },
-                      }}
-                    >
-                      <span>Upload a file</span>
-                      <VisuallyHidden>
-                        <input
-                          id="file-upload"
-                          name="file-upload"
-                          type="file"
+                    <Stack spacing={1} textAlign="center">
+                      <Icon
+                        mx="auto"
+                        boxSize={12}
+                        color="black"
+                        _dark={{
+                          color: "white",
+                        }}
+                        stroke="currentColor"
+                        fill="none"
+                        viewBox="0 0 48 48"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         />
-                      </VisuallyHidden>
-                    </chakra.label>
-                    <Text pl={1}>or drag and drop</Text>
+                      </Icon>
+                      <Flex
+                        fontSize="sm"
+                        color="gray.600"
+                        _dark={{
+                          color: "gray.400",
+                        }}
+                        alignItems="baseline"
+                      >
+                        <chakra.label
+                          htmlFor="file-upload"
+                          cursor="pointer"
+                          rounded="md"
+                          fontSize="md"
+                          color="brand.600"
+                          _dark={{
+                            color: "brand.200",
+                          }}
+                          pos="relative"
+                          _hover={{
+                            color: "brand.400",
+                            _dark: {
+                              color: "brand.300",
+                            },
+                          }}
+                        >
+                          <span>Upload a file</span>
+                          <VisuallyHidden>
+                            <input
+                              id="file-upload"
+                              name="file-upload"
+                              type="file"
+                            />
+                          </VisuallyHidden>
+                        </chakra.label>
+                        <Text pl={1}>or drag and drop</Text>
+                      </Flex>
+                      <Text
+                        fontSize="xs"
+                        _dark={{
+                          color: "gray.400",
+                        }}
+                      >
+                        PNG, JPG, GIF up to 10MB
+                      </Text>
+                    </Stack>
                   </Flex>
-                  <Text
-                    fontSize="xs"
-                    color="gray.400"
-                    _dark={{
-                      color:"gray.400",
-                    }}
-                  >
-                    PNG, JPG, GIF up to 10MB
-                  </Text>
-                </Stack>
-              </Flex>
-            </FormControl>
+                </FormControl>
 
-            <FormControl mt={2}>
-              <FormLabel color="gray.400" fontSize={20}>Textual Reference</FormLabel>
-              <InputGroup size="sm">
-                  <InputLeftAddon
-                    bg="gray.50"
-                    _dark={{
-                      bg: "gray.800",
-                    }}
-                    color="gray.500"
-                    rounded="md"
-                  >
-                    http://
-                  </InputLeftAddon>
-                  <Input
-                    type="tel"
-                    color="gray.400"
-                    placeholder="www.example.com"
-                    w={"68%"}
+                <FormControl mt={2}>
+                  <FormLabel fontSize={20}>Textual Reference</FormLabel>
+                  <InputGroup size="sm">
+                    <InputLeftAddon
+                      bg="gray.50"
+                      _dark={{
+                        bg: "gray.800",
+                      }}
+                      color="gray.500"
+                      rounded="md"
+                    >
+                      http://
+                    </InputLeftAddon>
+                    <Input type="tel" name="textual_reference" onChange={handleOnChange} placeholder="www.example.com" w={"68%"} />
+                  </InputGroup>
+                </FormControl>
+
+                <FormControl mt={2}>
+                  <FormLabel fontSize={20}>Video Reference</FormLabel>
+                  <InputGroup size="sm">
+                    <InputLeftAddon
+                      bg="gray.50"
+                      _dark={{
+                        bg: "gray.800",
+                      }}
+                      color="gray.500"
+                      rounded="md"
+                    >
+                      http://
+                    </InputLeftAddon>
+                    <Input type="tel" name="video_reference" onChange={handleOnChange} placeholder="www.example.com" w={"68%"} />
+                  </InputGroup>
+                </FormControl>
+
+                <FormControl mt={2}>
+                  <FormLabel fontSize={20}>Solution Code</FormLabel>
+                  <Textarea
+                    name="solution_code" onChange={handleOnChange}
+                    placeholder="Enter your code"
+                    w={"80%"}
                   />
-                </InputGroup>
-            </FormControl>
+                </FormControl>
 
-            <FormControl mt={2}>
-              <FormLabel color="gray.400" fontSize={20}>Video Reference</FormLabel>
-              <InputGroup size="sm">
-                  <InputLeftAddon
-                    bg="gray.50"
-                    _dark={{
-                      bg: "gray.800",
-                    }}
-                    color="gray.500"
-                    rounded="md"
-                  >
-                    http://
-                  </InputLeftAddon>
-                  <Input
-                    type="tel"
-                    color="gray.400"
-                    placeholder="www.example.com"
-                    w={"68%"}
-                  />
-                </InputGroup>
-            </FormControl>
-
-            <FormControl mt={2}>
-              <FormLabel color="gray.400" fontSize={20}>Solution Code</FormLabel>
-              <Textarea
-                placeholder="write a textual_reference for problem"
-                w={"80%"}
-              />
-            </FormControl>
-
-            <FormControl mt={2}>
-              <FormLabel color="gray.400" fontSize={20}>Difficulty Level</FormLabel>
-              <Select color="gray.400" placeholder="please select" w={"80%"}>
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-              </Select>
-            </FormControl>
+                <FormControl mt={2}>
+                  <FormLabel fontSize={20}>Difficulty Level</FormLabel>
+                  <Select name="difficulty" onChange={handleOnChange} placeholder="please select" w={"80%"}>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                  </Select>
+                </FormControl>
               </Box>
             </Flex>
-            
-            
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3}>
+            <Button onClick={handleOnSubmit} colorScheme="blue" mr={3}>
               Add It
             </Button>
             <Button onClick={onClose}>Cancel</Button>
