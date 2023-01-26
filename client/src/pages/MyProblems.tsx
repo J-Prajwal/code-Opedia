@@ -89,20 +89,6 @@ const MyProblems = () => {
   const addNewProblem = (): void => {
     onOpen();
   };
-  if (isPostSuccess) {
-    toast({
-      title: "Problem Added",
-      status: "success",
-      position: "top",
-      variant: "subtle",
-      containerStyle: {
-        backgroundColor: "purple.700",
-        borderRadius: "md",
-      },
-      duration: 3000,
-      isClosable: true,
-    });
-  }
   const handleOnChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -120,6 +106,21 @@ const MyProblems = () => {
   };
 
   useEffect(() => {
+    if (isPostSuccess) {
+      toast({
+        title: "Problem Added",
+        status: "success",
+        position: "top",
+        variant: "subtle",
+        containerStyle: {
+          backgroundColor: "purple.700",
+          borderRadius: "md",
+        },
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+
     if (!userDetails) {
       dispatch(getUserDetails(username));
     }
@@ -132,8 +133,9 @@ const MyProblems = () => {
           right={0}
           position={"fixed"}
           bgColor={"purple.700"}
-          _hover={{ bgColor: "purple.500" }}
-          borderRadius={"3xl"}
+          _hover={{ bgColor: "purple.500", pr: "5" }}
+          borderRadius={"40% 0 0 40%"}
+          transition={"ease-in-out 1s"}
           onClick={addNewProblem}
         >
           <VscNewFile color="white" size={20} />
@@ -420,7 +422,6 @@ const MyProblems = () => {
         </ModalContent>
       </Modal>
       <Box
-        color={"white"}
         w={"80%"}
         m={"auto"}
         mt={"10%"}
@@ -434,7 +435,7 @@ const MyProblems = () => {
               <WrapItem>
                 <Avatar
                   size="2xl"
-                  name="arpit mishra"
+                  name={userDetails?.fullname}
                   src={userDetails?.profile_picture}
                 />
               </WrapItem>

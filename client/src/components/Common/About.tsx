@@ -20,7 +20,7 @@ const About = () => {
         pl={["2", "", ""]}
         textAlign={["left", "center", "center"]}
         textTransform={"uppercase"}
-        color={"purple.200"}
+        color={"purple.300"}
         fontWeight={"light"}
       >
         about code'opedia
@@ -77,6 +77,7 @@ const About = () => {
           _hover={{ bgColor: "purple.500" }}
           px={10}
           bgColor={"purple.700"}
+          color={"white"}
         >
           SignUp
         </Button>
@@ -103,6 +104,7 @@ const About = () => {
             _hover={{ bgColor: "purple.500" }}
             px={10}
             bgColor={"purple.700"}
+            color={"white"}
           >
             Get Started
           </Button>

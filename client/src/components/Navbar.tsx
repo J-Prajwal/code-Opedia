@@ -26,7 +26,6 @@ const Navbar = () => {
   const dispatch: Dispatch<any> = useDispatch();
   useEffect(() => {
     if (!userDetails) {
-      console.log(userDetails, username);
       dispatch(getUserDetails(username));
     }
   }, []);

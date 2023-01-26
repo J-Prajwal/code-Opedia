@@ -23,11 +23,26 @@ export const reducer = (
     case types.GET_MY_PROBLEMS_FAILURE:
       return { ...state, isLoading: false, isError: true };
     case types.POST_MY_PROBLEMS_LOADING:
-      return { ...state, isLoading: true, isError: false };
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+        isPostSuccess: false,
+      };
     case types.POST_MY_PROBLEMS_SUCCESS:
-      return { ...state, isLoading: false, isError: false, isPostSuccess: true };
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        isPostSuccess: true,
+      };
     case types.POST_MY_PROBLEMS_FAILURE:
-      return { ...state, isLoading: false, isError: true };
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        isPostSuccess: false,
+      };
     default:
       return state;
   }

@@ -6,6 +6,7 @@ import {
   Link,
   Stack,
   Text,
+  useColorMode,
   useColorModeValue,
   VisuallyHidden,
 } from "@chakra-ui/react";
@@ -54,11 +55,9 @@ const SocialButton = ({
 };
 
 export default function Footer() {
+  const {colorMode} = useColorMode();
   return (
-    <Box
-      bg={"#1a202c"}
-      color={"white"}
-    >
+    <Box>
       <Container
         as={Stack}
         maxW={"6xl"}
@@ -67,7 +66,17 @@ export default function Footer() {
         justify={"center"}
         align={"center"}
       >
-        <Logo />
+        {colorMode == "light" ? (
+                <Image
+                  src="https://res.cloudinary.com/des8eyvcg/image/upload/c_fill,h_126,w_500/v1674389945/Indic_Designs_Creative_Logo-removebg-preview_nb4mil.png"
+                  w={"20rem"}
+                />
+              ) : (
+                <Image
+                  src="https://res.cloudinary.com/des8eyvcg/image/upload/v1671615829/1-removebg-preview_btiiyz.png"
+                  w={"20rem"}
+                />
+              )}
         <Stack direction={"row"} spacing={6}>
           <Link href={"#"}>Home</Link>
           <Link href={"#"}>About</Link>
