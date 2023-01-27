@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const UserModel = require("../models/user.model");
 
 require("dotenv").config;
-const authentication = (req, res, next) => {
+const isAdminAuthentication = (req, res, next) => {
   if (!req.headers.authorization) {
     return res.status(401).send({ message: "Please login!" });
   }
@@ -26,4 +26,4 @@ const authentication = (req, res, next) => {
   });
 };
 
-module.exports = authentication;
+module.exports = isAdminAuthentication;

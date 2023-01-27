@@ -1,5 +1,6 @@
 const express = require("express");
 const TutorialModel = require("../models/tutorials.model");
+const isAdminAuthentication = require("../middlewares/isAdminAuthentication");
 const tutorialController = express.Router();
 
 // getting all the tutes
@@ -13,7 +14,7 @@ tutorialController.get("/", async (req, res) => {
 });
 
 // posting new tute
-tutorialController.post("/new", async (req, res) => {
+tutorialController.post("/new", isAdminAuthentication, async (req, res) => {
   const {
     title,
     description,
@@ -37,3 +38,5 @@ tutorialController.post("/new", async (req, res) => {
     res.status(500).send({ message: "Internal server error" });
   }
 });
+
+module.exports = tutorialController;

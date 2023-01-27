@@ -6,6 +6,7 @@ const problemController = require("./controllers/problem.routes");
 const fileUploadController = require("./controllers/fileUploads.routes");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const tutorialController = require("./controllers/tutorials.routes");
 require("dotenv").config();
 
 const app = express();
@@ -28,7 +29,7 @@ app.use("/", fileUploadController);
 app.use("/users", userController);
 app.use(authentication);
 app.use("/problems", problemController);
-
+app.use("/tutorials", tutorialController);
 app.listen(process.env.PORT, async () => {
   try {
     await connectDatabase;
