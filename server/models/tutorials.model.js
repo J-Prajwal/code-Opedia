@@ -5,7 +5,6 @@ const tutorialSchema = mongoose.Schema({
   description: { type: String, required: true },
   youtube_video_embed: { type: String, required: true },
   article_link: { type: String, required: true },
-  topic: { type: String, required: true },
   category: {
     type: String,
     enum: ["DSA", "Development", "Networking"],
@@ -25,7 +24,6 @@ const tutorialSchema = mongoose.Schema({
       "Express",
       "MongoDb",
     ],
-    required: true,
   },
 });
 
