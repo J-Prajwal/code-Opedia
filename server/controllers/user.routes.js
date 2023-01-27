@@ -83,7 +83,7 @@ userController.post("/register", async (req, res) => {
       verified,
       profile_picture,
     });
-    
+
     try {
       user.save();
       const usertemp = await UserModel.findOne({ email });
@@ -122,7 +122,6 @@ userController.post("/login", async (req, res) => {
   if (!user) res.status(404).send({ message: "No such user found!" });
   const hash = user.password;
   bcrypt.compare(password, hash, async function (err, result) {
-    console.log(err, result);
     if (result) {
       const token = jwt.sign(
         { email: user.email, userId: user._id },
@@ -161,10 +160,7 @@ userController.get("/verify/:token", async (req, res) => {
     user.verified = true;
     await user.save();
 
-    return res.status(200).send({
-      message: "Account Verified",
-      login: "http://localhost:3000/login",
-    });
+    return res.status(200).redirect("http://localhost:3000/login")
   } catch (err) {
     res.status(500).send({ message: "error 2" });
   }

@@ -24,9 +24,9 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("Homepage!");
 });
-app.use("/users", userController);
-// app.use(authentication);
 app.use("/", fileUploadController);
+app.use("/users", userController);
+app.use(authentication);
 app.use("/problems", problemController);
 
 app.listen(process.env.PORT, async () => {
