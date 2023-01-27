@@ -12,8 +12,8 @@ const isAdminAuthentication = (req, res, next) => {
       return res.status(401).send("Please login again");
     }
 
-    const userDetails = await UserModel.find({ email: decoded.email });
-    if (userDetails.isAdmin) {
+    const userDetails = await UserModel.findOne({ email: decoded.email });
+    if (userDetails.is_admin) {
       req.body.email = decoded.email;
       req.body.password = decoded.password;
 
