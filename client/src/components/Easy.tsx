@@ -1,5 +1,6 @@
 import { Box, Button, Image, SimpleGrid, Text, useToast } from '@chakra-ui/react'
 import React from 'react'
+import hacker from "../assets/svg/hacker.svg"
 import styles from "../styles/Home.module.css";
 const Easy = () => {
   const toast = useToast();
@@ -9,7 +10,7 @@ const Easy = () => {
     <SimpleGrid className={styles.grid_cont} m="auto" gap={5}>
     <Box className={styles.flex_boxes} p={1}>
               <Box w={"30%"} m="auto" className={styles.card_boxes}>
-                <Image src="https://cdn3.iconfinder.com/data/icons/logos-and-brands-adobe/512/160_Hackerrank-512.png" />
+                <Image src={hacker} />
               </Box>
               <Box w={"70%"} textAlign={"left"} pl={"5%"}>
                 <Text fontWeight={"bold"} fontSize={20}>
@@ -41,7 +42,7 @@ const Easy = () => {
             </Box>
             <Box className={styles.flex_boxes} p={1}>
               <Box w={"30%"} m="auto" className={styles.card_boxes}>
-                <Image src="https://cdn3.iconfinder.com/data/icons/logos-and-brands-adobe/512/160_Hackerrank-512.png" />
+                <Image src={hacker} />
               </Box>
               <Box w={"70%"} textAlign={"left"} pl={"5%"}>
                 <Text fontWeight={"bold"} fontSize={20}>

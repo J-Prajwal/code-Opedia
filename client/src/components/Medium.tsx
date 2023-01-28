@@ -1,6 +1,8 @@
 import { Box, Button, Image, SimpleGrid, Text, useToast } from '@chakra-ui/react'
 import React from 'react'
 import styles from "../styles/Home.module.css";
+import hacker from "../assets/svg/hacker.svg"
+import leet from "../assets/svg/leet.svg"
 const Medium = () => {
   const toast = useToast();
   return (
@@ -9,7 +11,7 @@ const Medium = () => {
     <SimpleGrid className={styles.grid_cont} m="auto" gap={5}>
     <Box className={styles.flex_boxes} p={1}>
               <Box w={"30%"} m="auto" className={styles.card_boxes}>
-                <Image src="https://leetcode.com/static/images/LeetCode_logo_rvs.png" />
+                <Image src={leet} />
               </Box>
               <Box w={"70%"} textAlign={"left"} pl={"5%"}>
                 <Text fontWeight={"bold"} fontSize={20}>
@@ -41,7 +43,7 @@ const Medium = () => {
             </Box>
             <Box className={styles.flex_boxes} p={1}>
               <Box w={"30%"} m="auto" className={styles.card_boxes}>
-                <Image src="https://cdn3.iconfinder.com/data/icons/logos-and-brands-adobe/512/160_Hackerrank-512.png" />
+                <Image src={hacker} />
               </Box>
               <Box w={"70%"} textAlign={"left"} pl={"5%"}>
                 <Text fontWeight={"bold"} fontSize={20}>
