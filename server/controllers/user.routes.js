@@ -146,7 +146,6 @@ userController.get("/verify/:token", async (req, res) => {
   let payload = null;
   try {
     payload = jwt.verify(token, process.env.USER_VERIFICATION_TOKEN_SECRET);
-    console.log(payload, "io");
   } catch (err) {
     res.status(500).send({ message: "error 1" });
   }
