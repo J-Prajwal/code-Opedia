@@ -10,6 +10,7 @@ const tutorialSchema = mongoose.Schema({
     enum: ["DSA", "Development", "Networking"],
     required: true,
   },
+  isPlaylist: { type: Boolean, required: true },
   sub_category: {
     type: String,
     enum: [
