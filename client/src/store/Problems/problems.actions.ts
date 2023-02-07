@@ -18,3 +18,16 @@ export const postMyProblem =
         dispatch({ type: types.GET_MY_PROBLEMS_FAILURE });
       });
   };
+
+export const getMyProblem =
+  () => (dispatch: ({ type, payload }: ProblemReducer) => void) => {
+    dispatch({ type: types.GET_MY_PROBLEMS_LOADING });
+    axios
+      .get("http://localhost:8080/problems")
+      .then((res) => {
+        dispatch({ type: types.GET_MY_PROBLEMS_SUCCESS, payload: res.data });
+      })
+      .catch((err) => {
+        dispatch({ type: types.GET_MY_PROBLEMS_FAILURE });
+      });
+  };
