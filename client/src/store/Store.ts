@@ -3,11 +3,11 @@ import {
   combineReducers,
   compose,
   legacy_createStore,
-} from "redux";
-import { reducer as AuthReducer } from "./Auth/auth.reducer";
-import { reducer as ContestReducer } from "./Contests/contests.reducer";
-import { reducer as ProblemReducer } from "./Problems/problem.reducer";
-import thunk from "redux-thunk";
+} from 'redux';
+import { reducer as AuthReducer } from './Auth/auth.reducer';
+import { reducer as ContestReducer } from './Contests/contests.reducer';
+import { reducer as ProblemReducer } from './Problems/problem.reducer';
+import thunk from 'redux-thunk';
 
 declare global {
   interface Window {
@@ -21,7 +21,7 @@ const composeEnhancers: any =
 const rootReducer = combineReducers({
   auth: AuthReducer,
   contest: ContestReducer,
-  problems: ProblemReducer
+  problems: ProblemReducer,
 });
 
 export const store = legacy_createStore(

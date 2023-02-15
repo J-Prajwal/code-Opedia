@@ -1,5 +1,5 @@
-import { ContestsInitialState, ReducerProps } from "../../constants/constants";
-import * as types from "./contests.actionTypes";
+import { ContestsInitialState, ReducerProps } from '../../constants/constants';
+import * as types from './contests.actionTypes';
 
 const initialState: ContestsInitialState = {
   isLoading: false,

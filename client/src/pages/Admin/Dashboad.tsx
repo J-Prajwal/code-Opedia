@@ -15,18 +15,18 @@ import {
   Text,
   useColorMode,
   useDisclosure,
-} from "@chakra-ui/react";
-import { MdHome } from "react-icons/md";
-import { FaBell, FaCode, FaMoon, FaRss, FaSun, FaUser } from "react-icons/fa";
-import { AiOutlineFileSearch } from "react-icons/ai";
-import { BsFillMenuAppFill } from "react-icons/bs";
-import { useDispatch, useSelector } from "react-redux";
-import { State } from "../../constants/constants";
-import { Dispatch } from "redux";
-import { useEffect, useState } from "react";
-import { getUserDetails } from "../../store/Auth/auth.actions";
-import Home from "../../components/Admin/Home";
-import Articles from "../../components/Admin/Articles";
+} from '@chakra-ui/react';
+import { MdHome } from 'react-icons/md';
+import { FaBell, FaCode, FaMoon, FaRss, FaSun, FaUser } from 'react-icons/fa';
+import { AiOutlineFileSearch } from 'react-icons/ai';
+import { BsFillMenuAppFill } from 'react-icons/bs';
+import { useDispatch, useSelector } from 'react-redux';
+import { State } from '../../constants/constants';
+import { Dispatch } from 'redux';
+import { useEffect, useState } from 'react';
+import { getUserDetails } from '../../store/Auth/auth.actions';
+import Home from '../../components/Admin/Home';
+import Articles from '../../components/Admin/Articles';
 
 const Dashboad = () => {
   const { userDetails, username } = useSelector((store: State) => store.auth);
@@ -84,15 +84,15 @@ const Dashboad = () => {
     >
       <Flex px="4" py="5" align="center">
         <Text fontSize="2xl" ml="2" fontWeight="semibold">
-          {colorMode == "light" ? (
+          {colorMode == 'light' ? (
             <Image
               src="https://res.cloudinary.com/des8eyvcg/image/upload/c_fill,h_126,w_500/v1674389945/Indic_Designs_Creative_Logo-removebg-preview_nb4mil.png"
-              w={"10rem"}
+              w={'10rem'}
             />
           ) : (
             <Image
               src="https://res.cloudinary.com/des8eyvcg/image/upload/v1671615829/1-removebg-preview_btiiyz.png"
-              w={"10rem"}
+              w={'10rem'}
             />
           )}
         </Text>
@@ -106,13 +106,17 @@ const Dashboad = () => {
         <NavItem onClick={() => setComp(<Home />)} icon={MdHome}>
           Home
         </NavItem>
-        <NavItem onClick={() => setComp(<Home />)} value={"Users"} icon={FaUser}>
+        <NavItem
+          onClick={() => setComp(<Home />)}
+          value={'Users'}
+          icon={FaUser}
+        >
           Users
         </NavItem>
         <NavItem onClick={() => setComp(<Articles />)} icon={FaRss}>
           Articles
         </NavItem>
-        <NavItem onClick={() => setComp(<Home />)} value={"Flow"} icon={FaCode}>
+        <NavItem onClick={() => setComp(<Home />)} value={'Flow'} icon={FaCode}>
           Flow
         </NavItem>
       </Flex>
@@ -124,14 +128,14 @@ const Dashboad = () => {
       as="section"
       bg="gray.50"
       _dark={{
-        bg: "gray.700",
+        bg: 'gray.700',
       }}
       minH="100vh"
     >
       <SidebarContent
         display={{
-          base: "none",
-          md: "unset",
+          base: 'none',
+          md: 'unset',
         }}
       />
       <Drawer
@@ -159,7 +163,7 @@ const Dashboad = () => {
           px="4"
           bg="white"
           _dark={{
-            bg: "gray.800",
+            bg: 'gray.800',
           }}
           borderBottomWidth="1px"
           borderColor="blackAlpha.300"
@@ -168,8 +172,8 @@ const Dashboad = () => {
           <IconButton
             aria-label="Menu"
             display={{
-              base: "inline-flex",
-              md: "none",
+              base: 'inline-flex',
+              md: 'none',
             }}
             onClick={sidebar.onOpen}
             icon={<BsFillMenuAppFill />}
@@ -178,8 +182,8 @@ const Dashboad = () => {
           <InputGroup
             w="96"
             display={{
-              base: "none",
-              md: "flex",
+              base: 'none',
+              md: 'flex',
             }}
           >
             <InputLeftElement color="gray.500">
@@ -190,11 +194,11 @@ const Dashboad = () => {
 
           <Flex gap={5} align="center">
             <Button
-              variant={"ghost"}
-              _hover={{ variant: "ghost" }}
+              variant={'ghost'}
+              _hover={{ variant: 'ghost' }}
               onClick={toggleColorMode}
             >
-              {colorMode == "light" ? <FaMoon /> : <FaSun />}
+              {colorMode == 'light' ? <FaMoon /> : <FaSun />}
             </Button>
             <Icon color="gray.500" as={FaBell} cursor="pointer" />
             <Avatar

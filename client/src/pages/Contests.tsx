@@ -1,14 +1,14 @@
-import { Dispatch, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllContests } from "../store/Contests/contests.actions";
+import { Dispatch, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllContests } from '../store/Contests/contests.actions';
 import {
   ContestDetails,
   ContestsInitialState,
   State,
-} from "../constants/constants";
-import Loader from "../components/Loader";
-import { SimpleGrid } from "@chakra-ui/react";
-import ContestCard from "../components/ContestCard";
+} from '../constants/constants';
+import Loader from '../components/Loader';
+import { SimpleGrid } from '@chakra-ui/react';
+import ContestCard from '../components/ContestCard';
 
 const Contests = () => {
   const dispatch: Dispatch<any> = useDispatch();
@@ -19,7 +19,7 @@ const Contests = () => {
   useEffect(() => {
     dispatch(getAllContests());
   }, []);
-  
+
   if (isLoading) return <Loader />;
 
   return (

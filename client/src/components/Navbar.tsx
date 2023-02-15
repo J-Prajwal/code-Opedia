@@ -13,13 +13,13 @@ import {
   chakra,
   Image,
   useColorMode,
-} from "@chakra-ui/react";
-import { AiFillBell, AiOutlineMenu } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { State } from "../constants/constants";
-import { Dispatch, useEffect } from "react";
-import { getUserDetails } from "../store/Auth/auth.actions";
+} from '@chakra-ui/react';
+import { AiFillBell, AiOutlineMenu } from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { State } from '../constants/constants';
+import { Dispatch, useEffect } from 'react';
+import { getUserDetails } from '../store/Auth/auth.actions';
 
 const Navbar = () => {
   const { userDetails, username } = useSelector((store: State) => store.auth);
@@ -29,7 +29,7 @@ const Navbar = () => {
       dispatch(getUserDetails(username));
     }
   }, []);
-  const bg = useColorModeValue("white", "gray.800");
+  const bg = useColorModeValue('white', 'gray.800');
   const mobileNav = useDisclosure();
   const { colorMode } = useColorMode();
   return (
@@ -49,20 +49,20 @@ const Navbar = () => {
           <HStack spacing={4} display="flex" alignItems="center">
             <Box
               display={{
-                base: "inline-flex",
-                md: "none",
+                base: 'inline-flex',
+                md: 'none',
               }}
             >
               <IconButton
                 display={{
-                  base: "flex",
-                  md: "none",
+                  base: 'flex',
+                  md: 'none',
                 }}
                 aria-label="Open menu"
                 fontSize="20px"
                 color="gray.800"
                 _dark={{
-                  color: "inherit",
+                  color: 'inherit',
                 }}
                 variant="ghost"
                 onClick={mobileNav.onOpen}
@@ -73,7 +73,7 @@ const Navbar = () => {
                 top={0}
                 left={0}
                 right={0}
-                display={mobileNav.isOpen ? "flex" : "none"}
+                display={mobileNav.isOpen ? 'flex' : 'none'}
                 flexDirection="column"
                 p={2}
                 pb={4}
@@ -108,15 +108,15 @@ const Navbar = () => {
               display="flex"
               alignItems="center"
             >
-              {colorMode == "light" ? (
+              {colorMode == 'light' ? (
                 <Image
                   src="https://res.cloudinary.com/des8eyvcg/image/upload/c_fill,h_126,w_500/v1674389945/Indic_Designs_Creative_Logo-removebg-preview_nb4mil.png"
-                  w={"10rem"}
+                  w={'10rem'}
                 />
               ) : (
                 <Image
                   src="https://res.cloudinary.com/des8eyvcg/image/upload/v1671615829/1-removebg-preview_btiiyz.png"
-                  w={"10rem"}
+                  w={'10rem'}
                 />
               )}
 
@@ -127,37 +127,37 @@ const Navbar = () => {
             <HStack
               spacing={3}
               display={{
-                base: "none",
-                md: "inline-flex",
+                base: 'none',
+                md: 'inline-flex',
               }}
             >
               <Button variant="ghost" size="sm">
                 <Link to={`/my-problems`}> My Problems </Link>
               </Button>
               <Button variant="ghost" size="sm">
-                <Link to={`/user/${"username"}`}> Dashboard </Link>
+                <Link to={`/user/${'username'}`}> Dashboard </Link>
               </Button>
               <Button variant="ghost" size="sm">
-                <Link to={"/practise"}>Practice</Link>
+                <Link to={'/practise'}>Practice</Link>
               </Button>
               <Button variant="solid" size="sm">
-                <Link to={"/contests"}>Contests</Link>
+                <Link to={'/contests'}>Contests</Link>
               </Button>
               <Button variant="ghost" size="sm">
-                <Link to={"/tutorials"}>Tutorials</Link>
+                <Link to={'/tutorials'}>Tutorials</Link>
               </Button>
             </HStack>
             <chakra.a
               p={3}
               color="gray.800"
               _dark={{
-                color: "inherit",
+                color: 'inherit',
               }}
               rounded="sm"
               _hover={{
-                color: "gray.800",
+                color: 'gray.800',
                 _dark: {
-                  color: "gray.600",
+                  color: 'gray.600',
                 },
               }}
             >
@@ -171,8 +171,8 @@ const Navbar = () => {
                 src={userDetails?.profile_picture}
               />
             ) : (
-              <Button bgColor={"purple.700"}>
-                <Link to={"/signup"}>Register</Link>
+              <Button bgColor={'purple.700'}>
+                <Link to={'/signup'}>Register</Link>
               </Button>
             )}
           </HStack>

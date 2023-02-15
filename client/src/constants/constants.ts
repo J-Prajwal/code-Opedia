@@ -1,4 +1,4 @@
-import { ProblemInitialState } from "./Store/Problems/problems.types";
+import { ProblemInitialState } from './Store/Problems/problems.types';
 
 export interface UserDetails {
   fullname: string;

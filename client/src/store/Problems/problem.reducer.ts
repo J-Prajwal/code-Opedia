@@ -1,8 +1,8 @@
 import {
   ProblemInitialState,
   ProblemReducer,
-} from "../../constants/Store/Problems/problems.types";
-import * as types from "./problems.actionTypes";
+} from '../../constants/Store/Problems/problems.types';
+import * as types from './problems.actionTypes';
 
 const initialState: ProblemInitialState = {
   isLoading: false,

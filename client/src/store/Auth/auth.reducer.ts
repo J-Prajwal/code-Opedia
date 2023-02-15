@@ -1,19 +1,19 @@
-import * as types from "./auth.actionTypes";
+import * as types from './auth.actionTypes';
 
 import {
   AuthInitialState,
   AuthReducer,
   ReducerProps,
-} from "../../constants/constants";
-import { getItem } from "../../utils/localStorage";
+} from '../../constants/constants';
+import { getItem } from '../../utils/localStorage';
 
 const initialState: AuthInitialState = {
   isLoading: false,
-  isAuth: getItem("token") ? true : false,
+  isAuth: getItem('token') ? true : false,
   isError: false,
-  token: getItem("token"),
+  token: getItem('token'),
   userDetails: null,
-  username: getItem("username") || null,
+  username: getItem('username') || null,
 };
 
 export const reducer = (

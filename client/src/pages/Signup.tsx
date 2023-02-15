@@ -1,4 +1,4 @@
-import React, { Dispatch, useState } from "react";
+import React, { Dispatch, useState } from 'react';
 import {
   Progress,
   Box,
@@ -21,14 +21,14 @@ import {
   VisuallyHidden,
   Text,
   Avatar,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
-import { useToast } from "@chakra-ui/react";
-import axios from "axios";
-import { SignupProps, UserDetails } from "../constants/constants";
-import { useDispatch } from "react-redux";
-import { registerUser } from "../store/Auth/auth.actions";
-import { Link } from "react-router-dom";
+import { useToast } from '@chakra-ui/react';
+import axios from 'axios';
+import { SignupProps, UserDetails } from '../constants/constants';
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../store/Auth/auth.actions';
+import { Link } from 'react-router-dom';
 
 const Form1 = ({
   userDetails,
@@ -39,12 +39,12 @@ const Form1 = ({
   const handleClick = () => setShow(!show);
   return (
     <>
-      <Heading w="100%" textAlign={"center"} fontWeight="normal" mb="2%">
+      <Heading w="100%" textAlign={'center'} fontWeight="normal" mb="2%">
         User Registration
       </Heading>
       <Flex>
         <FormControl isRequired mr="5%">
-          <FormLabel htmlFor="full-name" fontWeight={"normal"}>
+          <FormLabel htmlFor="full-name" fontWeight={'normal'}>
             Full name
           </FormLabel>
           <Input
@@ -57,26 +57,26 @@ const Form1 = ({
         </FormControl>
 
         <FormControl isRequired>
-          <FormLabel htmlFor="username" fontWeight={"normal"}>
+          <FormLabel htmlFor="username" fontWeight={'normal'}>
             Username
           </FormLabel>
           <Input
             id="username"
             name="username"
-            outline={existingUsername ? "2px solid red" : ""}
+            outline={existingUsername ? '2px solid red' : ''}
             onChange={handleOnChange}
             placeholder="Username"
             required
           />
           {existingUsername && (
-            <FormHelperText color={"red"}>
+            <FormHelperText color={'red'}>
               Username already taken
             </FormHelperText>
           )}
         </FormControl>
       </Flex>
       <FormControl isRequired mt="2%">
-        <FormLabel htmlFor="email" fontWeight={"normal"}>
+        <FormLabel htmlFor="email" fontWeight={'normal'}>
           Email address
         </FormLabel>
         <Input
@@ -88,19 +88,19 @@ const Form1 = ({
           value={userDetails.email}
           required
         />
-        <FormHelperText color={"whiteAlpha.500"}>
+        <FormHelperText color={'whiteAlpha.500'}>
           We'll never share your email.
         </FormHelperText>
       </FormControl>
 
       <FormControl isRequired>
-        <FormLabel htmlFor="password" fontWeight={"normal"} mt="2%">
+        <FormLabel htmlFor="password" fontWeight={'normal'} mt="2%">
           Password
         </FormLabel>
         <InputGroup size="md">
           <Input
             pr="4.5rem"
-            type={show ? "text" : "password"}
+            type={show ? 'text' : 'password'}
             placeholder="Enter password"
             name="password"
             onChange={handleOnChange}
@@ -108,18 +108,18 @@ const Form1 = ({
           <InputRightElement width="5.5rem">
             <Button
               h="1.75rem"
-              size={"md"}
-              bg={"transparent"}
-              color={"black"}
+              size={'md'}
+              bg={'transparent'}
+              color={'black'}
               onClick={handleClick}
             >
-              {show ? "Hide" : "Show"}
+              {show ? 'Hide' : 'Show'}
             </Button>
           </InputRightElement>
         </InputGroup>
       </FormControl>
       <FormControl isRequired mt="2%">
-        <FormLabel htmlFor="skills" fontWeight={"normal"}>
+        <FormLabel htmlFor="skills" fontWeight={'normal'}>
           Skills
         </FormLabel>
         <Input
@@ -130,7 +130,7 @@ const Form1 = ({
           placeholder="Add your skills"
           required
         />
-        <FormHelperText color={"whiteAlpha.500"}>
+        <FormHelperText color={'whiteAlpha.500'}>
           Seperate each of your skill with a comma( , )
         </FormHelperText>
       </FormControl>
@@ -141,7 +141,7 @@ const Form1 = ({
 const Form2 = ({ userDetails, handleOnChange }: SignupProps) => {
   return (
     <>
-      <Heading w="100%" textAlign={"center"} fontWeight="normal" mb="2%">
+      <Heading w="100%" textAlign={'center'} fontWeight="normal" mb="2%">
         Geek Handles
       </Heading>
       <FormControl isRequired as={GridItem} colSpan={6}>
@@ -227,7 +227,7 @@ const Form2 = ({ userDetails, handleOnChange }: SignupProps) => {
           fontWeight="md"
           color="white"
           _dark={{
-            color: "gray.50",
+            color: 'gray.50',
           }}
           mt="2%"
         >
@@ -255,7 +255,7 @@ const Form2 = ({ userDetails, handleOnChange }: SignupProps) => {
           fontWeight="md"
           color="white"
           _dark={{
-            color: "gray.50",
+            color: 'gray.50',
           }}
           mt="2%"
         >
@@ -282,7 +282,7 @@ const Form2 = ({ userDetails, handleOnChange }: SignupProps) => {
           fontWeight="md"
           color="white"
           _dark={{
-            color: "gray.50",
+            color: 'gray.50',
           }}
           mt="2%"
         >
@@ -308,7 +308,7 @@ const Form2 = ({ userDetails, handleOnChange }: SignupProps) => {
 
 const Form3 = ({ userDetails, handleOnChange }: SignupProps) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [url, setUrl] = useState<string>("");
+  const [url, setUrl] = useState<string>('');
 
   const convertBase64 = (file: any): any => {
     return new Promise((resolve, reject) => {
@@ -328,11 +328,11 @@ const Form3 = ({ userDetails, handleOnChange }: SignupProps) => {
     const base64 = await convertBase64(file);
     setLoading(true);
     axios
-      .post("http://localhost:8080/uploadImage", { image: base64 })
+      .post('http://localhost:8080/uploadImage', { image: base64 })
       .then((res) => {
         setUrl(res.data);
         userDetails.profile_picture = res.data;
-        alert("image uploaded");
+        alert('image uploaded');
       })
       .then(() => setLoading(false))
       .catch((err) => {
@@ -342,7 +342,7 @@ const Form3 = ({ userDetails, handleOnChange }: SignupProps) => {
 
   return (
     <>
-      <Heading w="100%" textAlign={"center"} fontWeight="normal">
+      <Heading w="100%" textAlign={'center'} fontWeight="normal">
         Geeky Description
       </Heading>
       <SimpleGrid columns={1} spacing={6}>
@@ -358,7 +358,7 @@ const Form3 = ({ userDetails, handleOnChange }: SignupProps) => {
             name="about_me"
             onChange={handleOnChange}
             fontSize={{
-              sm: "sm",
+              sm: 'sm',
             }}
           />
           <FormHelperText>
@@ -369,7 +369,7 @@ const Form3 = ({ userDetails, handleOnChange }: SignupProps) => {
         {/* Arpit mishra to start working from here && not above this line */}
 
         {url ? (
-          <Avatar size={"2xl"} src={url} />
+          <Avatar size={'2xl'} src={url} />
         ) : (
           <Flex
             mt={1}
@@ -379,7 +379,7 @@ const Form3 = ({ userDetails, handleOnChange }: SignupProps) => {
             pb={6}
             borderWidth={2}
             _dark={{
-              color: "gray.500",
+              color: 'gray.500',
             }}
             borderStyle="dashed"
             rounded="md"
@@ -390,7 +390,7 @@ const Form3 = ({ userDetails, handleOnChange }: SignupProps) => {
                 boxSize={12}
                 color="gray.400"
                 _dark={{
-                  color: "gray.500",
+                  color: 'gray.500',
                 }}
                 stroke="currentColor"
                 fill="none"
@@ -408,7 +408,7 @@ const Form3 = ({ userDetails, handleOnChange }: SignupProps) => {
                 fontSize="sm"
                 color="gray.600"
                 _dark={{
-                  color: "gray.400",
+                  color: 'gray.400',
                 }}
                 alignItems="baseline"
               >
@@ -419,13 +419,13 @@ const Form3 = ({ userDetails, handleOnChange }: SignupProps) => {
                   fontSize="md"
                   color="brand.600"
                   _dark={{
-                    color: "brand.200",
+                    color: 'brand.200',
                   }}
                   pos="relative"
                   _hover={{
-                    color: "brand.400",
+                    color: 'brand.400',
                     _dark: {
-                      color: "brand.300",
+                      color: 'brand.300',
                     },
                   }}
                 >
@@ -445,7 +445,7 @@ const Form3 = ({ userDetails, handleOnChange }: SignupProps) => {
                 fontSize="xs"
                 color="gray.500"
                 _dark={{
-                  color: "gray.50",
+                  color: 'gray.50',
                 }}
               >
                 PNG, JPG, GIF up to 10MB
@@ -463,18 +463,18 @@ export default function Signup() {
   const [step, setStep] = useState(1);
   const [progress, setProgress] = useState(33.33);
   const [userDetails, setUserDetails] = useState<UserDetails>({
-    fullname: "",
-    username: "",
-    email: "",
-    password: "",
+    fullname: '',
+    username: '',
+    email: '',
+    password: '',
     skills: [],
-    github: "",
-    linkedin: "",
-    about_me: "",
-    leetcode: "",
-    gfg: "",
-    hackerRank: "",
-    codeChef: "",
+    github: '',
+    linkedin: '',
+    about_me: '',
+    leetcode: '',
+    gfg: '',
+    hackerRank: '',
+    codeChef: '',
     is_admin: false,
     no_of_problems: 0,
     easy: 0,
@@ -482,7 +482,7 @@ export default function Signup() {
     hard: 0,
     no_of_contests: 0,
     verified: false,
-    profile_picture: "",
+    profile_picture: '',
   });
 
   const [existingUsername, setExistingUsername] = useState<boolean>(false);
@@ -493,7 +493,7 @@ export default function Signup() {
     const name = e.target.name;
     let value = e.target.value;
 
-    if (name === "username") {
+    if (name === 'username') {
       axios
         .get(`http://localhost:8080/users?q=${value}`)
         .then((res) => {
@@ -506,8 +506,8 @@ export default function Signup() {
         .catch((err) => console.log(err));
     }
 
-    if (name === "skills") {
-      value = value.split(",");
+    if (name === 'skills') {
+      value = value.split(',');
     }
 
     setUserDetails((values) => ({ ...values, [name]: value }));
@@ -517,9 +517,9 @@ export default function Signup() {
     dispatch(registerUser(userDetails));
 
     toast({
-      title: "Account created.",
+      title: 'Account created.',
       description: "We've created your account for you.",
-      status: "success",
+      status: 'success',
       duration: 3000,
       isClosable: true,
     });
@@ -535,8 +535,8 @@ export default function Signup() {
         p={6}
         m="10px auto"
         as="form"
-        bg={"#1a202c"}
-        color={"white"}
+        bg={'#1a202c'}
+        color={'white'}
       >
         <Progress
           hasStripe
@@ -544,7 +544,7 @@ export default function Signup() {
           mb="5%"
           mx="5%"
           isAnimated
-          colorScheme={"purple"}
+          colorScheme={'purple'}
         ></Progress>
         {step === 1 ? (
           <Form1
@@ -590,11 +590,11 @@ export default function Signup() {
                 Next
               </Button>
               <Button
-                variant={"ghosted"}
-                colorScheme={"purple"}
-                color={"purple.200"}
+                variant={'ghosted'}
+                colorScheme={'purple'}
+                color={'purple.200'}
               >
-                <Link to={"/login"}>Already registered? Login</Link>
+                <Link to={'/login'}>Already registered? Login</Link>
               </Button>
             </Flex>
             {step === 3 ? (

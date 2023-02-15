@@ -1,6 +1,6 @@
-import axios from "axios";
-import { ReducerProps } from "../../constants/constants";
-import * as types from "./contests.actionTypes";
+import axios from 'axios';
+import { ReducerProps } from '../../constants/constants';
+import * as types from './contests.actionTypes';
 
 export const getAllContests =
   () =>

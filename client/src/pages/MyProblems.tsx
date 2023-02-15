@@ -1,6 +1,6 @@
-import styles from "../styles/Home.module.css";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import styles from '../styles/Home.module.css';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import {
   Avatar,
   Box,
@@ -35,8 +35,8 @@ import {
   InputGroup,
   InputLeftAddon,
   useToast,
-} from "@chakra-ui/react";
-import { FaReact, FaNodeJs } from "react-icons/fa";
+} from '@chakra-ui/react';
+import { FaReact, FaNodeJs } from 'react-icons/fa';
 import {
   SiRedux,
   SiHtml5,
@@ -44,22 +44,22 @@ import {
   SiExpress,
   SiChakraui,
   SiTailwindcss,
-} from "react-icons/si";
-import { DiCss3, DiMongodb } from "react-icons/di";
-import { SiJavascript } from "react-icons/si";
-import { VscGithub, VscNewFile } from "react-icons/vsc";
-import { Divider } from "@chakra-ui/react";
-import React, { useEffect, Dispatch, useRef, useState } from "react";
-import Easy from "../components/Easy";
-import AllProblems from "../components/AllProblems";
-import Medium from "../components/Medium";
-import Hard from "../components/Hard";
-import CustomProblems from "../components/CustomProblems";
-import { useDispatch, useSelector } from "react-redux";
-import { State } from "../constants/constants";
-import { getUserDetails } from "../store/Auth/auth.actions";
-import { Problem } from "../constants/Store/Problems/problems.types";
-import { postMyProblem } from "../store/Problems/problems.actions";
+} from 'react-icons/si';
+import { DiCss3, DiMongodb } from 'react-icons/di';
+import { SiJavascript } from 'react-icons/si';
+import { VscGithub, VscNewFile } from 'react-icons/vsc';
+import { Divider } from '@chakra-ui/react';
+import React, { useEffect, Dispatch, useRef, useState } from 'react';
+import Easy from '../components/Easy';
+import AllProblems from '../components/AllProblems';
+import Medium from '../components/Medium';
+import Hard from '../components/Hard';
+import CustomProblems from '../components/CustomProblems';
+import { useDispatch, useSelector } from 'react-redux';
+import { State } from '../constants/constants';
+import { getUserDetails } from '../store/Auth/auth.actions';
+import { Problem } from '../constants/Store/Problems/problems.types';
+import { postMyProblem } from '../store/Problems/problems.actions';
 
 const MyProblems = () => {
   const { userDetails, username } = useSelector((store: State) => store.auth);
@@ -69,18 +69,18 @@ const MyProblems = () => {
   const dispatch: Dispatch<any> = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [problemData, setProblemData] = useState<Problem>({
-    userId: "",
-    problem_url: "",
-    platform_name: "",
-    problem_name: "",
-    description: "",
-    textual_approach: "",
-    pictorial_approach: "",
-    textual_reference: "",
-    video_reference: "",
-    solution_code: "",
-    language_used: "",
-    difficulty: "",
+    userId: '',
+    problem_url: '',
+    platform_name: '',
+    problem_name: '',
+    description: '',
+    textual_approach: '',
+    pictorial_approach: '',
+    textual_reference: '',
+    video_reference: '',
+    solution_code: '',
+    language_used: '',
+    difficulty: '',
   });
   const toast = useToast();
 
@@ -108,13 +108,13 @@ const MyProblems = () => {
   useEffect(() => {
     if (isPostSuccess) {
       toast({
-        title: "Problem Added",
-        status: "success",
-        position: "top",
-        variant: "subtle",
+        title: 'Problem Added',
+        status: 'success',
+        position: 'top',
+        variant: 'subtle',
         containerStyle: {
-          backgroundColor: "purple.700",
-          borderRadius: "md",
+          backgroundColor: 'purple.700',
+          borderRadius: 'md',
         },
         duration: 3000,
         isClosable: true,
@@ -128,14 +128,14 @@ const MyProblems = () => {
   return (
     <div>
       <Navbar />
-      <Tooltip hasArrow label={"Add new problem"} placement="top">
+      <Tooltip hasArrow label={'Add new problem'} placement="top">
         <Button
           right={0}
-          position={"fixed"}
-          bgColor={"purple.700"}
-          _hover={{ bgColor: "purple.500", pr: "5" }}
-          borderRadius={"40% 0 0 40%"}
-          transition={"ease-in-out 1s"}
+          position={'fixed'}
+          bgColor={'purple.700'}
+          _hover={{ bgColor: 'purple.500', pr: '5' }}
+          borderRadius={'40% 0 0 40%'}
+          transition={'ease-in-out 1s'}
           onClick={addNewProblem}
         >
           <VscNewFile color="white" size={20} />
@@ -146,28 +146,28 @@ const MyProblems = () => {
         finalFocusRef={finalRef}
         isOpen={isOpen}
         onClose={onClose}
-        size={"6xl"}
+        size={'6xl'}
       >
         <ModalOverlay />
         <ModalContent m="auto">
           <ModalHeader
-            textAlign={"center"}
+            textAlign={'center'}
             fontSize={25}
-            textDecoration={"underline"}
+            textDecoration={'underline'}
           >
             Add New Problem
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <Flex w={"100%"} m="auto">
-              <Box w={"50%"}>
+            <Flex w={'100%'} m="auto">
+              <Box w={'50%'}>
                 <FormControl>
                   <FormLabel fontSize={20}>Problem Url</FormLabel>
                   <InputGroup size="sm">
                     <InputLeftAddon
                       bg="gray.50"
                       _dark={{
-                        bg: "gray.800",
+                        bg: 'gray.800',
                       }}
                       color="gray.500"
                       rounded="md"
@@ -179,7 +179,7 @@ const MyProblems = () => {
                       name="problem_url"
                       onChange={(e) => handleOnChange(e)}
                       placeholder="www.example.com"
-                      w={"68%"}
+                      w={'68%'}
                     />
                   </InputGroup>
                 </FormControl>
@@ -189,7 +189,7 @@ const MyProblems = () => {
                     name="platform_name"
                     onChange={handleOnChange}
                     placeholder="please select"
-                    w={"80%"}
+                    w={'80%'}
                   >
                     <option value="leetcode">leetcode</option>
                     <option value="gfg">gfg</option>
@@ -205,7 +205,7 @@ const MyProblems = () => {
                     name="problem_name"
                     onChange={handleOnChange}
                     placeholder="Problem name"
-                    w={"80%"}
+                    w={'80%'}
                   />
                 </FormControl>
 
@@ -215,7 +215,7 @@ const MyProblems = () => {
                     name="description"
                     onChange={handleOnChange}
                     placeholder="write a description for problem"
-                    w={"80%"}
+                    w={'80%'}
                   />
                 </FormControl>
 
@@ -225,7 +225,7 @@ const MyProblems = () => {
                     name="textual_approach"
                     onChange={handleOnChange}
                     placeholder="write a textual_reference for problem"
-                    w={"80%"}
+                    w={'80%'}
                   />
                 </FormControl>
 
@@ -235,7 +235,7 @@ const MyProblems = () => {
                     name="language_used"
                     onChange={handleOnChange}
                     placeholder="please select"
-                    w={"80%"}
+                    w={'80%'}
                   >
                     <option value="Javascript">Javascript</option>
                     <option value="Java">Java</option>
@@ -250,16 +250,16 @@ const MyProblems = () => {
                   </Select>
                 </FormControl>
               </Box>
-              <Box w={"50%"}>
+              <Box w={'50%'}>
                 <FormControl>
                   <FormLabel fontSize={20}>Pictorial Reference</FormLabel>
                   <Flex
-                    w={"80%"}
+                    w={'80%'}
                     mt={1}
                     justify="center"
                     borderWidth={2}
                     _dark={{
-                      color: "gray.500",
+                      color: 'gray.500',
                     }}
                     borderStyle="dashed"
                     rounded="md"
@@ -270,7 +270,7 @@ const MyProblems = () => {
                         boxSize={12}
                         color="black"
                         _dark={{
-                          color: "white",
+                          color: 'white',
                         }}
                         stroke="currentColor"
                         fill="none"
@@ -288,7 +288,7 @@ const MyProblems = () => {
                         fontSize="sm"
                         color="gray.600"
                         _dark={{
-                          color: "gray.400",
+                          color: 'gray.400',
                         }}
                         alignItems="baseline"
                       >
@@ -299,13 +299,13 @@ const MyProblems = () => {
                           fontSize="md"
                           color="brand.600"
                           _dark={{
-                            color: "brand.200",
+                            color: 'brand.200',
                           }}
                           pos="relative"
                           _hover={{
-                            color: "brand.400",
+                            color: 'brand.400',
                             _dark: {
-                              color: "brand.300",
+                              color: 'brand.300',
                             },
                           }}
                         >
@@ -323,7 +323,7 @@ const MyProblems = () => {
                       <Text
                         fontSize="xs"
                         _dark={{
-                          color: "gray.400",
+                          color: 'gray.400',
                         }}
                       >
                         PNG, JPG, GIF up to 10MB
@@ -338,7 +338,7 @@ const MyProblems = () => {
                     <InputLeftAddon
                       bg="gray.50"
                       _dark={{
-                        bg: "gray.800",
+                        bg: 'gray.800',
                       }}
                       color="gray.500"
                       rounded="md"
@@ -350,7 +350,7 @@ const MyProblems = () => {
                       name="textual_reference"
                       onChange={handleOnChange}
                       placeholder="www.example.com"
-                      w={"68%"}
+                      w={'68%'}
                     />
                   </InputGroup>
                 </FormControl>
@@ -361,7 +361,7 @@ const MyProblems = () => {
                     <InputLeftAddon
                       bg="gray.50"
                       _dark={{
-                        bg: "gray.800",
+                        bg: 'gray.800',
                       }}
                       color="gray.500"
                       rounded="md"
@@ -373,7 +373,7 @@ const MyProblems = () => {
                       name="video_reference"
                       onChange={handleOnChange}
                       placeholder="www.example.com"
-                      w={"68%"}
+                      w={'68%'}
                     />
                   </InputGroup>
                 </FormControl>
@@ -384,7 +384,7 @@ const MyProblems = () => {
                     name="solution_code"
                     onChange={handleOnChange}
                     placeholder="Enter your code"
-                    w={"80%"}
+                    w={'80%'}
                   />
                 </FormControl>
 
@@ -394,7 +394,7 @@ const MyProblems = () => {
                     name="difficulty"
                     onChange={handleOnChange}
                     placeholder="please select"
-                    w={"80%"}
+                    w={'80%'}
                   >
                     <option value="easy">Easy</option>
                     <option value="medium">Medium</option>
@@ -408,11 +408,11 @@ const MyProblems = () => {
           <ModalFooter>
             <Button
               onClick={handleOnSubmit}
-              color={"white"}
-              bgColor={"purple.700"}
+              color={'white'}
+              bgColor={'purple.700'}
               isLoading={isLoading}
               mx={3}
-              _hover={{ bgColor: "purple.500" }}
+              _hover={{ bgColor: 'purple.500' }}
               loadingText="Adding"
             >
               Add It
@@ -422,16 +422,16 @@ const MyProblems = () => {
         </ModalContent>
       </Modal>
       <Box
-        w={"80%"}
-        m={"auto"}
-        mt={"10%"}
+        w={'80%'}
+        m={'auto'}
+        mt={'10%'}
         textAlign="center"
-        borderRadius={"10%"}
-        border={"1px solid #0d7fdf"}
+        borderRadius={'10%'}
+        border={'1px solid #0d7fdf'}
       >
-        <Box w={"100%"}>
-          <Box display={"flex"} m="auto" mt={"-6%"}>
-            <Wrap m={"auto"}>
+        <Box w={'100%'}>
+          <Box display={'flex'} m="auto" mt={'-6%'}>
+            <Wrap m={'auto'}>
               <WrapItem>
                 <Avatar
                   size="2xl"
@@ -441,85 +441,85 @@ const MyProblems = () => {
               </WrapItem>
             </Wrap>
           </Box>
-          <Flex mt={5} gap="1%" justifyContent="center" alignItems={"center"}>
-            <Text fontSize={22} fontWeight={"bolder"}>
+          <Flex mt={5} gap="1%" justifyContent="center" alignItems={'center'}>
+            <Text fontSize={22} fontWeight={'bolder'}>
               {userDetails?.fullname}
             </Text>
             <Text fontSize={20}>@code_opedia</Text>
           </Flex>
-          <Box mb={"3%"}>
+          <Box mb={'3%'}>
             <Text fontSize={18} mt={2}>
               {userDetails?.about_me}
             </Text>
             <Text
-              m={"auto"}
+              m={'auto'}
               fontSize={22}
               textDecoration="underline"
-              fontWeight={"bolder"}
+              fontWeight={'bolder'}
               mt={2}
             >
               Tech Stack
             </Text>
             <Box className={styles.tech_stacks}>
-              <SiJavascript size={"100%"} />
-              <SiHtml5 size={"100%"} />
-              <DiCss3 size={"100%"} />
-              <FaReact size={"100%"} />
-              <FaNodeJs size={"100%"} />
-              <SiRedux size={"100%"} />
-              <DiMongodb size={"100%"} />
-              <SiExpress size={"100%"} />
-              <SiTailwindcss size={"100%"} />
-              <SiMaterialui size={"100%"} />
-              <SiChakraui size={"100%"} />
-              <VscGithub size={"100%"} />
+              <SiJavascript size={'100%'} />
+              <SiHtml5 size={'100%'} />
+              <DiCss3 size={'100%'} />
+              <FaReact size={'100%'} />
+              <FaNodeJs size={'100%'} />
+              <SiRedux size={'100%'} />
+              <DiMongodb size={'100%'} />
+              <SiExpress size={'100%'} />
+              <SiTailwindcss size={'100%'} />
+              <SiMaterialui size={'100%'} />
+              <SiChakraui size={'100%'} />
+              <VscGithub size={'100%'} />
             </Box>
           </Box>
           <Divider
             orientation="horizontal"
             mt={2}
             borderColor="white"
-            w={"80%"}
+            w={'80%'}
             m="auto"
           />
           <Flex
-            w={"80%"}
-            pt={"2%"}
+            w={'80%'}
+            pt={'2%'}
             justifyContent="center"
-            gap={"5%"}
-            m={"auto"}
+            gap={'5%'}
+            m={'auto'}
           >
-            <Box w={"40%"} minH={"80px"}>
-              <Text fontWeight={"bold"} fontSize={22}>
+            <Box w={'40%'} minH={'80px'}>
+              <Text fontWeight={'bold'} fontSize={22}>
                 Easy
               </Text>
-              <Text fontWeight={"semibold"} fontSize={20}>
+              <Text fontWeight={'semibold'} fontSize={20}>
                 {userDetails?.easy}
               </Text>
             </Box>
-            <Box w={"50%"} borderLeft="2px solid" borderRight="2px solid">
-              <Text fontWeight={"bold"} fontSize={22}>
+            <Box w={'50%'} borderLeft="2px solid" borderRight="2px solid">
+              <Text fontWeight={'bold'} fontSize={22}>
                 Medium
               </Text>
-              <Text fontWeight={"semibold"} fontSize={20}>
+              <Text fontWeight={'semibold'} fontSize={20}>
                 {userDetails?.medium}
               </Text>
             </Box>
-            <Box w={"40%"}>
-              <Text fontWeight={"bold"} fontSize={22}>
+            <Box w={'40%'}>
+              <Text fontWeight={'bold'} fontSize={22}>
                 Hard
               </Text>
-              <Text fontWeight={"semibold"} fontSize={20}>
+              <Text fontWeight={'semibold'} fontSize={20}>
                 {userDetails?.hard}
               </Text>
             </Box>
           </Flex>
         </Box>
-        <Box mt={"5%"} w={"80%"} m={"auto"} mb={"5%"}></Box>
+        <Box mt={'5%'} w={'80%'} m={'auto'} mb={'5%'}></Box>
       </Box>
       <Tabs
-        width={"90%"}
-        m={"auto"}
+        width={'90%'}
+        m={'auto'}
         mt={10}
         defaultIndex={0}
         borderBottomColor="transparent"
@@ -529,7 +529,7 @@ const MyProblems = () => {
             py={4}
             m={0}
             _focus={{
-              boxShadow: "none",
+              boxShadow: 'none',
             }}
           >
             All Problems
@@ -538,7 +538,7 @@ const MyProblems = () => {
             py={4}
             m={0}
             _focus={{
-              boxShadow: "none",
+              boxShadow: 'none',
             }}
           >
             Easy
@@ -547,7 +547,7 @@ const MyProblems = () => {
             py={4}
             m={0}
             _focus={{
-              boxShadow: "none",
+              boxShadow: 'none',
             }}
           >
             Medium
@@ -556,7 +556,7 @@ const MyProblems = () => {
             py={4}
             m={0}
             _focus={{
-              boxShadow: "none",
+              boxShadow: 'none',
             }}
           >
             Hard
