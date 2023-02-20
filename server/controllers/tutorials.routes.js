@@ -5,12 +5,26 @@ const UserModel = require("../models/user.model");
 const tutorialController = express.Router();
 
 // getting all the tutes
-tutorialController.get("/", async (req, res) => {
-  try {
-    const data = await TutorialModel.find();
-    res.status(200).send({ message: "Data retrieved!", data });
-  } catch (err) {
-    res.status(500).send({ message: "Internal server error" });
+mensController.get("/", async (req, res) => {
+  if (req.query.q) {
+    try {
+      const prods = await TutorialModel.find({
+        $or: [
+          { category: { $regex: req.query.q } },
+          { title: { $regex: req.query.q } },
+        ],
+      });
+      res.status(200).send(prods);
+    } catch (err) {
+      res.status(500).send({ message: "Please try again!" });
+    }
+  } else {
+    try {
+      const prods = await TutorialModel.find();
+      res.status(200).send(prods);
+    } catch (err) {
+      res.status(500).send({ message: "Please try again!" });
+    }
   }
 });
 
