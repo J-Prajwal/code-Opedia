@@ -9,7 +9,7 @@ const ReqAdminAuth = ({ children }: JsxElement) => {
   if (isAuth) {
     return children;
   } else {
-    return <Navigate to={"/"} replace />
+    return <Navigate to={'/'} replace />;
   }
 };
 

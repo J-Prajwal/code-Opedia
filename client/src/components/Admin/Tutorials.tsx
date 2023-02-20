@@ -1,79 +1,100 @@
-import React from 'react'
 import {
-    Box,
-    Button,
-    ButtonGroup,
-    Card,
-    CardBody,
-    CardFooter,
-    color,
-    Divider,
-    Flex,
-    Heading,
-    HStack,
-    Image,
-    Stack,
-    Text,
-  } from '@chakra-ui/react';
-  
-  import {FiEdit} from "react-icons/fi"
-  import {BsThreeDotsVertical} from "react-icons/bs"
+  Box,
+  Button,
+  ButtonGroup,
+  Card,
+  CardBody,
+  CardFooter,
+  Divider,
+  Flex,
+  HStack,
+  Heading,
+  Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Stack,
+  Text,
+} from '@chakra-ui/react';
+
+import { FiEdit } from 'react-icons/fi';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 
 const Tutorials = () => {
   return (
     <Box>
-<Box p={"1"}  mx="-3" mt={"-3"} 
-display={'flex'} justifyContent={"space-between"} >
-    <Heading as={"h5"}  size='md' >Tutorials</Heading>
-    <ButtonGroup >
-      <Button   size='sm'
-       variant='solid' fontSize={"0.8rem"} 
-      w={"12vh"} >
-      ANALYTICS
-      </Button>
-      <Button w={"23vh"} 
-       size='sm' fontSize={"0.8rem"} 
+      <Box
+        p={'1'}
+        mx="-3"
+        mt={'-3'}
+        display={'flex'}
+        justifyContent={'space-between'}
       >
-        CREATE ASSIGNMENTS
-      </Button>
-    </ButtonGroup>
-</Box>
-<Divider />
+        <Heading as={'h5'} size="md">
+          Tutorials
+        </Heading>
+        <ButtonGroup>
+          <Button
+            size="sm"
+            variant="solid"
+            fontSize={'0.8rem'}
+            w={'12vh'}
+            bg={'purple.600'}
+            color={'white'}
+          >
+            ANALYTICS
+          </Button>
+          <Button
+            w={'23vh'}
+            size="sm"
+            fontSize={'0.8rem'}
+            bg={'whatsapp.700'}
+            color={'white'}
+          >
+            CREATE TUTORIAL
+          </Button>
+        </ButtonGroup>
+      </Box>
+      <Divider />
 
-
-<Card maxW='sm' objectFit='cover' mt={"3"}>
-  <CardBody p={"2"} >
-    <Image
-      src='https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
-      alt='Green double couch with wooden legs'
-      borderRadius='lg'
-
-    />
-    <Stack mt='3' spacing='2'>
-        <Flex justifyContent={"space-between"}
-         alignItems={"center"}>
-      <Heading size='md'>Living room Sofa</Heading>
-<BsThreeDotsVertical cursor={"pointer"}/>
-        </Flex>
-      <Text>
-        This sofa is perfect for modern tropical spaces, baroque inspired
-        spaces, earthy toned spaces and for people who love a chic design with a
-        sprinkle of vintage design.
-      </Text>
-    </Stack>
-  </CardBody>
-  {/* <Divider />
-    <ButtonGroup m={"2"} display={'flex'} justifyContent={"space-evenly"}>
-      <Button variant='solid' w={"30%"} colorScheme='blue'>
-      <FiEdit/>
-      </Button>
-      <Button bg={"black"} w={"30%"}  colorScheme='blue'>
-        <MdDeleteForever/>
-      </Button>
-    </ButtonGroup> */}
-</Card>
+      <Card maxW="sm" objectFit="cover" mt={'3'}>
+        <CardBody p={'2'}>
+          <Stack mt="3" spacing="2">
+            <Flex justifyContent={'space-between'} alignItems={'center'}>
+              <Heading size="md">Tutorial Title</Heading>
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  bg={'none'}
+                  _hover={{ bg: 'none' }}
+                  _active={{ bg: 'none' }}
+                >
+                  <BsThreeDotsVertical cursor={'pointer'} />
+                </MenuButton>
+                <MenuList>
+                  <MenuItem>Share</MenuItem>
+                  <MenuItem>Download</MenuItem>
+                  <MenuItem>Open</MenuItem>
+                </MenuList>
+              </Menu>
+            </Flex>
+            <Text>Tutorial's description to be displayed here.</Text>
+          </Stack>
+        </CardBody>
+        <CardFooter mt={'-5'}>
+          <HStack gap={5}>
+            <Button color={'white'} size={'sm'} bg={'purple.500'}>
+              Edit
+            </Button>
+            <Button color={'white'} size={'sm'} bg={'red.500'}>
+              Delete
+            </Button>
+          </HStack>
+        </CardFooter>
+      </Card>
     </Box>
-  )
-}
+  );
+};
 
-export default Tutorials
+export default Tutorials;
