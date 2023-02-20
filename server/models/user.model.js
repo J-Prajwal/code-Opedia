@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
   fullname: { type: String, required: true },
@@ -23,6 +23,6 @@ const userSchema = mongoose.Schema({
   profile_picture: { type: String, required: false, default: null },
 });
 
-const UserModel = mongoose.model("user", userSchema);
+const UserModel = mongoose.model('user', userSchema);
 
 module.exports = UserModel;

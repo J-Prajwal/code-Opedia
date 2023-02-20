@@ -1,11 +1,11 @@
-const express = require("express");
-const TutorialModel = require("../models/tutorials.model");
-const isAdminAuthentication = require("../middlewares/isAdminAuthentication");
-const UserModel = require("../models/user.model");
+const express = require('express');
+const TutorialModel = require('../models/tutorials.model');
+const isAdminAuthentication = require('../middlewares/isAdminAuthentication');
+const UserModel = require('../models/user.model');
 const tutorialController = express.Router();
 
 // getting all the tutes
-mensController.get("/", async (req, res) => {
+mensController.get('/', async (req, res) => {
   if (req.query.q) {
     try {
       const prods = await TutorialModel.find({
@@ -16,20 +16,20 @@ mensController.get("/", async (req, res) => {
       });
       res.status(200).send(prods);
     } catch (err) {
-      res.status(500).send({ message: "Please try again!" });
+      res.status(500).send({ message: 'Please try again!' });
     }
   } else {
     try {
       const prods = await TutorialModel.find();
       res.status(200).send(prods);
     } catch (err) {
-      res.status(500).send({ message: "Please try again!" });
+      res.status(500).send({ message: 'Please try again!' });
     }
   }
 });
 
 // posting new tute
-tutorialController.post("/new", isAdminAuthentication, async (req, res) => {
+tutorialController.post('/new', isAdminAuthentication, async (req, res) => {
   const {
     title,
     description,
@@ -48,14 +48,14 @@ tutorialController.post("/new", isAdminAuthentication, async (req, res) => {
       sub_category,
     });
     data.save();
-    res.status(201).send({ message: "Tutorial added!", data });
+    res.status(201).send({ message: 'Tutorial added!', data });
   } catch (err) {
-    res.status(500).send({ message: "Internal server error" });
+    res.status(500).send({ message: 'Internal server error' });
   }
 });
 
 tutorialController.patch(
-  "/update/:id",
+  '/update/:id',
   isAdminAuthentication,
   async (req, res) => {
     const id = req.params.id;
@@ -76,22 +76,22 @@ tutorialController.patch(
         category,
         sub_category,
       });
-      res.status(200).send({ message: "Tutorial updated!", data });
+      res.status(200).send({ message: 'Tutorial updated!', data });
     } catch (err) {
-      res.status(500).send({ message: "Internal server error" });
+      res.status(500).send({ message: 'Internal server error' });
     }
   }
 );
 tutorialController.delete(
-  "/remove/:id",
+  '/remove/:id',
   isAdminAuthentication,
   async (req, res) => {
     const id = req.params.id;
     try {
       const data = await UserModel.findByIdAndDelete(id);
-      res.status(200).send({ message: "Tutorial deleted!", data });
+      res.status(200).send({ message: 'Tutorial deleted!', data });
     } catch (err) {
-      res.status(500).send({ message: "Internal server error" });
+      res.status(500).send({ message: 'Internal server error' });
     }
   }
 );

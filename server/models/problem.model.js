@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const problemSchema = mongoose.Schema({
   userId: { type: String, required: true },
@@ -16,6 +16,6 @@ const problemSchema = mongoose.Schema({
   updatedAt: { type: Date, default: Date.now() },
 });
 
-const ProblemModel = mongoose.model("problem", problemSchema);
+const ProblemModel = mongoose.model('problem', problemSchema);
 
 module.exports = ProblemModel;

@@ -1,6 +1,6 @@
-const cloudinary = require("cloudinary").v2;
+const cloudinary = require('cloudinary').v2;
 
-require("dotenv").config();
+require('dotenv').config();
 
 cloudinary.config({
   secure: true,
@@ -12,7 +12,7 @@ cloudinary.config({
 const opts = {
   overwrite: true,
   invalidate: true,
-  resource_type: "auto",
+  resource_type: 'auto',
 };
 
 module.exports = (image) => {

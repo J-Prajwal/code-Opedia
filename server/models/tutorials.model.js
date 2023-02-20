@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const tutorialSchema = mongoose.Schema({
   title: { type: String, required: true },
@@ -7,27 +7,27 @@ const tutorialSchema = mongoose.Schema({
   article_link: { type: String, required: true },
   category: {
     type: String,
-    enum: ["DSA", "Development", "Networking"],
+    enum: ['DSA', 'Development', 'Networking'],
     required: true,
   },
   isPlaylist: { type: Boolean, required: true },
   sub_category: {
     type: String,
     enum: [
-      "MERN",
-      "MEAN",
-      "MEARN",
-      "NextJs",
-      "NXM",
-      "Graphql",
-      "Typescript",
-      "NodeJs",
-      "Express",
-      "MongoDb",
+      'MERN',
+      'MEAN',
+      'MEARN',
+      'NextJs',
+      'NXM',
+      'Graphql',
+      'Typescript',
+      'NodeJs',
+      'Express',
+      'MongoDb',
     ],
   },
 });
 
-const TutorialModel = mongoose.model("tutorial", tutorialSchema);
+const TutorialModel = mongoose.model('tutorial', tutorialSchema);
 
 module.exports = TutorialModel;

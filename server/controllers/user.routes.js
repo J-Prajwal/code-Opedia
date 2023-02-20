@@ -1,13 +1,13 @@
-const express = require("express");
-const UserModel = require("../models/user.model.js");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
+const express = require('express');
+const UserModel = require('../models/user.model.js');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 
-require("dotenv").config();
+require('dotenv').config();
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  service: 'gmail',
   auth: {
     user: process.env.EMAIL_USERNAME,
     pass: process.env.EMAIL_PASSWORD,
@@ -18,16 +18,16 @@ const saltRounds = 10; // number of times salting will be done
 
 const userController = express.Router();
 
-userController.get("/", async (req, res) => {
+userController.get('/', async (req, res) => {
   try {
     const users = await UserModel.find({ username: req.query.q });
-    res.status(200).send({ message: "User Data Found!", users });
+    res.status(200).send({ message: 'User Data Found!', users });
   } catch (err) {
-    res.status(500).send({ message: "Internal Server Error" });
+    res.status(500).send({ message: 'Internal Server Error' });
   }
 });
 
-userController.post("/register", async (req, res) => {
+userController.post('/register', async (req, res) => {
   const {
     fullname,
     username,
@@ -52,13 +52,13 @@ userController.post("/register", async (req, res) => {
   } = req.body;
   bcrypt.hash(password, saltRounds, async function (err, hash) {
     if (err) {
-      return res.status(500).send({ error: "Please try again!" });
+      return res.status(500).send({ error: 'Please try again!' });
     }
 
     const existingUser = await UserModel.findOne({ email }).exec();
     if (existingUser) {
       return res.status(409).send({
-        message: "Email is already in use.",
+        message: 'Email is already in use.',
       });
     }
     const user = new UserModel({
@@ -90,7 +90,7 @@ userController.post("/register", async (req, res) => {
       const verificationToken = jwt.sign(
         { ID: usertemp._id },
         process.env.USER_VERIFICATION_TOKEN_SECRET,
-        { expiresIn: "7d" }
+        { expiresIn: '7d' }
       );
 
       const url = `http://localhost:8080/users/verify/${verificationToken}`;
@@ -99,7 +99,7 @@ userController.post("/register", async (req, res) => {
         {
           from: process.env.EMAIL_USERNAME,
           to: email,
-          subject: "Verify Account",
+          subject: 'Verify Account',
           html: `Welcome to code'Opedia <br>Please <a href='${url}'>Click here to verify your account.</a>`,
         },
         (err, data) => {
@@ -115,11 +115,11 @@ userController.post("/register", async (req, res) => {
   });
 });
 
-userController.post("/login", async (req, res) => {
+userController.post('/login', async (req, res) => {
   const { email, password } = req.body;
   const user = await UserModel.findOne({ email });
 
-  if (!user) res.status(404).send({ message: "No such user found!" });
+  if (!user) res.status(404).send({ message: 'No such user found!' });
   const hash = user.password;
   bcrypt.compare(password, hash, async function (err, result) {
     if (result) {
@@ -129,48 +129,48 @@ userController.post("/login", async (req, res) => {
       );
       return res
         .status(200)
-        .send({ message: "Login Successfull", token, user });
+        .send({ message: 'Login Successfull', token, user });
     } else {
       res
         .status(401)
-        .send({ message: "Unauthorised Access, Please try again." });
+        .send({ message: 'Unauthorised Access, Please try again.' });
     }
   });
 });
 
-userController.get("/verify/:token", async (req, res) => {
+userController.get('/verify/:token', async (req, res) => {
   const { token } = req.params;
-  if (!token) return res.status(422).send({ message: "Token Missing." });
+  if (!token) return res.status(422).send({ message: 'Token Missing.' });
 
   // verifying the token from the url
   let payload = null;
   try {
     payload = jwt.verify(token, process.env.USER_VERIFICATION_TOKEN_SECRET);
   } catch (err) {
-    res.status(500).send({ message: "error 1" });
+    res.status(500).send({ message: 'error 1' });
   }
 
   // findind the user with the matching id
   try {
     const user = await UserModel.findOne({ _id: payload.ID }).exec();
-    if (!user) return res.status(404).send({ message: "User does not exist." });
+    if (!user) return res.status(404).send({ message: 'User does not exist.' });
 
     // updating user's verification status to true
     user.verified = true;
     await user.save();
 
-    return res.status(200).redirect("http://localhost:3000/login")
+    return res.status(200).redirect('http://localhost:3000/login');
   } catch (err) {
-    res.status(500).send({ message: "error 2" });
+    res.status(500).send({ message: 'error 2' });
   }
 });
 
-userController.post("/forgotpassword", async (req, res) => {
+userController.post('/forgotpassword', async (req, res) => {
   const { email } = req.body;
   try {
     const userData = await UserModel.findOne({ email }).exec();
     if (!userData)
-      return res.status(404).send({ message: "Email not registered." });
+      return res.status(404).send({ message: 'Email not registered.' });
     else {
       userData.verified = false;
       await userData.save();
@@ -178,7 +178,7 @@ userController.post("/forgotpassword", async (req, res) => {
       const verificationToken = jwt.sign(
         { ID: userData._id },
         process.env.USER_VERIFICATION_TOKEN_SECRET,
-        { expiresIn: "7d" }
+        { expiresIn: '7d' }
       );
 
       const url = `http://localhost:8080/users/verify/${verificationToken}`;
@@ -187,7 +187,7 @@ userController.post("/forgotpassword", async (req, res) => {
         {
           from: process.env.EMAIL_USERNAME,
           to: email,
-          subject: "Change Password",
+          subject: 'Change Password',
           html: `<h3>Hi ${userData.fullname},
           </h3><br>Please <a href='${url}'>Click here to verify yourself.</a>
           <p>After verifying yourself, click <a href="http://localhost:8080/users/changepassword/${email}">here</a> to change your password</p>
@@ -202,26 +202,26 @@ userController.post("/forgotpassword", async (req, res) => {
         .send({ message: `Sent a verification email to ${email}` });
     }
   } catch (err) {
-    res.status(501).send({ message: "Internal Server err", err });
+    res.status(501).send({ message: 'Internal Server err', err });
   }
 });
 
-userController.patch("/changepassword/:email", async (req, res) => {
+userController.patch('/changepassword/:email', async (req, res) => {
   const { email } = req.params;
   const { password } = req.body;
 
   const user = await UserModel.findOne({ email }).exec();
 
-  if (!user) return res.status(404).send({ message: "User not found" });
+  if (!user) return res.status(404).send({ message: 'User not found' });
 
   if (!user.verified)
     return res
       .status(401)
-      .send({ message: "Unauthorized, please verify your mail." });
+      .send({ message: 'Unauthorized, please verify your mail.' });
   else {
     bcrypt.hash(password, saltRounds, async function (err, hash) {
       if (err) {
-        return res.status(500).send({ error: "Please try again!" });
+        return res.status(500).send({ error: 'Please try again!' });
       }
       try {
         // await UserModel.findOneAndUpdate({ email }, { password });
@@ -229,9 +229,9 @@ userController.patch("/changepassword/:email", async (req, res) => {
         await user.save();
         return res
           .status(200)
-          .send({ message: "Password updated successfully.", user });
+          .send({ message: 'Password updated successfully.', user });
       } catch (err) {
-        return res.status(500).send({ message: "Internal server error", err });
+        return res.status(500).send({ message: 'Internal server error', err });
       }
     });
   }

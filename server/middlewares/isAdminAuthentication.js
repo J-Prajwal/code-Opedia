@@ -1,15 +1,15 @@
-const jwt = require("jsonwebtoken");
-const UserModel = require("../models/user.model");
+const jwt = require('jsonwebtoken');
+const UserModel = require('../models/user.model');
 
-require("dotenv").config;
+require('dotenv').config;
 const isAdminAuthentication = (req, res, next) => {
   if (!req.headers.authorization) {
-    return res.status(401).send({ message: "Please login!" });
+    return res.status(401).send({ message: 'Please login!' });
   }
-  const userToken = req.headers.authorization.split(" ")[1];
+  const userToken = req.headers.authorization.split(' ')[1];
   jwt.verify(userToken, process.env.SECRET, async function (err, decoded) {
     if (err) {
-      return res.status(401).send("Please login again");
+      return res.status(401).send('Please login again');
     }
 
     const userDetails = await UserModel.findOne({ email: decoded.email });
@@ -21,7 +21,7 @@ const isAdminAuthentication = (req, res, next) => {
     } else {
       return res
         .status(401)
-        .send({ message: "You are not authorized to post content" });
+        .send({ message: 'You are not authorized to post content' });
     }
   });
 };
