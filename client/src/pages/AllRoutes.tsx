@@ -19,6 +19,7 @@ const AllRoutes = () => {
       <Route path="/user/problems/new" element={<NewProblem />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
+      <Route path="*" element={<h1>This root is not exist!</h1>} />
       <Route path="/admin/dashboard" element={<Dashboad />} />
       <Route
         path="/contests"

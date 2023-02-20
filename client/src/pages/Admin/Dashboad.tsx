@@ -19,6 +19,7 @@ import {
 import { MdHome } from 'react-icons/md';
 import { FaBell, FaCode, FaMoon, FaRss, FaSun, FaUser } from 'react-icons/fa';
 import { AiOutlineFileSearch } from 'react-icons/ai';
+import { BiBookHeart } from 'react-icons/bi';
 import { BsFillMenuAppFill } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../../constants/constants';
@@ -27,6 +28,7 @@ import { useEffect, useState } from 'react';
 import { getUserDetails } from '../../store/Auth/auth.actions';
 import Home from '../../components/Admin/Home';
 import Articles from '../../components/Admin/Articles';
+import Tutorials from '../../components/Admin/Tutorials';
 
 const Dashboad = () => {
   const { userDetails, username } = useSelector((store: State) => store.auth);
@@ -115,6 +117,9 @@ const Dashboad = () => {
         </NavItem>
         <NavItem onClick={() => setComp(<Articles />)} icon={FaRss}>
           Articles
+        </NavItem>
+        <NavItem onClick={() => setComp(<Tutorials />)} icon={BiBookHeart}>
+          Tutorials
         </NavItem>
         <NavItem onClick={() => setComp(<Home />)} value={'Flow'} icon={FaCode}>
           Flow
