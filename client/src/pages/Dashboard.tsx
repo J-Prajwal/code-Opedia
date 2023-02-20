@@ -18,10 +18,8 @@ const Dashboard = () => {
     <div>
       <Navbar />
       <Box
-        bg="#1a202c"
         w="100%"
         h={{ md: '500vh', lg: '180vh' }}
-        borderTop="1px solid #9ca1cd"
         padding={{
           base: '20px 20px',
           sm: '20px 20px',
@@ -38,7 +36,8 @@ const Dashboard = () => {
           <GridItem
             rowSpan={{ base: 60, sm: 60, md: 40, lg: 18 }}
             colSpan={{ base: 11, sm: 11, md: 11, lg: 3 }}
-            bg="#a9aed6"
+            bg={'whiteAlpha.300'}
+            boxShadow={'xl'}
             borderRadius="5px"
           >
             <Flex></Flex>
@@ -50,7 +49,8 @@ const Dashboard = () => {
           <GridItem
             rowSpan={{ base: 13, sm: 13, md: 12, lg: 4 }}
             colSpan={{ base: 11, sm: 11, md: 11, lg: 4 }}
-            bg="#a9aed6"
+            bg={'whiteAlpha.300'}
+            boxShadow={'xl'}
             borderRadius="5px"
             display="flex"
             flexDirection="column"
@@ -153,13 +153,15 @@ const Dashboard = () => {
           <GridItem
             rowSpan={{ base: 13, sm: 13, md: 12, lg: 4 }}
             colSpan={{ base: 11, sm: 11, md: 11, lg: 4 }}
-            bg="#a9aed6"
+            bg={'whiteAlpha.300'}
+            boxShadow={'xl'}
             borderRadius="5px"
           ></GridItem>
           <GridItem
             rowSpan={{ base: 13, sm: 13, md: 12, lg: 4 }}
             colSpan={{ base: 11, sm: 11, md: 11, lg: 8 }}
-            bg="#a9aed6"
+            bg={'whiteAlpha.300'}
+            boxShadow={'xl'}
             borderRadius="5px"
             padding="0px 20px"
           >
@@ -178,7 +180,8 @@ const Dashboard = () => {
           <GridItem
             rowSpan={{ base: 45, sm: 45, md: 40, lg: 12 }}
             colSpan={{ base: 11, sm: 11, md: 11, lg: 8 }}
-            bg="#a9aed6"
+            bg={'whiteAlpha.300'}
+            boxShadow={'xl'}
             borderRadius="5px"
             padding="20px"
           >
