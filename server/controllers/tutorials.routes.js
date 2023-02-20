@@ -5,7 +5,7 @@ const UserModel = require('../models/user.model');
 const tutorialController = express.Router();
 
 // getting all the tutes
-mensController.get('/', async (req, res) => {
+tutorialController.get('/', async (req, res) => {
   if (req.query.q) {
     try {
       const prods = await TutorialModel.find({
