@@ -24,6 +24,7 @@ import { getUserDetails } from '../store/Auth/auth.actions';
 const Navbar = () => {
   const { userDetails, username } = useSelector((store: State) => store.auth);
   const dispatch: Dispatch<any> = useDispatch();
+  const clink = window.location.href.split('/')[3];
   useEffect(() => {
     if (!userDetails) {
       dispatch(getUserDetails(username));
@@ -102,12 +103,7 @@ const Navbar = () => {
                 </Button>
               </VStack>
             </Box>
-            <chakra.a
-              href="/"
-              title="Choc Home Page"
-              display="flex"
-              alignItems="center"
-            >
+            <Link to={'/'}>
               {colorMode == 'light' ? (
                 <Image
                   src="https://res.cloudinary.com/des8eyvcg/image/upload/c_fill,h_126,w_500/v1674389945/Indic_Designs_Creative_Logo-removebg-preview_nb4mil.png"
@@ -121,7 +117,7 @@ const Navbar = () => {
               )}
 
               <VisuallyHidden>Code'Opedia</VisuallyHidden>
-            </chakra.a>
+            </Link>
           </HStack>
           <HStack spacing={3} display="flex" alignItems="center">
             <HStack
@@ -131,19 +127,39 @@ const Navbar = () => {
                 md: 'inline-flex',
               }}
             >
-              <Button variant="ghost" size="sm">
+              <Button
+                variant={'ghost'}
+                borderBottom={clink == 'my-problems' ? '1px solid purple' : ''}
+                size="sm"
+              >
                 <Link to={`/my-problems`}> My Problems </Link>
               </Button>
-              <Button variant="ghost" size="sm">
+              <Button
+                variant={'ghost'}
+                borderBottom={clink == 'user' ? '1px solid purple' : ''}
+                size="sm"
+              >
                 <Link to={`/user/${'username'}`}> Dashboard </Link>
               </Button>
-              <Button variant="ghost" size="sm">
+              <Button
+                variant={'ghost'}
+                borderBottom={clink == 'practise' ? '1px solid purple' : ''}
+                size="sm"
+              >
                 <Link to={'/practise'}>Practice</Link>
               </Button>
-              <Button variant="solid" size="sm">
+              <Button
+                variant={'ghost'}
+                borderBottom={clink == 'contests' ? '1px solid purple' : ''}
+                size="sm"
+              >
                 <Link to={'/contests'}>Contests</Link>
               </Button>
-              <Button variant="ghost" size="sm">
+              <Button
+                variant={'ghost'}
+                borderBottom={clink == 'tutorials' ? '1px solid purple' : ''}
+                size="sm"
+              >
                 <Link to={'/tutorials'}>Tutorials</Link>
               </Button>
             </HStack>
