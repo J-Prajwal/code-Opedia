@@ -42,6 +42,7 @@ const Tutorials = () => {
             w={'12vh'}
             bg={'purple.600'}
             color={'white'}
+         
           >
             ANALYTICS
           </Button>
@@ -76,13 +77,15 @@ const Tutorials = () => {
                   <MenuItem>Share</MenuItem>
                   <MenuItem>Download</MenuItem>
                   <MenuItem>Open</MenuItem>
+                  <MenuItem>Edit</MenuItem>
+                  <MenuItem>Delete</MenuItem>
                 </MenuList>
               </Menu>
             </Flex>
             <Text>Tutorial's description to be displayed here.</Text>
           </Stack>
         </CardBody>
-        <CardFooter mt={'-5'}>
+        {/* <CardFooter mt={'-5'}>
           <HStack gap={5}>
             <Button color={'white'} size={'sm'} bg={'purple.500'}>
               Edit
@@ -91,7 +94,7 @@ const Tutorials = () => {
               Delete
             </Button>
           </HStack>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </Box>
   );

@@ -9,6 +9,7 @@ import NewProblem from './NewProblem';
 import Login from './Login';
 import MyProblems from './MyProblems';
 import Dashboad from './Admin/Dashboad';
+import NotFoundPage from '../components/NotFoundPage';
 
 const AllRoutes = () => {
   return (
@@ -19,7 +20,7 @@ const AllRoutes = () => {
       <Route path="/user/problems/new" element={<NewProblem />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
-      <Route path="*" element={<h1>This root is not exist!</h1>} />
+      <Route path="*" element={<NotFoundPage/>} />
       <Route path="/admin/dashboard" element={<Dashboad />} />
       <Route
         path="/contests"
