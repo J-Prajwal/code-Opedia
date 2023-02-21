@@ -33,18 +33,36 @@ import {
   Select,
   Textarea,
   ModalFooter,
+  Image,
 } from '@chakra-ui/react';
 import React, { useRef } from 'react';
 // import { FiEdit } from 'react-icons/fi';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
+declare global {
+  namespace JSX {
+    interface InstrinsicElements {
+      iframe: React.DetailedHTMLProps<React.IframeHTMLAttributes<HTMLIFrameElement>, HTMLIFrameElement> & {
+        allowfullscreen?: boolean;
+      };
+    }
+  }
+}
+
+
+
 const Tutorials = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef(null);
   const finalRef = useRef(null);
+const iframeRef=useRef<HTMLIFrameElement>(null);
+
+
   const addNewProblem = (): void => {
     onOpen();
   };
+//
+
   return (
     <Box>
       <Box
@@ -236,7 +254,12 @@ const Tutorials = () => {
       <Card maxW="sm" objectFit="cover" mt={'3'}>
         <CardBody p={'2'}>
           <Stack mt="3" spacing="2">
+            <iframe src="https://www.youtube.com/embed/uXWycyeTeCs" 
+            width={"100%"}
+             height={"200"} allowFullScreen ref={iframeRef}></iframe>
             <Flex justifyContent={'space-between'} alignItems={'center'}>
+              {/* <Image src={"https://www.youtube.com/embed/GiyL4KFRNBA"} 
+              alt={"YT"}/> */}
               <Heading size="md">Tutorial Title</Heading>
               <Menu>
                 <MenuButton

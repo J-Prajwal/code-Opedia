@@ -110,3 +110,11 @@ export type Store = {
   auth?: AuthInitialState;
   contest?: ContestsInitialState;
 };
+
+
+export type Iframe={
+   src: string;
+    width: string; 
+    height: string; 
+    allowfullscreen?: boolean;
+}
