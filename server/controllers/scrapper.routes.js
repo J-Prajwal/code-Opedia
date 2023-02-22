@@ -2,7 +2,7 @@ const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-const Scrapper = express.router();
+const Scrapper = express.Router();
 
 Scrapper.get('hackerrank/:username', async (req, res) => {
   try {
