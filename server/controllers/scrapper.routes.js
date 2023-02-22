@@ -2,9 +2,9 @@ const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-const Scrapper = express.Router();
+const scrapperController = express.Router();
 
-Scrapper.get('hackerrank/:username', async (req, res) => {
+scrapperController.get('/hackerrank/:username', async (req, res) => {
   try {
     const { username } = req.params;
     const response = await axios.get(`https://www.hackerrank.com/${username}`);
@@ -36,4 +36,4 @@ Scrapper.get('hackerrank/:username', async (req, res) => {
   }
 });
 
-module.exports = Scrapper;
+module.exports = scrapperController;
