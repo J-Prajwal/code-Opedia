@@ -28,3 +28,5 @@ export const store = legacy_createStore(
   rootReducer,
   composeEnhancers(applyMiddleware(thunk))
 );
+
+export type useAppDispatch = typeof store.dispatch;
