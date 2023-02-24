@@ -17,8 +17,11 @@ import GitHubCalendar from 'react-github-calendar';
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import {FcFaq, FcOk, FcRating ,FcDoughnutChart} from "react-icons/fc";
 import { BsFillRecordFill } from "react-icons/bs";
+import { useSelector } from 'react-redux';
+import { State } from '../constants/constants';
 
 const Dashboard = () => {
+  const {userDetails} = useSelector((store: State) => store.auth);
   return (
     <div>
       <Navbar />
@@ -28,8 +31,8 @@ const Dashboard = () => {
         padding={{
           base: '20px 20px',
           sm: '20px 20px',
-          md: '30px 30px',
-          lg: '30px 100px',
+          md: '10px 20px',
+          lg: '10px 100px',
         }}
       >
         <Grid
@@ -42,7 +45,7 @@ const Dashboard = () => {
             rowSpan={{ base: 60, sm: 60, md: 40, lg: 18 }}
             colSpan={{ base: 11, sm: 11, md: 11, lg: 3 }}
             bg={'whiteAlpha.300'}
-            boxShadow={'xl'}
+            boxShadow={'2xl'}
             borderRadius="5px"
             justifyContent={"center"}
             pr="4%"
@@ -50,11 +53,11 @@ const Dashboard = () => {
           >
             <Flex justifyContent={"center"} gap={10} mt="10%">
               <Box>
-                <Image src='https://assets.leetcode.com/users/avatars/avatar_1660280193.png' borderRadius={10}/>
+                <Image src={userDetails?.profile_picture} w={'100px'} borderRadius={10}/>
               </Box>
               <Box >
-                <Text fontWeight={"bold"} fontSize={20}>arpitmiahra4</Text>
-                <Text fontSize={20} mt="20%">Rank ~5,000,000</Text>
+                <Text fontWeight={"bold"} fontSize={20}>{userDetails?.fullname}</Text>
+                <Text fontSize={15} mt="20%">Rank ~5,000,000</Text>
               </Box>
             </Flex>
           <Button mt={"5%"} w="98%"  borderRadius={10} fontWeight="semibold" fontSize={18} _hover={{bgColor:"#eff9f2"}} bgColor="#eff9f2" color={"#2db55e"}>Edit Profile</Button>
