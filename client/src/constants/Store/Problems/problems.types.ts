@@ -6,6 +6,7 @@ export interface ProblemInitialState {
 }
 
 export interface Problem {
+  _id: string | undefined;
   userId: string | undefined;
   problem_url: string | undefined;
   platform_name: string | undefined;
