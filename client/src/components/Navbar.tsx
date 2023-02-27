@@ -90,9 +90,6 @@ const Navbar = () => {
                   onClick={mobileNav.onClose}
                 />
                 <Button w="full" variant="ghost">
-                  Dashboard
-                </Button>
-                <Button w="full" variant="ghost">
                   Practice
                 </Button>
                 <Button w="full" variant="solid" colorScheme="brand">
@@ -134,13 +131,19 @@ const Navbar = () => {
               >
                 <Link to={`/my-problems`}> My Problems </Link>
               </Button>
-              <Button
-                variant={'ghost'}
-                borderBottom={clink == 'user' ? '1px solid purple' : ''}
-                size="sm"
-              >
-                <Link to={`/user/${'username'}`}> Dashboard </Link>
-              </Button>
+
+              {userDetails?.is_admin && (
+                <Button
+                  variant={'ghost'}
+                  borderBottom={
+                    clink == '/admin/dashboard' ? '1px solid purple' : ''
+                  }
+                  size="sm"
+                >
+                  <Link to={'/admin/dashboard'}> Dashboard </Link>
+                </Button>
+              )}
+
               <Button
                 variant={'ghost'}
                 borderBottom={clink == 'practise' ? '1px solid purple' : ''}
@@ -181,11 +184,13 @@ const Navbar = () => {
               <VisuallyHidden>Notifications</VisuallyHidden>
             </chakra.a>
             {userDetails ? (
-              <Avatar
-                size="sm"
-                name="Dan Abrahmov"
-                src={userDetails?.profile_picture}
-              />
+              <Link to={`/user/${userDetails?.username}`}>
+                <Avatar
+                  size="sm"
+                  name={userDetails?.fullname}
+                  src={userDetails?.profile_picture}
+                />
+              </Link>
             ) : (
               <Button bgColor={'purple.700'}>
                 <Link to={'/signup'}>Register</Link>
