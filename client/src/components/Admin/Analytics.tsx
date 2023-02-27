@@ -24,19 +24,19 @@ const Analytics = () => {
         Tutorials Analytics
       </Heading>
       <Box display={'flex'} justifyContent={'space-around'} width="100%" mt="5">
-        <Box boxShadow="xl" p="3" rounded="md" bg="white" textAlign={'center'}>
+        <Box boxShadow="xl" p="3" rounded="md"  textAlign={'center'}>
           <Heading>{data.length}</Heading>
           <Text fontSize={'lg'} fontWeight="medium">
             Total Videos{' '}
           </Text>
         </Box>
-        <Box boxShadow="xl" p="3" rounded="md" bg="white" textAlign={'center'}>
+        <Box boxShadow="xl" p="3" rounded="md"  textAlign={'center'}>
           <Heading>{data.length}</Heading>
           <Text fontSize={'lg'} fontWeight="medium">
             Unlisted Videos{' '}
           </Text>
         </Box>
-        <Box boxShadow="xl" p="3" rounded="md" bg="white" textAlign={'center'}>
+        <Box boxShadow="xl" p="3" rounded="md"  textAlign={'center'}>
           <Heading>{data.length}</Heading>
           <Text fontSize={'lg'} fontWeight="medium">
             {' '}
@@ -45,7 +45,7 @@ const Analytics = () => {
         </Box>
       </Box>
 
-      <Box boxShadow="2xl" p="5" rounded="md" bg="white" mt={'6'}>
+      <Box boxShadow="2xl" p="5" rounded="md" mt={'6'}>
         <Chart
           chartType="PieChart"
           data={data}
