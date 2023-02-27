@@ -4,18 +4,13 @@ import {
   ButtonGroup,
   Card,
   CardBody,
-  CardFooter,
   Divider,
   Flex,
-  HStack,
   Heading,
-  chakra,
-  Icon,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
-  VisuallyHidden,
   Stack,
   Text,
   useDisclosure,
@@ -33,11 +28,12 @@ import {
   Select,
   Textarea,
   ModalFooter,
-  Image,
+  Link,
 } from '@chakra-ui/react';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 // import { FiEdit } from 'react-icons/fi';
 import { BsThreeDotsVertical } from 'react-icons/bs';
+import Analytics from './Analytics';
 
 declare global {
   namespace JSX {
@@ -56,12 +52,11 @@ const Tutorials = () => {
   const initialRef = useRef(null);
   const finalRef = useRef(null);
 const iframeRef=useRef<HTMLIFrameElement>(null);
-
+const [analyticsComp, setAnalyticsComp] = useState(false)
 
   const addNewProblem = (): void => {
     onOpen();
   };
-//
 
   return (
     <Box>
@@ -80,20 +75,22 @@ const iframeRef=useRef<HTMLIFrameElement>(null);
             size="sm"
             variant="solid"
             fontSize={'0.8rem'}
-            w={'12vh'}
+            w={'7vw'}
             bg={'purple.600'}
             color={'white'}
-         
+            _hover={{"color":"black"}}
+            onClick={()=>setAnalyticsComp(!analyticsComp)}
           >
-            ANALYTICS
+           {analyticsComp ?  "TUTORIAL":"ANALYTICS"}
           </Button>
           <Button
-            w={'23vh'}
+            w={'9vw'}
             size="sm"
             fontSize={'0.8rem'}
             bg={'whatsapp.700'}
             color={'white'}
             onClick={addNewProblem}
+            _hover={{"color":"black"}}
           >
             CREATE TUTORIAL
           </Button>
@@ -250,13 +247,13 @@ const iframeRef=useRef<HTMLIFrameElement>(null);
         </ButtonGroup>
       </Box>
       <Divider />
-
+{analyticsComp ? <Analytics/>:
       <Card maxW="sm" objectFit="cover" mt={'3'}>
         <CardBody p={'2'}>
           <Stack mt="3" spacing="2">
             <iframe src="https://www.youtube.com/embed/uXWycyeTeCs" 
             width={"100%"}
-             height={"200"} allowFullScreen ref={iframeRef}></iframe>
+             height={"200"} title="Tutorial videos" allowFullScreen ref={iframeRef}></iframe>
             <Flex justifyContent={'space-between'} alignItems={'center'}>
               {/* <Image src={"https://www.youtube.com/embed/GiyL4KFRNBA"} 
               alt={"YT"}/> */}
@@ -293,6 +290,7 @@ const iframeRef=useRef<HTMLIFrameElement>(null);
           </HStack>
         </CardFooter> */}
       </Card>
+}
     </Box>
   );
 };
