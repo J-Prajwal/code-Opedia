@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const tutorialController = require('./controllers/tutorials.routes');
 const scrapperController = require('./controllers/scrapper.routes');
+const reminder = require('./controllers/reminder.routes');
 require('dotenv').config();
 
 const app = express();
@@ -31,10 +32,11 @@ app.use(cors());
 app.get('/', (req, res) => {
   res.send('Homepage!');
 });
-// app.use('/scrapper', scrapperController);
 app.use('/', fileUploadController);
 app.use('/users', userController);
-// app.use(authentication);
+app.use('/', reminder);
+
+app.use(authentication);
 app.use('/problems', problemController);
 app.use('/tutorials', tutorialController);
 
