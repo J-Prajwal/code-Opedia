@@ -4,18 +4,14 @@ import {
   ButtonGroup,
   Card,
   CardBody,
-  CardFooter,
   Divider,
   Flex,
   HStack,
   Heading,
-  chakra,
-  Icon,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
-  VisuallyHidden,
   Stack,
   Text,
   useDisclosure,
@@ -33,14 +29,18 @@ import {
   Select,
   Textarea,
   ModalFooter,
-  Image,
   InputRightElement,
+  useToast,
 } from '@chakra-ui/react';
-import React, { useRef } from 'react';
+import React, { Dispatch, useEffect, useRef, useState } from 'react';
 // import { FiEdit } from 'react-icons/fi';
 import { BsSearch, BsThreeDotsVertical } from 'react-icons/bs';
+import { State } from '../../constants/constants';
 import Pagination from '../Pagination';
-
+import { Tutorial } from '../../constants/Store/Tutorials/tutorial.types';
+import { useDispatch, useSelector } from 'react-redux';
+import { postMyTutorial } from '../../store/Tutorials/tutorial.actions';
+import { getUserDetails } from '../../store/Auth/auth.actions';
 declare global {
   namespace JSX {
     interface InstrinsicElements {
@@ -60,10 +60,66 @@ const Tutorials = () => {
   const finalRef = useRef(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
+  const { userDetails, username } = useSelector((store: State) => store.auth);
+  const { isLoading, isError, isPostSuccess, tutorials } = useSelector(
+    (store: State) => store.tutorials
+  );
+  const dispatch: Dispatch<any> = useDispatch();
+
+  const [tutorialData, setTutorialData] = useState<Tutorial>({
+    title: '',
+    youtube_video_embed: '',
+    article_link: '',
+    category: '',
+    description: '',
+    isPlaylist: false,
+    sub_category: '',
+  });
+  const toast = useToast();
+
   const addNewProblem = (): void => {
     onOpen();
   };
 
+  const handleOnChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ): void => {
+    let name = e.target.name;
+    let value: boolean | string = e.target.value;
+
+    if (name === 'isPlaylist') {
+      value = value === 'true' ? true : false;
+    }
+
+    setTutorialData((values) => ({ ...values, [name]: value }));
+  };
+  const handleOnSubmit = () => {
+    tutorialData.title = userDetails?._id;
+    dispatch(postMyTutorial(tutorialData));
+  };
+
+  useEffect(() => {
+    if (isPostSuccess) {
+      toast({
+        title: 'Tutorial Added',
+        status: 'success',
+        position: 'top',
+        variant: 'subtle',
+        containerStyle: {
+          backgroundColor: 'purple.700',
+          borderRadius: 'md',
+        },
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+    if (!userDetails) {
+      dispatch(getUserDetails(username));
+    }
+  }, []);
   return (
     <Box>
       <Box
@@ -132,8 +188,8 @@ const Tutorials = () => {
                         </InputLeftAddon>
                         <Input
                           type="tel"
-                          name="problem_url"
-                          // onChange={(e) => handleOnChange(e)}
+                          name="article_link"
+                          onChange={handleOnChange}
                           placeholder="www.example.com"
                           w={'68%'}
                         />
@@ -142,8 +198,8 @@ const Tutorials = () => {
                     <FormControl mt={5}>
                       <FormLabel fontSize={20}>Tutorial Title</FormLabel>
                       <Input
-                        name="Tutorial_name"
-                        // onChange={handleOnChange}
+                        name="title"
+                        onChange={handleOnChange}
                         placeholder="Tutorial_name"
                         w={'80%'}
                       />
@@ -152,7 +208,7 @@ const Tutorials = () => {
                       <FormLabel fontSize={20}>Description</FormLabel>
                       <Textarea
                         name="description"
-                        // onChange={handleOnChange}
+                        onChange={handleOnChange}
                         placeholder="write a description for problem"
                         w={'80%'}
                       />
@@ -160,14 +216,14 @@ const Tutorials = () => {
                     <FormControl mt={5}>
                       <FormLabel fontSize={20}>Category</FormLabel>
                       <Select
-                        name="language_used"
-                        // onChange={handleOnChange}
+                        name="category"
+                        onChange={handleOnChange}
                         placeholder="please select"
                         w={'80%'}
                       >
-                        <option value="dsa">DSA</option>
-                        <option value="development">Development</option>
-                        <option value="networking">Networking</option>
+                        <option value="DSA">DSA</option>
+                        <option value="Development">Development</option>
+                        <option value="Networking">Networking</option>
                       </Select>
                     </FormControl>
                   </Box>
@@ -175,21 +231,21 @@ const Tutorials = () => {
                     <FormControl mt={5}>
                       <FormLabel fontSize={20}>Sub_Category</FormLabel>
                       <Select
-                        name="language_used"
-                        // onChange={handleOnChange}
+                        name="sub_category"
+                        onChange={handleOnChange}
                         placeholder="please select"
                         w={'80%'}
                       >
-                        <option value="mern">MERN</option>
-                        <option value="mean">MEAN</option>
-                        <option value="mearn">MEARN</option>
-                        <option value="nextJs">NextJs</option>
-                        <option value="nXM">NXM</option>
-                        <option value="graphql">Graphql</option>
-                        <option value="typescript">Typescript</option>
-                        <option value="nodeJs">NodeJs</option>
-                        <option value="express">Express</option>
-                        <option value="mongoDb">MongoDb</option>
+                        <option value="MERN">MERN</option>
+                        <option value="MEAN">MEAN</option>
+                        <option value="MEARN">MEARN</option>
+                        <option value="NextJs">NextJs</option>
+                        <option value="NXM">NXM</option>
+                        <option value="Graphql">Graphql</option>
+                        <option value="Typescript">Typescript</option>
+                        <option value="NodeJs">NodeJs</option>
+                        <option value="Express">Express</option>
+                        <option value="MongoDb">MongoDb</option>
                       </Select>
                     </FormControl>
 
@@ -208,8 +264,8 @@ const Tutorials = () => {
                         </InputLeftAddon>
                         <Input
                           type="tel"
-                          name="video_reference"
-                          // onChange={handleOnChange}
+                          name="youtube_video_embed"
+                          onChange={handleOnChange}
                           placeholder="www.example.com"
                           w={'68%'}
                         />
@@ -218,8 +274,8 @@ const Tutorials = () => {
                     <FormControl mt={5}>
                       <FormLabel fontSize={20}>isPlaylist</FormLabel>
                       <Select
-                        name="difficulty"
-                        // onChange={handleOnChange}
+                        name="isPlaylist"
+                        onChange={handleOnChange}
                         placeholder="please select"
                         w={'80%'}
                       >
@@ -233,10 +289,10 @@ const Tutorials = () => {
 
               <ModalFooter>
                 <Button
-                  // onClick={handleOnSubmit}
+                  onClick={handleOnSubmit}
                   color={'white'}
                   bgColor={'purple.700'}
-                  // isLoading={isLoading}
+                  isLoading={isLoading}
                   mx={3}
                   _hover={{ bgColor: 'purple.500' }}
                   loadingText="Adding"

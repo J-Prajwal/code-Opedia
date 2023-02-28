@@ -36,6 +36,7 @@ tutorialController.post('/new', isAdminAuthentication, async (req, res) => {
     youtube_video_embed,
     article_link,
     category,
+    isPlaylist,
     sub_category,
   } = req.body;
   try {
@@ -46,6 +47,7 @@ tutorialController.post('/new', isAdminAuthentication, async (req, res) => {
       article_link,
       category,
       sub_category,
+      isPlaylist
     });
     data.save();
     res.status(201).send({ message: 'Tutorial added!', data });
@@ -65,6 +67,7 @@ tutorialController.patch(
       youtube_video_embed,
       article_link,
       category,
+      isPlaylist,
       sub_category,
     } = req.body;
     try {
@@ -74,6 +77,7 @@ tutorialController.patch(
         youtube_video_embed,
         article_link,
         category,
+        isPlaylist,
         sub_category,
       });
       res.status(200).send({ message: 'Tutorial updated!', data });
