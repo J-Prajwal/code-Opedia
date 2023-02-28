@@ -21,17 +21,16 @@ export const postMyProblem =
   };
 
 export const getMyProblem =
-  (userToken: string | null) =>
-  (dispatch: ({ type, payload }: ProblemReducer) => void) => {
+  (userToken: string | null, userId: string | undefined) =>
+  async (dispatch: ({ type, payload }: ProblemReducer) => void) => {
     dispatch({ type: types.GET_MY_PROBLEMS_LOADING });
-    axios
-      .get(`http://localhost:8080/problems`, {
+    await axios
+      .get(`http://localhost:8080/problems/${userId}`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
       })
       .then((res) => {
-        console.log(res)
         dispatch({
           type: types.GET_MY_PROBLEMS_SUCCESS,
           payload: res.data.data,
@@ -43,13 +42,14 @@ export const getMyProblem =
   };
 
 export const getProblemById =
-  (id: string | undefined) => (dispatch: ({ type, payload }: ProblemReducer) => void) => {
+  (id: string | undefined) =>
+  (dispatch: ({ type, payload }: ProblemReducer) => void) => {
     dispatch({ type: types.GET_MY_PROBLEMS_LOADING });
     axios
       .get(`http://localhost:8080/problems/${id}`, {
         headers: {
-          Authorization: `Bearer ${getItem('token')}`
-        }
+          Authorization: `Bearer ${getItem('token')}`,
+        },
       })
       .then((res) => {
         dispatch({

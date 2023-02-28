@@ -33,14 +33,12 @@ export const loginUser =
     return axios
       .post('http://localhost:8080/users/login', userCreds)
       .then((res) => {
-        console.log(res.data);
         dispatch({ type: types.LOGIN_USER_SUCCESS, payload: res.data });
         setItem('token', res.data.token);
         setItem('username', res.data.user.username);
         return true;
       })
       .catch((err) => {
-        console.log(err);
         dispatch({ type: types.LOGIN_USER_FAILURE });
         return false;
       });
@@ -53,7 +51,6 @@ export const getUserDetails =
     return axios
       .get(`http://localhost:8080/users?q=${username}`)
       .then((res) => {
-        console.log(res.data);
         dispatch({
           type: types.GET_USER_DETAILS_SUCCESS,
           payload: res.data,
