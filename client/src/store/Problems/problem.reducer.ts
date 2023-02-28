@@ -9,6 +9,7 @@ const initialState: ProblemInitialState = {
   isPostSuccess: false,
   isError: false,
   problems: [],
+  problem: null,
 };
 
 export const reducer = (
@@ -43,6 +44,12 @@ export const reducer = (
         isError: true,
         isPostSuccess: false,
       };
+    case types.GET_PROBLEM_BY_ID_LOADING:
+      return { ...state, isLoading: true, isError: false };
+    case types.GET_PROBLEM_BY_ID_SUCCESS:
+      return { ...state, isLoading: false, problem: payload, isError: false };
+    case types.GET_PROBLEM_BY_ID_FAILURE:
+      return { ...state, isLoading: false, isError: true };
     default:
       return state;
   }

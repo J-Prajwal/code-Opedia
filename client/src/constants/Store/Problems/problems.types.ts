@@ -3,6 +3,7 @@ export interface ProblemInitialState {
   isError: boolean;
   isPostSuccess: boolean;
   problems: Problem[] | [];
+  problem: null | Problem
 }
 
 export interface Problem {

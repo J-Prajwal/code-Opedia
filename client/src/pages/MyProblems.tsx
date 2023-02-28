@@ -422,7 +422,7 @@ const MyProblems = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <Box
+      {/* <Box
         w={'80%'}
         m={'auto'}
         mt={'10%'}
@@ -517,11 +517,10 @@ const MyProblems = () => {
           </Flex>
         </Box>
         <Box mt={'5%'} w={'80%'} m={'auto'} mb={'5%'}></Box>
-      </Box>
+      </Box> */}
       <Tabs
         width={'90%'}
         m={'auto'}
-        mt={10}
         defaultIndex={0}
         borderBottomColor="transparent"
       >
