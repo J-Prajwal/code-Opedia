@@ -20,12 +20,16 @@ export const postMyProblem =
   };
 
 export const getMyProblem =
-  () => (dispatch: ({ type, payload }: ProblemReducer) => void) => {
+  (userToken: string | null) => (dispatch: ({ type, payload }: ProblemReducer) => void) => {
     dispatch({ type: types.GET_MY_PROBLEMS_LOADING });
     axios
-      .get('http://localhost:8080/problems')
+      .get('http://localhost:8080/problems', {
+        headers: {
+          Authorization: `Bearer ${userToken}`
+        }
+      })
       .then((res) => {
-        dispatch({ type: types.GET_MY_PROBLEMS_SUCCESS, payload: res.data });
+        dispatch({ type: types.GET_MY_PROBLEMS_SUCCESS, payload: res.data.data });
       })
       .catch((err) => {
         dispatch({ type: types.GET_MY_PROBLEMS_FAILURE });

@@ -45,7 +45,7 @@ const Analytics = () => {
         </Box>
       </Box>
 
-      <Box boxShadow="2xl" p="5" rounded="md" mt={'6'}>
+      <Box boxShadow="2xl" p="5" rounded="md"  mt={'6'} >
         <Chart
           chartType="PieChart"
           data={data}
