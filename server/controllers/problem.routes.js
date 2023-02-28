@@ -2,10 +2,22 @@ const express = require('express');
 const ProblemModel = require('../models/problem.model');
 const problemController = express.Router();
 
-problemController.get('/', async (req, res) => {
+problemController.get('/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  console.log('userId', userId);
   try {
-    const data = await ProblemModel.find();
-    res.status(200).send({ message: 'Data found', data });
+    const data = await ProblemModel.find({ userId });
+    res.status(200).json({ data });
+  } catch (err) {
+    res.status(500).send({ message: 'Internal Server Error' });
+  }
+});
+
+problemController.get('/:problemId', async (req, res) => {
+  const problemId = req.params.problemId;
+  try {
+    const data = await ProblemModel.findById(problemId);
+    res.status(200).json({ data });
   } catch (err) {
     res.status(500).send({ message: 'Internal Server Error' });
   }
