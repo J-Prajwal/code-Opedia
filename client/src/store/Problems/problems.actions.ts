@@ -43,10 +43,10 @@ export const getMyProblem =
 
 export const getProblemById =
   (id: string | undefined) =>
-  (dispatch: ({ type, payload }: ProblemReducer) => void) => {
+  async (dispatch: ({ type, payload }: ProblemReducer) => void) => {
     dispatch({ type: types.GET_MY_PROBLEMS_LOADING });
-    axios
-      .get(`http://localhost:8080/problems/${id}`, {
+    await axios
+      .get(`http://localhost:8080/problems/singleProblem/${id}`, {
         headers: {
           Authorization: `Bearer ${getItem('token')}`,
         },
@@ -54,7 +54,7 @@ export const getProblemById =
       .then((res) => {
         dispatch({
           type: types.GET_PROBLEM_BY_ID_SUCCESS,
-          payload: res.data,
+          payload: res.data.data,
         });
       })
       .catch((e) => {
