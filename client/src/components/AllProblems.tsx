@@ -1,17 +1,6 @@
 import {
-  Box,
   Button,
-  Flex,
-  HStack,
-  Heading,
-  Image,
-  SimpleGrid,
-  Tag,
-  Text,
   useToast,
-  chakra,
-  Link,
-  Avatar,
   TableContainer,
   Table,
   Thead,
@@ -19,7 +8,10 @@ import {
   Th,
   Tbody,
   Td,
-  Tfoot,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../constants/constants';
@@ -28,19 +20,18 @@ import { getMyProblem } from '../store/Problems/problems.actions';
 import { useAppDispatch } from '../store/Store';
 import Loader from './Loader';
 import { Link as RouterLink } from 'react-router-dom';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 
 const AllProblems = () => {
   const toast = useToast();
   const { isLoading, problems } = useSelector((state: State) => state.problems);
-  const { token } = useSelector((state: State) => state.auth);
+  const { token, userDetails } = useSelector((state: State) => state.auth);
   const dispatch = useDispatch<useAppDispatch>();
-
   useEffect(() => {
-    dispatch(getMyProblem(token));
-  }, []);
+    dispatch(getMyProblem(token, userDetails?._id));
+  }, [userDetails]);
 
   if (isLoading) return <Loader />;
-  console.log(problems);
   return (
     <>
       <TableContainer>
@@ -57,7 +48,7 @@ const AllProblems = () => {
           </Thead>
           <Tbody>
             {problems?.map((ele, ind) => (
-              <Tr>
+              <Tr key={ind}>
                 <Td>{ind + 1}</Td>
                 <Td>
                   <RouterLink to={`/my-problems/${ele._id}`}>
@@ -66,12 +57,28 @@ const AllProblems = () => {
                 </Td>
                 <Td>{ele.platform_name}</Td>
                 <Td>
-                  <a href={ele.problem_url}>{ele.problem_url}</a>
+                  <a href={ele.problem_url} target="_blank">
+                    {ele.problem_url}
+                  </a>
                 </Td>
                 <Td>
-                  <Button size={'xs'} colorScheme="green">
-                    Revise
-                  </Button>
+                  <Menu>
+                    <MenuButton
+                      as={Button}
+                      size={'xs'}
+                      colorScheme={'green'}
+                      rightIcon={<ChevronDownIcon />}
+                    >
+                      Revise
+                    </MenuButton>
+                    <MenuList>
+                      <MenuItem>3 Days</MenuItem>
+                      <MenuItem>7 Days</MenuItem>
+                      <MenuItem>15 Days</MenuItem>
+                      <MenuItem>30 Days</MenuItem>
+                      <MenuItem>Custom</MenuItem>
+                    </MenuList>
+                  </Menu>
                 </Td>
                 <Td>
                   <Button size={'xs'} colorScheme="red">

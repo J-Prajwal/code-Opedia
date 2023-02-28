@@ -1,10 +1,6 @@
 import * as types from './auth.actionTypes';
 
-import {
-  AuthInitialState,
-  AuthReducer,
-  ReducerProps,
-} from '../../constants/constants';
+import { AuthInitialState } from '../../constants/constants';
 import { getItem } from '../../utils/localStorage';
 
 const initialState: AuthInitialState = {
