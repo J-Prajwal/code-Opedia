@@ -13,7 +13,7 @@ problemController.get('/:userId', async (req, res) => {
   }
 });
 
-problemController.get('/:problemId', async (req, res) => {
+problemController.get('/singleProblem/:problemId', async (req, res) => {
   const problemId = req.params.problemId;
   try {
     const data = await ProblemModel.findById(problemId);
