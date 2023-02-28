@@ -7,6 +7,7 @@ import {
 import { reducer as AuthReducer } from './Auth/auth.reducer';
 import { reducer as ContestReducer } from './Contests/contests.reducer';
 import { reducer as ProblemReducer } from './Problems/problem.reducer';
+import { reducer as TutorialReducer } from './Tutorials/tutorial.reducer';
 import thunk from 'redux-thunk';
 
 declare global {
@@ -22,9 +23,12 @@ const rootReducer = combineReducers({
   auth: AuthReducer,
   contest: ContestReducer,
   problems: ProblemReducer,
+  tutorials: TutorialReducer,
 });
 
 export const store = legacy_createStore(
   rootReducer,
   composeEnhancers(applyMiddleware(thunk))
 );
+
+export type useAppDispatch = typeof store.dispatch;

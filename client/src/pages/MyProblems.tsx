@@ -69,6 +69,7 @@ const MyProblems = () => {
   const dispatch: Dispatch<any> = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [problemData, setProblemData] = useState<Problem>({
+    _id: '',
     userId: '',
     problem_url: '',
     platform_name: '',

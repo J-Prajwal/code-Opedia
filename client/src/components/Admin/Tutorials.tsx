@@ -4,18 +4,13 @@ import {
   ButtonGroup,
   Card,
   CardBody,
-  CardFooter,
   Divider,
   Flex,
-  HStack,
   Heading,
-  chakra,
-  Icon,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
-  VisuallyHidden,
   Stack,
   Text,
   useDisclosure,
@@ -33,36 +28,95 @@ import {
   Select,
   Textarea,
   ModalFooter,
-  Image,
+  useToast,
 } from '@chakra-ui/react';
-import React, { useRef } from 'react';
-// import { FiEdit } from 'react-icons/fi';
+import Analytics from './Analytics';
+import React, { Dispatch, useEffect, useRef, useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-
+import { State } from '../../constants/constants';
+import Pagination from '../Pagination';
+import { Tutorial } from '../../constants/Store/Tutorials/tutorial.types';
+import { useDispatch, useSelector } from 'react-redux';
+import { postMyTutorial } from '../../store/Tutorials/tutorial.actions';
+import { getUserDetails } from '../../store/Auth/auth.actions';
 declare global {
   namespace JSX {
     interface InstrinsicElements {
-      iframe: React.DetailedHTMLProps<React.IframeHTMLAttributes<HTMLIFrameElement>, HTMLIFrameElement> & {
+      iframe: React.DetailedHTMLProps<
+        React.IframeHTMLAttributes<HTMLIFrameElement>,
+        HTMLIFrameElement
+      > & {
         allowfullscreen?: boolean;
       };
     }
   }
 }
 
-
-
 const Tutorials = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef(null);
   const finalRef = useRef(null);
-const iframeRef=useRef<HTMLIFrameElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [analyticsComp, setAnalyticsComp] = useState(false);
+  const { userDetails, username } = useSelector((store: State) => store.auth);
+  const { isLoading, isError, isPostSuccess, tutorials } = useSelector(
+    (store: State) => store.tutorials
+  );
+  const dispatch: Dispatch<any> = useDispatch();
 
-
+  const [tutorialData, setTutorialData] = useState<Tutorial>({
+    title: '',
+    youtube_video_embed: '',
+    article_link: '',
+    category: '',
+    description: '',
+    isPlaylist: false,
+    sub_category: '',
+  });
+  const toast = useToast();
   const addNewProblem = (): void => {
     onOpen();
   };
-//
 
+  const handleOnChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ): void => {
+    let name = e.target.name;
+    let value: boolean | string = e.target.value;
+
+    if (name === 'isPlaylist') {
+      value = value === 'true' ? true : false;
+    }
+
+    setTutorialData((values) => ({ ...values, [name]: value }));
+  };
+  const handleOnSubmit = () => {
+    tutorialData.title = userDetails?._id;
+    dispatch(postMyTutorial(tutorialData));
+  };
+
+  useEffect(() => {
+    if (isPostSuccess) {
+      toast({
+        title: 'Tutorial Added',
+        status: 'success',
+        position: 'top',
+        variant: 'subtle',
+        containerStyle: {
+          backgroundColor: 'purple.700',
+          borderRadius: 'md',
+        },
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+    if (!userDetails) {
+      dispatch(getUserDetails(username));
+    }
+  }, []);
   return (
     <Box>
       <Box
@@ -80,219 +134,220 @@ const iframeRef=useRef<HTMLIFrameElement>(null);
             size="sm"
             variant="solid"
             fontSize={'0.8rem'}
-            w={'12vh'}
+            w={'7vw'}
             bg={'purple.600'}
             color={'white'}
-         
+            _hover={{ color: 'black' }}
+            onClick={() => setAnalyticsComp(!analyticsComp)}
           >
-            ANALYTICS
+            {analyticsComp ? 'TUTORIAL' : 'ANALYTICS'}
           </Button>
           <Button
-            w={'23vh'}
+            w={'9vw'}
             size="sm"
             fontSize={'0.8rem'}
             bg={'whatsapp.700'}
             color={'white'}
             onClick={addNewProblem}
+            _hover={{ color: 'black' }}
           >
             CREATE TUTORIAL
           </Button>
           <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
-        size={'6xl'}
-      >
-        <ModalOverlay />
-        <ModalContent m="auto">
-          <ModalHeader
-            textAlign={'center'}
-            fontSize={25}
-            textDecoration={'underline'}
+            initialFocusRef={initialRef}
+            finalFocusRef={finalRef}
+            isOpen={isOpen}
+            onClose={onClose}
+            size={'6xl'}
           >
-            Create New Tutorial
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            <Flex w={'100%'} m="auto">
-              <Box w={'50%'}>
-                <FormControl>
-                  <FormLabel fontSize={20}>Article Link</FormLabel>
-                  <InputGroup size="sm">
-                    <InputLeftAddon
-                      bg="gray.50"
-                      _dark={{
-                        bg: 'gray.800',
-                      }}
-                      color="gray.500"
-                      rounded="md"
-                    >
-                      http://
-                    </InputLeftAddon>
-                    <Input
-                      type="tel"
-                      name="problem_url"
-                      // onChange={(e) => handleOnChange(e)}
-                      placeholder="www.example.com"
-                      w={'68%'}
-                    />
-                  </InputGroup>
-                </FormControl>
-                <FormControl mt={5}>
-                  <FormLabel fontSize={20}>Tutorial Title</FormLabel>
-                  <Input
-                    name="Tutorial_name"
-                    // onChange={handleOnChange}
-                    placeholder="Tutorial_name"
-                    w={'80%'}
-                  />
-                </FormControl>
-                <FormControl mt={2}>
-                  <FormLabel fontSize={20}>Description</FormLabel>
-                  <Textarea
-                    name="description"
-                    // onChange={handleOnChange}
-                    placeholder="write a description for problem"
-                    w={'80%'}
-                  />
-                </FormControl>
-                <FormControl mt={5}>
-                  <FormLabel fontSize={20}>Category</FormLabel>
-                  <Select
-                    name="language_used"
-                    // onChange={handleOnChange}
-                    placeholder="please select"
-                    w={'80%'}
-                  >
-                    <option value="dsa">DSA</option>
-                    <option value="development">Development</option>
-                    <option value="networking">Networking</option>
-                  </Select>
-                </FormControl>
-              </Box>
-              <Box w={'50%'}>
-              <FormControl mt={5}>
-                  <FormLabel fontSize={20}>Sub_Category</FormLabel>
-                  <Select
-                    name="language_used"
-                    // onChange={handleOnChange}
-                    placeholder="please select"
-                    w={'80%'}
-                  >
-                    <option value="mern">MERN</option>
-                    <option value="mean">MEAN</option>
-                    <option value="mearn">MEARN</option>
-                    <option value="nextJs">NextJs</option>
-                    <option value="nXM">NXM</option>
-                    <option value="graphql">Graphql</option>
-                    <option value="typescript">Typescript</option>
-                    <option value="nodeJs">NodeJs</option>
-                    <option value="express">Express</option>
-                    <option value="mongoDb">MongoDb</option>
-                  </Select>
-                </FormControl>
+            <ModalOverlay />
+            <ModalContent m="auto">
+              <ModalHeader
+                textAlign={'center'}
+                fontSize={25}
+                textDecoration={'underline'}
+              >
+                Create New Tutorial
+              </ModalHeader>
+              <ModalCloseButton />
+              <ModalBody pb={6}>
+                <Flex w={'100%'} m="auto">
+                  <Box w={'50%'}>
+                    <FormControl>
+                      <FormLabel fontSize={20}>Article Link</FormLabel>
+                      <InputGroup size="sm">
+                        <InputLeftAddon
+                          bg="gray.50"
+                          _dark={{
+                            bg: 'gray.800',
+                          }}
+                          color="gray.500"
+                          rounded="md"
+                        >
+                          http://
+                        </InputLeftAddon>
+                        <Input
+                          type="tel"
+                          name="article_link"
+                          onChange={handleOnChange}
+                          placeholder="www.example.com"
+                          w={'68%'}
+                        />
+                      </InputGroup>
+                    </FormControl>
+                    <FormControl mt={5}>
+                      <FormLabel fontSize={20}>Tutorial Title</FormLabel>
+                      <Input
+                        name="title"
+                        onChange={handleOnChange}
+                        placeholder="Tutorial_name"
+                        w={'80%'}
+                      />
+                    </FormControl>
+                    <FormControl mt={2}>
+                      <FormLabel fontSize={20}>Description</FormLabel>
+                      <Textarea
+                        name="description"
+                        onChange={handleOnChange}
+                        placeholder="write a description for problem"
+                        w={'80%'}
+                      />
+                    </FormControl>
+                    <FormControl mt={5}>
+                      <FormLabel fontSize={20}>Category</FormLabel>
+                      <Select
+                        name="category"
+                        onChange={handleOnChange}
+                        placeholder="please select"
+                        w={'80%'}
+                      >
+                        <option value="DSA">DSA</option>
+                        <option value="Development">Development</option>
+                        <option value="Networking">Networking</option>
+                      </Select>
+                    </FormControl>
+                  </Box>
+                  <Box w={'50%'}>
+                    <FormControl mt={5}>
+                      <FormLabel fontSize={20}>Sub_Category</FormLabel>
+                      <Select
+                        name="sub_category"
+                        onChange={handleOnChange}
+                        placeholder="please select"
+                        w={'80%'}
+                      >
+                        <option value="MERN">MERN</option>
+                        <option value="MEAN">MEAN</option>
+                        <option value="MEARN">MEARN</option>
+                        <option value="NextJs">NextJs</option>
+                        <option value="NXM">NXM</option>
+                        <option value="Graphql">Graphql</option>
+                        <option value="Typescript">Typescript</option>
+                        <option value="NodeJs">NodeJs</option>
+                        <option value="Express">Express</option>
+                        <option value="MongoDb">MongoDb</option>
+                      </Select>
+                    </FormControl>
 
-                <FormControl mt={5}>
-                  <FormLabel fontSize={20}>youtube_video_embed</FormLabel>
-                  <InputGroup size="sm">
-                    <InputLeftAddon
-                      bg="gray.50"
-                      _dark={{
-                        bg: 'gray.800',
-                      }}
-                      color="gray.500"
-                      rounded="md"
-                    >
-                      http://
-                    </InputLeftAddon>
-                    <Input
-                      type="tel"
-                      name="video_reference"
-                      // onChange={handleOnChange}
-                      placeholder="www.example.com"
-                      w={'68%'}
-                    />
-                  </InputGroup>
-                </FormControl>
-                <FormControl mt={5} >
-                  <FormLabel fontSize={20}>isPlaylist</FormLabel>
-                  <Select
-                    name="difficulty"
-                    // onChange={handleOnChange}
-                    placeholder="please select"
-                    w={'80%'}
-                  >
-                    <option value="true">True</option>
-                    <option value="false">False</option>
-                  </Select>
-                </FormControl>
-              </Box>
-            </Flex>
-          </ModalBody>
+                    <FormControl mt={5}>
+                      <FormLabel fontSize={20}>youtube_video_embed</FormLabel>
+                      <InputGroup size="sm">
+                        <InputLeftAddon
+                          bg="gray.50"
+                          _dark={{
+                            bg: 'gray.800',
+                          }}
+                          color="gray.500"
+                          rounded="md"
+                        >
+                          http://
+                        </InputLeftAddon>
+                        <Input
+                          type="tel"
+                          name="youtube_video_embed"
+                          onChange={handleOnChange}
+                          placeholder="www.example.com"
+                          w={'68%'}
+                        />
+                      </InputGroup>
+                    </FormControl>
+                    <FormControl mt={5}>
+                      <FormLabel fontSize={20}>isPlaylist</FormLabel>
+                      <Select
+                        name="isPlaylist"
+                        onChange={handleOnChange}
+                        placeholder="please select"
+                        w={'80%'}
+                      >
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                      </Select>
+                    </FormControl>
+                  </Box>
+                </Flex>
+              </ModalBody>
 
-          <ModalFooter>
-            <Button
-              // onClick={handleOnSubmit}
-              color={'white'}
-              bgColor={'purple.700'}
-              // isLoading={isLoading}
-              mx={3}
-              _hover={{ bgColor: 'purple.500' }}
-              loadingText="Adding"
-            >
-              Add It
-            </Button>
-            <Button onClick={onClose}>Cancel</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+              <ModalFooter>
+                <Button
+                  onClick={handleOnSubmit}
+                  color={'white'}
+                  bgColor={'purple.700'}
+                  isLoading={isLoading}
+                  mx={3}
+                  _hover={{ bgColor: 'purple.500' }}
+                  loadingText="Adding"
+                >
+                  Add It
+                </Button>
+                <Button onClick={onClose}>Cancel</Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
         </ButtonGroup>
       </Box>
       <Divider />
-
-      <Card maxW="sm" objectFit="cover" mt={'3'}>
-        <CardBody p={'2'}>
-          <Stack mt="3" spacing="2">
-            <iframe src="https://www.youtube.com/embed/uXWycyeTeCs" 
-            width={"100%"}
-             height={"200"} allowFullScreen ref={iframeRef}></iframe>
-            <Flex justifyContent={'space-between'} alignItems={'center'}>
-              {/* <Image src={"https://www.youtube.com/embed/GiyL4KFRNBA"} 
-              alt={"YT"}/> */}
-              <Heading size="md">Tutorial Title</Heading>
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  bg={'none'}
-                  _hover={{ bg: 'none' }}
-                  _active={{ bg: 'none' }}
-                >
-                  <BsThreeDotsVertical cursor={'pointer'} />
-                </MenuButton>
-                <MenuList>
-                  <MenuItem>Share</MenuItem>
-                  <MenuItem>Download</MenuItem>
-                  <MenuItem>Open</MenuItem>
-                  <MenuItem>Edit</MenuItem>
-                  <MenuItem>Delete</MenuItem>
-                </MenuList>
-              </Menu>
-            </Flex>
-            <Text>Tutorial's description to be displayed here.</Text>
-          </Stack>
-        </CardBody>
-        {/* <CardFooter mt={'-5'}>
-          <HStack gap={5}>
-            <Button color={'white'} size={'sm'} bg={'purple.500'}>
-              Edit
-            </Button>
-            <Button color={'white'} size={'sm'} bg={'red.500'}>
-              Delete
-            </Button>
-          </HStack>
-        </CardFooter> */}
-      </Card>
+      {analyticsComp ? (
+        <Analytics />
+      ) : (
+        <Box>
+          <Card maxW="sm" objectFit="cover" mt={'3'}>
+            <CardBody p={'2'}>
+              <Stack mt="3" spacing="2">
+                <iframe
+                  src="https://www.youtube.com/embed/uXWycyeTeCs"
+                  width={'100%'}
+                  height={'200'}
+                  allowFullScreen
+                  ref={iframeRef}
+                  title="Tutorials video"
+                ></iframe>
+                <Flex justifyContent={'space-between'} alignItems={'center'}>
+                  <Heading size="md">Tutorial Title</Heading>
+                  <Menu>
+                    <MenuButton
+                      as={Button}
+                      bg={'none'}
+                      _hover={{ bg: 'none' }}
+                      _active={{ bg: 'none' }}
+                    >
+                      <BsThreeDotsVertical cursor={'pointer'} />
+                    </MenuButton>
+                    <MenuList>
+                      <MenuItem>Share</MenuItem>
+                      <MenuItem>Download</MenuItem>
+                      <MenuItem>Open</MenuItem>
+                      <MenuItem>Edit</MenuItem>
+                      <MenuItem>Delete</MenuItem>
+                    </MenuList>
+                  </Menu>
+                </Flex>
+                <Text>Tutorial's description to be displayed here.</Text>
+              </Stack>
+            </CardBody>
+          </Card>
+          <Pagination activePage={1} currPage={1} />
+        </Box>
+      )}
     </Box>
   );
 };

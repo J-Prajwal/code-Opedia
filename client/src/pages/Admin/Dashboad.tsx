@@ -24,21 +24,19 @@ import { BsFillMenuAppFill } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../../constants/constants';
 import { Dispatch } from 'redux';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getUserDetails } from '../../store/Auth/auth.actions';
 import Home from '../../components/Admin/Home';
 import Articles from '../../components/Admin/Articles';
 import Tutorials from '../../components/Admin/Tutorials';
+import { useAppDispatch } from '../../store/Store';
+import { JsxElement } from 'typescript';
 
 const Dashboad = () => {
   const { userDetails, username } = useSelector((store: State) => store.auth);
-  const dispatch: Dispatch<any> = useDispatch();
-  const [comp, setComp] = useState(<Home />);
-  const handleOnChange = (e: any) => {
-    const name = e.target.name;
-    const value = e.target.values;
-    setComp((values) => ({ ...values, [name]: value }));
-  };
+  const dispatch: useAppDispatch = useDispatch();
+  const [comp, setComp] = useState<JSX.Element>(<Home />);
+  
   useEffect(() => {
     if (!userDetails) {
       dispatch(getUserDetails(username));
@@ -203,7 +201,7 @@ const Dashboad = () => {
               _hover={{ variant: 'ghost' }}
               onClick={toggleColorMode}
             >
-              {colorMode == 'light' ? <FaMoon /> : <FaSun />}
+              {colorMode === 'light' ? <FaMoon /> : <FaSun />}
             </Button>
             <Icon color="gray.500" as={FaBell} cursor="pointer" />
             <Avatar

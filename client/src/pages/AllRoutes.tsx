@@ -10,14 +10,15 @@ import Login from './Login';
 import MyProblems from './MyProblems';
 import Dashboad from './Admin/Dashboad';
 import NotFoundPage from '../components/NotFoundPage';
+import SingleProblem from './SingleProblem';
 
 const AllRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/my-problems" element={<MyProblems />} />
+      <Route path="/my-problems/:problemId" element={<SingleProblem />} />
       <Route path="/user/:username" element={<Dashboard />} />
-      <Route path="/user/problems/new" element={<NewProblem />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
       <Route path="*" element={<NotFoundPage/>} />
