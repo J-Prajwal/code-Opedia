@@ -6,7 +6,6 @@ import {
   CardBody,
   Divider,
   Flex,
-  HStack,
   Heading,
   Menu,
   MenuButton,
@@ -29,12 +28,11 @@ import {
   Select,
   Textarea,
   ModalFooter,
-  InputRightElement,
   useToast,
 } from '@chakra-ui/react';
+import Analytics from './Analytics';
 import React, { Dispatch, useEffect, useRef, useState } from 'react';
-// import { FiEdit } from 'react-icons/fi';
-import { BsSearch, BsThreeDotsVertical } from 'react-icons/bs';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 import { State } from '../../constants/constants';
 import Pagination from '../Pagination';
 import { Tutorial } from '../../constants/Store/Tutorials/tutorial.types';
@@ -59,7 +57,7 @@ const Tutorials = () => {
   const initialRef = useRef(null);
   const finalRef = useRef(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
-
+  const [analyticsComp, setAnalyticsComp] = useState(false);
   const { userDetails, username } = useSelector((store: State) => store.auth);
   const { isLoading, isError, isPostSuccess, tutorials } = useSelector(
     (store: State) => store.tutorials
@@ -76,7 +74,6 @@ const Tutorials = () => {
     sub_category: '',
   });
   const toast = useToast();
-
   const addNewProblem = (): void => {
     onOpen();
   };
@@ -137,19 +134,22 @@ const Tutorials = () => {
             size="sm"
             variant="solid"
             fontSize={'0.8rem'}
-            w={'12vh'}
+            w={'7vw'}
             bg={'purple.600'}
             color={'white'}
+            _hover={{ color: 'black' }}
+            onClick={() => setAnalyticsComp(!analyticsComp)}
           >
-            ANALYTICS
+            {analyticsComp ? 'TUTORIAL' : 'ANALYTICS'}
           </Button>
           <Button
-            w={'23vh'}
+            w={'9vw'}
             size="sm"
             fontSize={'0.8rem'}
             bg={'whatsapp.700'}
             color={'white'}
             onClick={addNewProblem}
+            _hover={{ color: 'black' }}
           >
             CREATE TUTORIAL
           </Button>
@@ -306,67 +306,48 @@ const Tutorials = () => {
         </ButtonGroup>
       </Box>
       <Divider />
-      <InputGroup mt={3}>
-        <Input placeholder="Search for contents" />
-        <InputRightElement children={<BsSearch />} />
-      </InputGroup>
-      <HStack mt={3}>
-        <Select>
-          <option value="">Category</option>
-          <option value="DSA">DSA</option>
-          <option value="Development">Development</option>
-          <option value="Networking">Networking</option>
-        </Select>
-        <Select>
-          <option value="">Sub-Category</option>
-          <option value="MERN">MERN</option>
-          <option value="MEAN">MEAN</option>
-          <option value="MEARN">MEARN</option>
-          <option value="React">React</option>
-          <option value="NodeJs">NodeJs</option>
-          <option value="Java">Java</option>
-          <option value="GraphQl">GraphQl</option>
-          <option value="SQL">SQL</option>
-        </Select>
-      </HStack>
-      <Card maxW="sm" objectFit="cover" mt={'3'}>
-        <CardBody p={'2'}>
-          <Stack mt="3" spacing="2">
-            <iframe
-              src="https://www.youtube.com/embed/uXWycyeTeCs"
-              width={'100%'}
-              height={'200'}
-              allowFullScreen
-              ref={iframeRef}
-            ></iframe>
-            <Flex justifyContent={'space-between'} alignItems={'center'}>
-              {/* <Image src={"https://www.youtube.com/embed/GiyL4KFRNBA"} 
-              alt={"YT"}/> */}
-              <Heading size="md">Tutorial Title</Heading>
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  bg={'none'}
-                  _hover={{ bg: 'none' }}
-                  _active={{ bg: 'none' }}
-                >
-                  <BsThreeDotsVertical cursor={'pointer'} />
-                </MenuButton>
-                <MenuList>
-                  <MenuItem>Share</MenuItem>
-                  <MenuItem>Download</MenuItem>
-                  <MenuItem>Open</MenuItem>
-                  <MenuItem>Edit</MenuItem>
-                  <MenuItem>Delete</MenuItem>
-                </MenuList>
-              </Menu>
-            </Flex>
-            <Text>Tutorial's description to be displayed here.</Text>
-          </Stack>
-        </CardBody>
-      </Card>
-
-      <Pagination activePage={1} currPage={1} />
+      {analyticsComp ? (
+        <Analytics />
+      ) : (
+        <Box>
+          <Card maxW="sm" objectFit="cover" mt={'3'}>
+            <CardBody p={'2'}>
+              <Stack mt="3" spacing="2">
+                <iframe
+                  src="https://www.youtube.com/embed/uXWycyeTeCs"
+                  width={'100%'}
+                  height={'200'}
+                  allowFullScreen
+                  ref={iframeRef}
+                  title="Tutorials video"
+                ></iframe>
+                <Flex justifyContent={'space-between'} alignItems={'center'}>
+                  <Heading size="md">Tutorial Title</Heading>
+                  <Menu>
+                    <MenuButton
+                      as={Button}
+                      bg={'none'}
+                      _hover={{ bg: 'none' }}
+                      _active={{ bg: 'none' }}
+                    >
+                      <BsThreeDotsVertical cursor={'pointer'} />
+                    </MenuButton>
+                    <MenuList>
+                      <MenuItem>Share</MenuItem>
+                      <MenuItem>Download</MenuItem>
+                      <MenuItem>Open</MenuItem>
+                      <MenuItem>Edit</MenuItem>
+                      <MenuItem>Delete</MenuItem>
+                    </MenuList>
+                  </Menu>
+                </Flex>
+                <Text>Tutorial's description to be displayed here.</Text>
+              </Stack>
+            </CardBody>
+          </Card>
+          <Pagination activePage={1} currPage={1} />
+        </Box>
+      )}
     </Box>
   );
 };

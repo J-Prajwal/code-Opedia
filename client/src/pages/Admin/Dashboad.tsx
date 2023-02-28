@@ -202,7 +202,7 @@ const Dashboad = () => {
               _hover={{ variant: 'ghost' }}
               onClick={toggleColorMode}
             >
-              {colorMode == 'light' ? <FaMoon /> : <FaSun />}
+              {colorMode === 'light' ? <FaMoon /> : <FaSun />}
             </Button>
             <Icon color="gray.500" as={FaBell} cursor="pointer" />
             <Avatar
