@@ -31,6 +31,7 @@ import Articles from '../../components/Admin/Articles';
 import Tutorials from '../../components/Admin/Tutorials';
 import { useAppDispatch } from '../../store/Store';
 import { JsxElement } from 'typescript';
+import Users from '../../components/Admin/Users';
 
 const Dashboad = () => {
   const { userDetails, username } = useSelector((store: State) => store.auth);
@@ -107,7 +108,7 @@ const Dashboad = () => {
           Home
         </NavItem>
         <NavItem
-          onClick={() => setComp(<Home />)}
+          onClick={() => setComp(<Users />)}
           value={'Users'}
           icon={FaUser}
         >
