@@ -14,24 +14,33 @@ import {
   List,
   ListItem,
   Code,
+  Select,
 } from '@chakra-ui/react';
 import { MdLocalShipping } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../constants/constants';
 import { useAppDispatch } from '../store/Store';
-import { useEffect } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { getProblemById } from '../store/Problems/problems.actions';
 import { useParams, useSearchParams } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import {
-  docco,
+  tomorrow,
+  monokai,
   tomorrowNight,
 } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { getItem, setItem } from '../utils/localStorage';
 export default function SingleProduct() {
   const { problem, isLoading } = useSelector((state: State) => state.problems);
   const code = problem?.solution_code;
   const dispatch = useDispatch<useAppDispatch>();
   const { problemId } = useParams();
+  const [themes, setThemes] = useState([monokai, tomorrowNight, tomorrow]);
+  const [myTheme, setMyTheme] = useState(themes[0]);
+  const handleChangeTheme = (e: ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setMyTheme(() => themes[themes.indexOf(value)]);
+  };
   useEffect(() => {
     dispatch(getProblemById(problemId));
   }, []);
@@ -93,13 +102,20 @@ export default function SingleProduct() {
                 {problem?.description}
               </Text>
               {code && (
-                <SyntaxHighlighter
-                  wrapLongLines
-                  language={problem.language_used}
-                  style={tomorrowNight}
-                >
-                  {code}
-                </SyntaxHighlighter>
+                <>
+                  <Select onChange={handleChangeTheme}>
+                    <option value="monokai">monokai</option>
+                    <option value="tomorrow">tomorrow</option>
+                    <option value="tomorrowNight">tomorrowNight</option>
+                  </Select>
+                  <SyntaxHighlighter
+                    wrapLongLines
+                    language={problem.language_used?.toLowerCase()}
+                    style={theme}
+                  >
+                    {code}
+                  </SyntaxHighlighter>
+                </>
               )}
             </VStack>
             <Box>
