@@ -78,9 +78,15 @@ const ContestCard = ({ contest }: ContestProps) => {
           h={'5vh'}
           borderRadius={'md'}
         >
-          <Text textTransform={'capitalize'}>
-            Participate in the contest <ExternalLinkIcon />
-          </Text>
+          <Link
+            href={contest.href}
+            target="_blank"
+            _hover={{ textDecoration: 'none' }}
+          >
+            <Text color={'whitesmoke'} textTransform={'capitalize'}>
+              Participate in the contest <ExternalLinkIcon />
+            </Text>
+          </Link>
         </Flex>
       </Stack>
     </Card>
