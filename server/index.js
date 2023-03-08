@@ -7,7 +7,6 @@ const fileUploadController = require('./controllers/fileUploads.routes');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const tutorialController = require('./controllers/tutorials.routes');
-const scrapperController = require('./controllers/scrapper.routes');
 const reminder = require('./controllers/reminder.routes');
 require('dotenv').config();
 
